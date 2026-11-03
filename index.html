@@ -1401,6 +1401,48 @@ body.noscroll{overflow:hidden}
 @media (max-width:620px){.rg-shmoves{grid-template-columns:minmax(0,1fr)}.rg-stats{grid-template-columns:auto minmax(60px,1fr) 40px}.rg-stats .note{grid-column:1/-1;margin-top:-4px}.rg-sh-head .rg-big{width:80px;height:80px}.rg-sh-head .rg-big img{width:76px;height:76px}.rg-roster{grid-template-columns:repeat(auto-fill,minmax(104px,1fr))}}
 .rg-filters .cpick{flex:0 1 170px;width:auto;min-width:140px}
 
+/* reward confirmation */
+.rg-rw-key{position:absolute;top:8px;left:10px;font-size:10px;opacity:.5}
+.rg-reward{position:relative}
+.rg-reward.on{transform:translateY(-3px)}
+.rg-reward.on::after{content:"✓";position:absolute;top:6px;right:8px;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;background:var(--rc);color:#fff;font-weight:800;font-size:13px}
+.rg-rewards:has(.rg-reward.on) .rg-reward:not(.on):not(:disabled){opacity:.6}
+.rg-confirm{--rc:var(--line);display:flex;flex-wrap:wrap;align-items:center;gap:12px 16px;margin-top:12px;padding:12px 14px;border-radius:14px;border:2px solid var(--rc);background:linear-gradient(90deg,color-mix(in srgb,var(--rc) 14%,var(--surface)),var(--surface));animation:rgpop .25s ease}
+.rg-confirm.t0{--rc:#9aa4b8}.rg-confirm.t1{--rc:#3b82f6}.rg-confirm.t2{--rc:#e6a019}.rg-confirm.t3{--rc:#e0457b}.rg-confirm.t4{--rc:#7c55e8}
+.rg-confirm.picking{border-style:dashed;background:var(--surface-2)}
+.rg-confirm-txt{flex:1 1 240px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.rg-confirm-txt b{font-family:var(--display);font-size:18px}
+.rg-confirm-act{display:flex;gap:8px;flex-wrap:wrap}
+@keyframes rgpop{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+@media (max-width:620px){.rg-confirm-txt{flex:1 1 0}.rg-rw-key{display:none}.rg-confirm-act{width:100%}.rg-confirm-act .btn{flex:1;justify-content:center}}
+
+.rg-preview{font-size:11px;line-height:1.25;color:var(--good);font-weight:700;text-align:center;max-width:120px}
+/* shiny sparkle */
+.shinystar{position:absolute;left:0;top:0;width:14px;height:14px;margin:-7px;background:radial-gradient(circle,#fff 0 25%,#ffe27a 45%,transparent 70%);clip-path:polygon(50% 0,60% 40%,100% 50%,60% 60%,50% 100%,40% 60%,0 50%,40% 40%);animation:shinystar 1.1s ease-out both;pointer-events:none;filter:drop-shadow(0 0 4px #fff6b0)}
+.shinystar.big{width:22px;height:22px;margin:-11px}
+@keyframes shinystar{0%{transform:translate(0,0) scale(.2) rotate(0);opacity:0}25%{opacity:1}100%{transform:translate(var(--dx),var(--dy)) scale(1) rotate(90deg);opacity:0}}
+.shinyglow img{animation:shinyglow 1s ease}
+@keyframes shinyglow{0%,100%{filter:none}30%{filter:brightness(1.6) drop-shadow(0 0 12px #ffe27a)}}
+/* ability picker */
+.rg-teampick li{flex-direction:column;align-items:stretch}
+.rg-tp-top{display:flex;align-items:center;gap:6px}
+.rg-tp-top b{flex:1;font-size:14px}
+.rg-abil{display:flex;flex-direction:column;gap:4px;padding:2px 6px 6px}
+.rg-abil-btns{display:flex;flex-wrap:wrap;gap:4px}
+.rg-abtn{border:1.5px solid var(--line);background:var(--surface);border-radius:999px;padding:4px 10px;font-size:12px;font-weight:600;cursor:pointer}
+.rg-abtn.on{background:var(--ink);color:var(--surface);border-color:var(--ink)}
+.rg-abtn.hid:not(.on){border-style:dashed}
+.rg-hidtag{font-size:9px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;opacity:.75}
+.rg-abdesc{font-size:12px;line-height:1.35}
+.rg-choice.cur{border-color:var(--good)}
+/* shop confirmation */
+.rg-shopi.on{border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 22%,transparent);background:color-mix(in srgb,var(--accent) 6%,var(--surface))}
+.rg-healrow .btn.on{border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 22%,transparent)}
+.rg-shopbar{margin-top:12px}
+.rg-qty{display:flex;align-items:center;gap:6px;margin:4px 0}
+.rg-qty b{min-width:2ch;text-align:center;font-size:16px}
+.rg-qty .btn.sm{padding:4px 10px}
+
 </style>
 </head>
 <body>
@@ -1422,7 +1464,7 @@ body.noscroll{overflow:hidden}
 <div class="sheet-backdrop" id="sheet" hidden></div>
 
 <script>
-/* ============ Battle engine v11 (pure, no DOM). Host-authoritative singles and doubles. ============ */
+/* ============ Battle engine v12 (pure, no DOM). Host-authoritative singles and doubles. ============ */
 var BattleEngine = (function () {
   "use strict";
   const CHART = {
@@ -1547,10 +1589,29 @@ var BattleEngine = (function () {
     "spicy-extract": { mcat: "unique", stats: [{ stat: "atk", change: 2 }, { stat: "def", change: -2 }], statChance: 100 },
     "jet-punch": { prio: 1 }, "aqua-cutter": { crit: 1 }, "ivy-cudgel": { crit: 1 }, "blood-moon": {}, "hyper-drill": {}, "mighty-cleave": {}
   };
+  /* Secondary effects of every damaging move, checked against Pokémon Showdown's move data:
+     name|statChance,self(1)/target(0),stat:change/…|ailmentChance,ailment|flinchChance */
+  const MOVE_FX_RAW = "absorb|||;accelerock|||;acid|10,0,spd:-1||;acid-spray|100,0,spd:-2||;acrobatics|||;aerial-ace|||;aeroblast|||;air-cutter|||;air-slash|||30;alluring-voice|||;anchor-shot|||;ancient-power|10,1,atk:1/def:1/spa:1/spd:1/spe:1||;apple-acid|100,0,spd:-1||;aqua-cutter|||;aqua-jet|||;aqua-step|100,1,spe:1||;aqua-tail|||;armor-cannon|100,1,def:-1/spd:-1||;arm-thrust|||;assurance|||;astonish|||30;astral-barrage|||;attack-order|||;aura-sphere|||;aura-wheel|100,1,spe:1||;aurora-beam|10,0,atk:-1||;avalanche|||;axe-kick||30,confusion|;baddy-bad|||;barb-barrage||50,poison|;barrage|||;beak-blast|||;beat-up|||;behemoth-bash|||;behemoth-blade|||;belch|||;bide|||;bind|||;bite|||30;bitter-blade|||;bitter-malice|100,0,atk:-1||;blast-burn|||;blaze-kick||10,burn|;blazing-torque||30,burn|;bleakwind-storm|30,0,spe:-1||;blizzard||10,freeze|;blood-moon|||;blue-flare||20,burn|;body-press|||;body-slam||30,paralysis|;bolt-beak|||;bolt-strike||20,paralysis|;bone-club|||10;bonemerang|||;bone-rush|||;boomburst|||;bounce||30,paralysis|;bouncy-bubble|||;branch-poke|||;brave-bird|||;breaking-swipe|100,0,atk:-1||;brick-break|||;brine|||;brutal-swing|||;bubble|10,0,spe:-1||;bubble-beam|10,0,spe:-1||;bug-bite|||;bug-buzz|10,0,spd:-1||;bulldoze|100,0,spe:-1||;bullet-punch|||;bullet-seed|||;burning-jealousy|||;burn-up|||;buzzy-buzz||100,paralysis|;ceaseless-edge|||;charge-beam|70,1,spa:1||;chatter||100,confusion|;chilling-water|100,0,atk:-1||;chip-away|||;chloroblast|||;circle-throw|||;clamp|||;clanging-scales|100,1,def:-1||;clear-smog|||;close-combat|100,1,def:-1/spd:-1||;collision-course|||;combat-torque||30,paralysis|;comet-punch|||;comeuppance|||;confusion||10,confusion|;constrict|10,0,spe:-1||;core-enforcer|||;counter|||;covet|||;crabhammer|||;cross-chop|||;cross-poison||10,poison|;crunch|20,0,def:-1||;crush-claw|50,0,def:-1||;crush-grip|||;cut|||;darkest-lariat|||;dark-pulse|||20;dazzling-gleam|||;diamond-storm|100,1,def:2||;dig|||;dire-claw|||;disarming-voice|||;discharge||30,paralysis|;dive|||;dizzy-punch||20,confusion|;doom-desire|||;double-edge|||;double-hit|||;double-iron-bash|||30;double-kick|||;double-shock|||;double-slap|||;draco-meteor|100,1,spa:-2||;dragon-ascent|100,1,def:-1/spd:-1||;dragon-breath||30,paralysis|;dragon-claw|||;dragon-darts|||;dragon-energy|||;dragon-hammer|||;dragon-pulse|||;dragon-rage|||;dragon-rush|||20;dragon-tail|||;draining-kiss|||;drain-punch|||;dream-eater|||;drill-peck|||;drill-run|||;drum-beating|100,0,spe:-1||;dual-chop|||;dual-wingbeat|||;dynamax-cannon|||;dynamic-punch||100,confusion|;earth-power|10,0,spd:-1||;earthquake|||;echoed-voice|||;eerie-spell|||;egg-bomb|||;electro-ball|||;electro-drift|||;electro-shot|||;electroweb|100,0,spe:-1||;ember||10,burn|;endeavor|||;energy-ball|10,0,spd:-1||;eruption|||;esper-wing|100,1,spe:1||;eternabeam|||;expanding-force|||;explosion|||;extrasensory|||10;extreme-speed|||;facade|||;fairy-wind|||;fake-out|||100;false-surrender|||;false-swipe|||;feint|||;feint-attack|||;fell-stinger|||;fickle-beam|||;fiery-dance|50,1,spa:1||;fiery-wrath|||20;final-gambit|||;fire-blast||10,burn|;fire-fang||10,burn|10;fire-lash|100,0,def:-1||;fire-pledge|||;fire-punch||10,burn|;fire-spin|||;first-impression|||;fishious-rend|||;fissure|||;flail|||;flame-burst|||;flame-charge|100,1,spe:1||;flamethrower||10,burn|;flame-wheel||10,burn|;flare-blitz||10,burn|;flash-cannon|10,0,spd:-1||;fleur-cannon|100,1,spa:-2||;fling|||;flip-turn|||;floaty-fall|||30;flower-trick|||;fly|||;flying-press|||;focus-blast|10,0,spd:-1||;focus-punch|||;force-palm||30,paralysis|;foul-play|||;freeze-dry||10,freeze|;freeze-shock||30,paralysis|;freezing-glare||10,freeze|;freezy-frost|||;frenzy-plant|||;frost-breath|||;frustration|||;fury-attack|||;fury-cutter|||;fury-swipes|||;fusion-bolt|||;fusion-flare|||;future-sight|||;gear-grind|||;giga-drain|||;giga-impact|||;gigaton-hammer|||;glacial-lance|||;glaciate|100,0,spe:-1||;glaive-rush|||;glitzy-glow|||;grass-knot|||;grass-pledge|||;grassy-glide|||;grav-apple|100,0,def:-1||;guillotine|||;gunk-shot||30,poison|;gust|||;gyro-ball|||;hammer-arm|100,1,spe:-1||;hard-press|||;headbutt|||30;head-charge|||;headlong-rush|100,1,def:-1/spd:-1||;head-smash|||;heart-stamp|||30;heat-crash|||;heat-wave||10,burn|;heavy-slam|||;hex|||;hidden-power|||;hidden-power-bug|||;hidden-power-dark|||;hidden-power-dragon|||;hidden-power-electric|||;hidden-power-fighting|||;hidden-power-fire|||;hidden-power-flying|||;hidden-power-ghost|||;hidden-power-grass|||;hidden-power-ground|||;hidden-power-ice|||;hidden-power-poison|||;hidden-power-psychic|||;hidden-power-rock|||;hidden-power-steel|||;hidden-power-water|||;high-horsepower|||;high-jump-kick|||;hold-back|||;horn-attack|||;horn-drill|||;horn-leech|||;hurricane||30,confusion|;hydro-cannon|||;hydro-pump|||;hydro-steam|||;hyper-beam|||;hyper-drill|||;hyper-fang|||10;hyperspace-fury|100,1,def:-1||;hyperspace-hole|||;hyper-voice|||;ice-ball|||;ice-beam||10,freeze|;ice-burn||30,burn|;ice-fang||10,freeze|10;ice-hammer|100,1,spe:-1||;ice-punch||10,freeze|;ice-shard|||;ice-spinner|||;icicle-crash|||30;icicle-spear|||;icy-wind|100,0,spe:-1||;incinerate|||;infernal-parade||30,burn|;inferno||100,burn|;infestation|||;iron-head|||30;iron-tail|30,0,def:-1||;ivy-cudgel|||;jaw-lock|||;jet-punch|||;judgment|||;jump-kick|||;karate-chop|||;knock-off|||;kowtow-cleave|||;lands-wrath|||;lash-out|||;last-resort|||;last-respects|||;lava-plume||30,burn|;leafage|||;leaf-blade|||;leaf-storm|100,1,spa:-2||;leaf-tornado|50,0,accuracy:-1||;leech-life|||;lick||30,paralysis|;light-of-ruin|||;liquidation|20,0,def:-1||;low-kick|||;low-sweep|100,0,spe:-1||;lumina-crash|100,0,spd:-2||;lunge|100,0,atk:-1||;luster-purge|50,0,spd:-1||;mach-punch|||;magical-leaf|||;magical-torque||30,confusion|;magma-storm|||;magnet-bomb|||;magnitude|||;make-it-rain|100,1,spa:-1||;malignant-chain||50,badpoison|;matcha-gotcha||20,burn|;mega-drain|||;megahorn|||;mega-kick|||;mega-punch|||;metal-burst|||;metal-claw|10,1,atk:1||;meteor-assault|||;meteor-beam|||;meteor-mash|20,1,atk:1||;mighty-cleave|||;mind-blown|||;mirror-coat|||;mirror-shot|30,0,accuracy:-1||;mist-ball|50,0,spa:-1||;misty-explosion|||;moonblast|30,0,spa:-1||;moongeist-beam|||;mortal-spin||100,poison|;mountain-gale|||30;mud-bomb|30,0,accuracy:-1||;muddy-water|30,0,accuracy:-1||;mud-shot|100,0,spe:-1||;mud-slap|100,0,accuracy:-1||;multi-attack|||;mystical-fire|100,0,spa:-1||;mystical-power|100,1,spa:1||;natural-gift|||;natures-madness|||;needle-arm|||30;night-daze|40,0,accuracy:-1||;night-shade|||;night-slash|||;nihil-light|||;noxious-torque||30,poison|;nuzzle||100,paralysis|;oblivion-wing|||;octazooka|50,0,accuracy:-1||;ominous-wind|10,1,atk:1/def:1/spa:1/spd:1/spe:1||;order-up|||;origin-pulse|||;outrage|||;overdrive|||;overheat|100,1,spa:-2||;parabolic-charge|||;payback|||;pay-day|||;peck|||;petal-blizzard|||;petal-dance|||;phantom-force|||;photon-geyser|||;pika-papow|||;pin-missile|||;plasma-fists|||;play-rough|10,0,atk:-1||;pluck|||;poison-fang||50,badpoison|;poison-jab||30,poison|;poison-sting||30,poison|;poison-tail||10,poison|;pollen-puff|||;poltergeist|||;population-bomb|||;pounce|100,0,spe:-1||;pound|||;powder-snow||10,freeze|;power-gem|||;power-trip|||;power-up-punch|100,1,atk:1||;power-whip|||;precipice-blades|||;present|||;prismatic-laser|||;psybeam||10,confusion|;psyblade|||;psychic|10,0,spd:-1||;psychic-fangs|||;psychic-noise|||;psycho-boost|100,1,spa:-2||;psycho-cut|||;psyshield-bash|100,1,def:1||;psyshock|||;psystrike|||;psywave|||;punishment|||;pursuit|||;pyro-ball||10,burn|;quick-attack|||;rage|||;rage-fist|||;raging-bull|||;raging-fury|||;rapid-spin|100,1,spe:1||;razor-leaf|||;razor-shell|50,0,def:-1||;razor-wind|||;relic-song||10,sleep|;retaliate|||;return|||;revelation-dance|||;revenge|||;reversal|||;rising-voltage|||;roar-of-time|||;rock-blast|||;rock-climb||20,confusion|;rock-slide|||30;rock-smash|50,0,def:-1||;rock-throw|||;rock-tomb|100,0,spe:-1||;rock-wrecker|||;rolling-kick|||30;rollout|||;round|||;ruination|||;sacred-fire||50,burn|;sacred-sword|||;salt-cure|||;sandsear-storm||20,burn|;sand-tomb|||;sappy-seed|||;scald||30,burn|;scale-shot|100,1,def:-1/spe:1||;scorching-sands||30,burn|;scratch|||;searing-shot||30,burn|;secret-power||30,paralysis|;secret-sword|||;seed-bomb|||;seed-flare|40,0,spd:-2||;seismic-toss|||;self-destruct|||;shadow-ball|20,0,spd:-1||;shadow-bone|20,0,def:-1||;shadow-claw|||;shadow-force|||;shadow-punch|||;shadow-sneak|||;sheer-cold|||;shell-side-arm||20,poison|;shell-trap|||;shock-wave|||;signal-beam||10,confusion|;silver-wind|10,1,atk:1/def:1/spa:1/spd:1/spe:1||;sizzly-slide||100,burn|;skitter-smack|100,0,spa:-1||;skull-bash|||;sky-attack|||30;sky-drop|||;sky-uppercut|||;slam|||;slash|||;sludge||30,poison|;sludge-bomb||30,poison|;sludge-wave||10,poison|;smack-down|||;smart-strike|||;smelling-salts|||;smog||40,poison|;snap-trap|||;snarl|100,0,spa:-1||;snipe-shot|||;snore|||30;solar-beam|||;solar-blade|||;sonic-boom|||;spacial-rend|||;spark||30,paralysis|;sparkling-aria|||;sparkly-swirl|||;spectral-thief|||;spike-cannon|||;spin-out|100,1,spe:-2||;spirit-break|100,0,spa:-1||;spirit-shackle|||;spit-up|||;splishy-splash||30,paralysis|;springtide-storm|30,0,atk:-1||;steam-eruption||30,burn|;steamroller|||30;steel-beam|||;steel-roller|||;steel-wing|10,1,def:1||;stomp|||30;stomping-tantrum|||;stone-axe|||;stone-edge|||;stored-power|||;storm-throw|||;strange-steam||20,confusion|;strength|||;struggle|||;struggle-bug|100,0,spa:-1||;submission|||;sucker-punch|||;sunsteel-strike|||;supercell-slam|||;super-fang|||;superpower|100,1,atk:-1/def:-1||;surf|||;surging-strikes|||;swift|||;synchronoise|||;syrup-bomb|||;tachyon-cutter|||;tackle|||;tail-slap|||;take-down|||;techno-blast|||;temper-flare|||;tera-blast|||;tera-starstorm|||;terrain-pulse|||;thief|||;thousand-arrows|||;thousand-waves|||;thrash|||;throat-chop|||;thunder||30,paralysis|;thunderbolt||10,paralysis|;thunder-cage|||;thunderclap|||;thunder-fang||10,paralysis|10;thunderous-kick|100,0,def:-1||;thunder-punch||10,paralysis|;thunder-shock||10,paralysis|;torch-song|100,1,spa:1||;trailblaze|100,1,spe:1||;tri-attack||20,tri|;triple-arrows|50,0,def:-1||30;triple-axel|||;triple-dive|||;triple-kick|||;trop-kick|100,0,atk:-1||;trump-card|||;twin-beam|||;twineedle||20,poison|;twister|||20;upper-hand|||100;uproar|||;u-turn|||;vacuum-wave|||;v-create|100,1,spe:-1/def:-1/spd:-1||;veevee-volley|||;venoshock|||;vine-whip|||;vise-grip|||;vital-throw|||;volt-switch|||;volt-tackle||10,paralysis|;wake-up-slap|||;waterfall|||20;water-gun|||;water-pledge|||;water-pulse||20,confusion|;water-shuriken|||;water-spout|||;wave-crash|||;weather-ball|||;whirlpool|||;wicked-blow|||;wicked-torque||10,sleep|;wildbolt-storm||20,paralysis|;wild-charge|||;wing-attack|||;wood-hammer|||;wrap|||;wring-out|||;x-scissor|||;zap-cannon||100,paralysis|;zen-headbutt|||20;zing-zap|||30;zippy-zap|100,1,evasion:1||;paleo-wave|20,0,atk:-1||;shadow-strike|50,0,def:-1||;polar-flare||10,freeze|";
+  const SD_STAT = { atk: "atk", def: "def", spa: "spa", spd: "spd", spe: "spe", accuracy: "acc", evasion: "eva" };
+  const MOVE_FX = {};
+  MOVE_FX_RAW.split(";").forEach(r => {
+    const [n, s, a, f] = r.split("|");
+    const e = { stats: [], statChance: 0, statSelf: false, ailment: "none", ailChance: 0, ailTox: false, flinch: f ? +f : 0 };
+    if (s) { const [c, self, list] = s.split(","); e.statChance = +c; e.statSelf = self === "1"; e.stats = list.split("/").map(x => { const [k, v] = x.split(":"); return { stat: SD_STAT[k], change: +v }; }).filter(x => x.stat); }
+    if (a) { const [c, ail] = a.split(","); e.ailChance = +c; e.ailment = ail === "badpoison" ? "poison" : ail; e.ailTox = ail === "badpoison"; }
+    MOVE_FX[n] = e;
+  });
+  const PLAIN_DMG = new Set(["damage", "damage+ailment", "damage+raise", "damage+lower"]);
   function compactMove(d) {
     const out = compactMoveRaw(d);
     const fix = MOVE_FIX[out.name];
-    return fix ? Object.assign(out, JSON.parse(JSON.stringify(fix))) : out;
+    if (fix) Object.assign(out, JSON.parse(JSON.stringify(fix)));
+    const fx = MOVE_FX[out.name];
+    if (fx && out.cat !== "status") {
+      Object.assign(out, JSON.parse(JSON.stringify(fx)), { sdFx: true });
+      if (PLAIN_DMG.has(out.mcat)) out.mcat = fx.stats.length ? (fx.statSelf ? "damage+raise" : "damage+lower") : fx.ailment !== "none" ? "damage+ailment" : "damage";
+    }
+    return out;
   }
   function compactMoveRaw(d) {
     const meta = d.meta || {};
@@ -1560,7 +1621,7 @@ var BattleEngine = (function () {
       mcat: meta.category ? meta.category.name : "unique", ailment: meta.ailment ? meta.ailment.name : "none",
       ailChance: meta.ailment_chance || 0, drain: meta.drain || 0, healing: meta.healing || 0, crit: meta.crit_rate || 0,
       flinch: meta.flinch_chance || 0, minHits: meta.min_hits || null, maxHits: meta.max_hits || null,
-      statChance: d.stat_chance || 0, stats: (d.stat_changes || []).map(s => ({ stat: MOVE_STAT[s.stat.name], change: s.change })).filter(s => s.stat)
+      statChance: meta.stat_chance != null ? meta.stat_chance : (d.stat_chance || 0), stats: (d.stat_changes || []).map(s => ({ stat: MOVE_STAT[s.stat.name], change: s.change })).filter(s => s.stat)
     };
   }
   function gasActive(p) {
@@ -2408,7 +2469,7 @@ var BattleEngine = (function () {
       if (user.sleepTurns <= 0) { user.status = null; log(B, U + " woke up!"); }
     }
     if (user.status === "frz") {
-      if (B.rng() < 0.2 || ["flare-blitz", "scald", "sacred-fire", "steam-eruption", "fusion-flare", "pyro-ball", "burn-up", "scorching-sands", "matcha-gotcha"].includes(mv.name)) { user.status = null; log(B, U + " thawed out!"); }
+      if (B.rng() < 0.2 || ["flame-wheel", "flare-blitz", "scald", "sacred-fire", "steam-eruption", "fusion-flare", "pyro-ball", "burn-up", "scorching-sands", "matcha-gotcha", "hydro-steam"].includes(mv.name)) { user.status = null; log(B, U + " thawed out!"); }
       else { log(B, U + " is frozen solid!"); ev(B, { t: "statusTick", si, pos: user.pos, status: "frz" }); return; }
     }
     if (user.status === "par" && B.rng() < 0.25) { log(B, U + " is fully paralyzed!"); ev(B, { t: "statusTick", si, pos: user.pos, status: "par" }); clearLocks(user); return; }
@@ -3275,7 +3336,7 @@ var BattleEngine = (function () {
     if (tAlly && ab(tAlly) === "friend-guard") mod *= 0.75;
     return Math.max(1, Math.floor(d * mod));
   }
-  function hasSecondary(mv) { return (mv.mcat === "damage+ailment" && mv.ailChance > 0) || mv.flinch > 0 || (mv.mcat === "damage+lower" && mv.statChance > 0) || (mv.mcat === "damage+raise" && mv.stats.some(s => s.change > 0) && mv.statChance > 0); }
+  function hasSecondary(mv) { if (mv.sdFx) return (mv.ailment !== "none" && mv.ailChance > 0) || mv.flinch > 0 || (mv.stats.length > 0 && mv.statChance > 0 && (!mv.statSelf || mv.stats.some(s => s.change > 0))); return (mv.mcat === "damage+ailment" && mv.ailChance > 0) || mv.flinch > 0 || (mv.mcat === "damage+lower" && mv.statChance > 0) || (mv.mcat === "damage+raise" && mv.stats.some(s => s.change > 0) && mv.statChance > 0); }
 
   function damagingMove(B, si, user, target, mv, ctx) {
     ctx = ctx || { first: true, last: true };
@@ -3444,6 +3505,7 @@ var BattleEngine = (function () {
       if (target.vol.grudge && user.moves) { const m = user.moves.find(x => x.name === mv.name); if (m) { m.ppLeft = 0; log(B, U + "'s " + tc(mv.name) + " lost all its PP due to the grudge!"); } }
     }
     const realTotal = hitSub ? 0 : hpBefore - target.hp;
+    if (realTotal > 0 && !target.fainted && target.status === "frz" && (mv.type === "fire" || ["scald", "steam-eruption", "scorching-sands", "hydro-steam"].includes(mv.name))) { target.status = null; log(B, T + " thawed out!"); }
     if (realTotal > 0 && target.si !== user.si) {
       const pct = Math.round(realTotal / target.maxhp * 100);
       user.rec.dmg += realTotal / target.maxhp * 100;
@@ -3565,14 +3627,15 @@ var BattleEngine = (function () {
       const cloak = it(target) === "covert-cloak" || ab(target) === "shield-dust";
       const chanceMul = ab(user) === "serene-grace" ? 2 : 1;
       if (!sheer) {
-        if (!target.fainted && !cloak && mv.ailment !== "none" && mv.mcat === "damage+ailment") {
-          if (B.rng() * 100 < (mv.ailChance || 100) * chanceMul) applyAilment(B, target, mv.ailment, false, mv.name === "poison-fang" && false, user);
+        if (!target.fainted && !cloak && mv.ailment !== "none" && (mv.mcat === "damage+ailment" || mv.sdFx)) {
+          if (B.rng() * 100 < (mv.ailChance || 100) * chanceMul) applyAilment(B, target, mv.ailment === "tri" ? ["burn", "paralysis", "freeze"][Math.floor(B.rng() * 3)] : mv.ailment, false, !!mv.ailTox, user);
         }
         if (!target.fainted && !cloak && mv.flinch && B.rng() * 100 < mv.flinch * chanceMul && ab(target) !== "inner-focus" && !target.vol.moved) target.vol.flinch = true;
         if (!target.fainted && !cloak && !mv.flinch && ["kings-rock", "razor-fang"].includes(it(user)) && B.rng() < 0.1 && ab(target) !== "inner-focus") { revealItem(user); target.vol.flinch = true; }
         else if (!target.fainted && !cloak && !mv.flinch && md(user, "kings-rock") && !target.vol.moved && B.rng() < 0.1 * md(user, "kings-rock") && ab(target) !== "inner-focus") target.vol.flinch = true;
-        if (mv.stats.length && B.rng() * 100 < (mv.statChance || 100) * (mv.mcat === "damage+raise" && mv.stats.every(s => s.change < 0) ? 1 : chanceMul)) {
-          const p = mv.mcat === "damage+raise" ? user : target;
+        const selfStats = mv.statSelf != null ? mv.statSelf : mv.mcat === "damage+raise";
+        if (mv.stats.length && B.rng() * 100 < (mv.sdFx ? mv.statChance : (mv.statChance || 100)) * (selfStats && mv.stats.every(s => s.change < 0) ? 1 : chanceMul)) {
+          const p = selfStats ? user : target;
           if (!p.fainted && !(p === target && cloak) && (p !== user || ctx.last)) mv.stats.forEach(s => changeStat(B, p, s.stat, s.change, p === target, user));
         }
       } else if (ctx.last && mv.mcat === "damage+raise" && mv.stats.every(s => s.change < 0)) mv.stats.forEach(s => changeStat(B, user, s.stat, s.change));
@@ -7651,6 +7714,7 @@ async function playEvent(e, v) {
     if (art) { art.classList.remove("awaitball"); if (!fast) pulse(art, "sendout", 750); }
     const wm = monAt(v, e.side, e.pos); if (wm && wm.cry) Sound.cry(wm.cry);
     if (!fast) await wait(500);
+    if (wm && wm.shiny) await shinySparkle(f, fast);
     return;
   }
   if (e.t === "switch") {
@@ -7659,6 +7723,7 @@ async function playEvent(e, v) {
     else if (art) art.classList.remove("awaitball");
     if (mon && mon.cry) Sound.cry(mon.cry);
     if (!fast) await wait(260);
+    if (mon && mon.shiny) await shinySparkle(f, fast);
     return;
   }
   if (e.t === "aim") { await moveAnim(e, v); return; }
@@ -8363,6 +8428,24 @@ function rgStarterOptions() {
   Object.keys(meta.fam).forEach(k => { const r = +k, f = meta.fam[k]; if ((f.u || f.s) && !out.some(o => o.id === r) && RG_BY_ID.has(r)) out.push({ id: r, root: r }); });
   return out;
 }
+/* Abilities a starter can pick from (Hidden Abilities included). */
+function rgLoadAbilities(id) {
+  Rogue.abil = Rogue.abil || {};
+  if (Rogue.abil[id]) return;
+  Rogue.abil[id] = "loading";
+  getJSON("pokemon-species/" + id + "/").then(sp => getJSON("pokemon/" + (sp.varieties.find(v => v.is_default) || sp.varieties[0]).pokemon.name + "/")).then(pk => {
+    Rogue.abil[id] = pk.abilities.slice().sort((x, y) => x.slot - y.slot).map(x => ({ name: x.ability.name, hidden: x.is_hidden }));
+    const t = (rgPickState().team || []).find(o => o.id === id);
+    if (t && !t.ability) t.ability = (Rogue.abil[id].find(x => !x.hidden) || Rogue.abil[id][0] || {}).name || "";
+    Rogue.abil[id].forEach(x => rgAbilityDesc(x.name));
+    if (state.screen === "rogue" && Rogue.view === "new") rgRefreshTeamBox();
+  }).catch(() => { Rogue.abil[id] = null; });
+}
+function rgAbilityDesc(name) {
+  if (!name) return "";
+  if (Rogue.abDesc[name] == null) { Rogue.abDesc[name] = ""; detail("ability", name).then(d => { Rogue.abDesc[name] = d ? englishEffect(d) || "" : ""; if (state.screen === "rogue") { if (Rogue.view === "new") rgRefreshTeamBox(); else if (document.querySelector(".rg-abilpick")) render(); } }); }
+  return Rogue.abDesc[name];
+}
 function rgOptCost(o) { return rgCost(o.root) + (o.mega ? 1 : 0); }
 function rgUnlockNote(kind, d, extra) { (Rogue.unlocks || (Rogue.unlocks = [])).push({ kind, id: d.id, name: d.name, slug: d.slug, extra }); }
 /* Friendship builds up per evolution family, across every run. */
@@ -8584,6 +8667,7 @@ async function rgStartRun(team, mode, challenge) {
       if (care >= 2) mods.leftovers = 1;
       if (care >= 3) mods["lucky-egg"] = 1;
       await rgInit(m, Math.min(100, 5 + 2 * rgSk("startlv")), { shiny: !!o.shiny, mods, met: { wave: 0, starter: true }, megaStone: o.mega || null });
+      if (o.ability && m.abilities.some(x => x.name === o.ability)) m.build.ability = o.ability;
       m.uid = uidSeq++;
       run.party.push(m);
     }
@@ -8701,7 +8785,8 @@ async function rgAfterBattle() {
   const post = { wave: run.wave, kind: enc.kind, name: enc.name, lines: [], gains: [], money: 0, caught: null, friend: [] };
   Rogue.unlocks = [];
   /* experience (a Pokémon you just caught doesn't earn any) */
-  const defeated = B.sides[1].team.map((f, i) => ({ f, i })).filter(x => x.f.fainted || x.i === B.caught).map(x => ({ L: x.f.level, baseExp: ctx.foes[x.i] && ctx.foes[x.i].rg ? ctx.foes[x.i].rg.baseExp : 100 }));
+  /* Knocking a Pokémon out is worth 1.5× the normal Exp.; catching one is worth half. */
+  const defeated = B.sides[1].team.map((f, i) => ({ f, i })).filter(x => x.f.fainted || x.i === B.caught).map(x => ({ L: x.f.level, baseExp: ctx.foes[x.i] && ctx.foes[x.i].rg ? ctx.foes[x.i].rg.baseExp : 100, k: x.f.fainted ? 1.5 : 0.5 }));
   run.kos += B.sides[1].team.filter(f => f.fainted).length;
   const trainer = enc.kind !== "wild";
   const charm = 1 + 0.25 * (run.keys["exp-charm"] || 0), skill = 1 + 0.1 * rgSk("exp");
@@ -8710,7 +8795,7 @@ async function rgAfterBattle() {
     const share = m._fought ? 1 : 0.75;
     const egg = 1 + 0.4 * (m.rg.mods["lucky-egg"] || 0);
     let gain = 0;
-    defeated.forEach(d => { gain += Math.floor(((d.baseExp * d.L / 5) * Math.pow((2 * d.L + 10) / (d.L + m.build.level + 10), 2.5) + 1) * (trainer ? 1.5 : 1) * RG_EXP_MULT * share * egg * charm * skill); });
+    defeated.forEach(d => { gain += Math.floor(((d.baseExp * d.L / 5) * Math.pow((2 * d.L + 10) / (d.L + m.build.level + 10), 2.5) + 1) * (trainer ? 1.5 : 1) * d.k * RG_EXP_MULT * share * egg * charm * skill); });
     const before = m.build.level;
     m.rg.exp += gain;
     let L = before;
@@ -9043,7 +9128,7 @@ async function rgEnterCamp() {
   run.wave++;
   run.enc = rgEncounter(run);
   run.rewards = null; run.taken = false; run.rerollCost = 0; run.freeRerolls = rgSk("reroll");
-  Rogue.encBuilt = null; Rogue.unlocks = [];
+  Rogue.encBuilt = null; Rogue.unlocks = []; Rogue.pickRw = null; Rogue.target = null;
   rgSave();
   await rgPrepareCamp();
 }
@@ -9093,7 +9178,7 @@ function rgPartyCard(m, i, run) {
       '<div class="rg-mods">' + rgModChips(m) + "</div>" +
     "</div>" +
     '<div class="rg-pm-act">' +
-      (rw ? (can ? '<button class="btn sm primary" type="button" data-rgive="' + i + '">Give</button>' : '<span class="note">Can’t use</span>') :
+      (rw ? (can ? '<button class="btn sm primary" type="button" data-rgive="' + i + '">Give</button><span class="rg-preview">' + esc(rgPreview(rw, m)) + "</span>" : '<span class="note">Can’t use</span>') :
         '<button class="btn sm" type="button" data-rsheet="' + m.uid + '">Summary</button>' +
         (i > 0 ? '<button class="btn sm ghost" type="button" data-rlead="' + i + '" title="Make this your lead">Lead</button>' : "") +
         (run.party.length > 1 ? (Rogue.confirmRelease === m.uid ? '<button class="btn sm danger" type="button" data-rrelease="' + i + '">Release?</button>' : '<button class="btn sm ghost" type="button" data-rrelask="' + m.uid + '" title="Release" aria-label="Release ' + esc(m.displayName) + '">✕</button>') : "")) +
@@ -9215,6 +9300,19 @@ function rgRosterGrid() {
     "</div>";
   }).join("");
 }
+/* Team list on the start screen, with an Ability picker for each starter (Hidden Abilities included). */
+function rgTeamBox() {
+  const p = rgPickState();
+  if (!p.team.length) return '<p class="note">Tap starters to add them. Stronger families cost more; legendaries cost the most.</p>';
+  return '<ol class="rg-teampick">' + p.team.map((o, i) => {
+    const d = RG_BY_ID.get(o.id);
+    rgLoadAbilities(o.id);
+    const list = Array.isArray(Rogue.abil && Rogue.abil[o.id]) ? Rogue.abil[o.id] : null;
+    const abil = list ? '<div class="rg-abil"><span class="label">Ability</span><div class="rg-abil-btns" role="radiogroup" aria-label="' + esc(d.name) + ' Ability">' + list.map(x => '<button type="button" role="radio" aria-checked="' + (o.ability === x.name) + '" class="rg-abtn' + (o.ability === x.name ? " on" : "") + (x.hidden ? " hid" : "") + '" data-rability="' + i + '" data-ab="' + esc(x.name) + '" title="' + esc(rgAbilityDesc(x.name) || pretty(x.name)) + '">' + esc(pretty(x.name)) + (x.hidden ? ' <span class="rg-hidtag">Hidden</span>' : "") + "</button>").join("") + '</div><span class="note rg-abdesc">' + esc(rgAbilityDesc(o.ability) || "") + "</span></div>" : '<span class="note">Loading Abilities…</span>';
+    return '<li><div class="rg-tp-top"><span class="rg-mini">' + rgDexSprite(d, o.shiny) + "</span><b>" + esc(d.name) + (o.shiny ? ' <span class="rg-shinytxt">✦</span>' : "") + (o.mega ? ' <span class="badge mega">Stone</span>' : "") + '</b><span class="mono note" title="Cost">' + rgOptCost(o) + '</span><button type="button" class="btn sm ghost" data-rdrop="' + i + '" aria-label="Remove ' + esc(d.name) + '">✕</button></div>' + abil + "</li>";
+  }).join("") + "</ol>";
+}
+function rgRefreshTeamBox() { const el = document.getElementById("rg-teambox"); if (el) el.innerHTML = rgTeamBox(); }
 function renderRogueStart() {
   const meta = rgMeta();
   const p = rgPickState();
@@ -9237,7 +9335,7 @@ function renderRogueStart() {
     "</section>" +
     '<aside class="panel rg-setup"><h3>Your team</h3>' +
       '<div class="rg-budget"><span class="label">Budget</span><span class="rg-bbar"><i style="width:' + Math.min(100, Math.round(used / budget * 100)) + '%"></i></span><b class="mono">' + used + " / " + budget + "</b></div>" +
-      (p.team.length ? '<ol class="rg-teampick">' + p.team.map((o, i) => { const d = RG_BY_ID.get(o.id); return '<li><span class="rg-mini">' + rgDexSprite(d, o.shiny) + "</span><b>" + esc(d.name) + (o.shiny ? ' <span class="rg-shinytxt">✦</span>' : "") + (o.mega ? ' <span class="badge mega">Stone</span>' : "") + '</b><span class="mono note">' + rgOptCost(o) + '</span><button type="button" class="btn sm ghost" data-rdrop="' + i + '" aria-label="Remove ' + esc(d.name) + '">✕</button></li>'; }).join("") + "</ol>" : '<p class="note">Tap starters to add them. Stronger families cost more; legendaries cost the most.</p>') +
+      '<div id="rg-teambox">' + rgTeamBox() + "</div>" +
       '<span class="label">Mode</span>' + seg("mode", p.mode, [["classic", "Classic", "50 waves. Beat the Champion on wave 50 to win."], ["endless", "Endless", "No finish line. Waves keep getting harder."]]) +
       '<span class="label">Challenge</span>' + seg("challenge", p.challenge, [["casual", "Casual", "Opponents are 3 levels lower and play softer."], ["standard", "Standard", "The intended balance."], ["hard", "Hard", "Opponents are 3 levels higher and play smarter."]]) +
       '<button class="btn primary rg-go" type="button" data-ract="begin"' + (p.team.length ? "" : " disabled") + ">" + (p.team.length ? "Begin the run →" : "Pick at least one starter") + "</button>" +
@@ -9264,10 +9362,10 @@ function renderRogueCamp() {
   const run = Rogue.run;
   const rw = run.rewards || [];
   const tierCls = t => " t" + (t || 0);
-  const rewardCard = (r, i) => '<button type="button" class="rg-reward' + tierCls(r.tier) + (Rogue.target === r ? " on" : "") + '" data-rreward="' + i + '"' + (run.taken ? " disabled" : "") + '><span class="rg-rw-tier">' + RG_TIER_NAME[r.tier || 0] + '</span><span class="rg-rw-ico">' + (r.kind === "tm" ? '<span class="rg-tm" style="--tc:' + (TYPE_COLOR[r.mtype] || "#888") + '">TM</span>' : rgImg(r.icon)) + '</span><span class="rg-rw-txt"><b>' + esc(r.name) + '</b><span class="note">' + esc(r.desc) + "</span></span></button>";
+  const rewardCard = (r, i) => '<button type="button" class="rg-reward' + tierCls(r.tier) + (Rogue.pickRw === i ? " on" : "") + '" data-rreward="' + i + '" aria-pressed="' + (Rogue.pickRw === i) + '"' + (run.taken ? " disabled" : "") + '><span class="rg-rw-key kbd" aria-hidden="true">' + (i + 1) + '</span><span class="rg-rw-tier">' + RG_TIER_NAME[r.tier || 0] + '</span><span class="rg-rw-ico">' + (r.kind === "tm" ? '<span class="rg-tm" style="--tc:' + (TYPE_COLOR[r.mtype] || "#888") + '">TM</span>' : rgImg(r.icon)) + '</span><span class="rg-rw-txt"><b>' + esc(r.name) + '</b><span class="note">' + esc(r.desc) + "</span></span></button>";
   const bonus = rw.filter(r => r.bonus);
   const normal = rw.filter(r => !r.bonus);
-  const shop = RG_SHOP.map(([id, base], i) => { const price = rgPrice(run, base); const ball = RG_BALLS.find(b => b[0] === id); return '<button type="button" class="rg-shopi" data-rshop="' + i + '"' + (run.money < price ? " disabled" : "") + ">" + rgItemIcon(ball ? ball[2] : id) + "<span><b>" + esc(ball ? ball[1] : pretty(id)) + '</b><span class="note">' + esc(RG_ITEM_DESC[id] || "") + '</span><span class="mono note">₽' + price.toLocaleString() + "</span></span></button>"; }).join("");
+  const shop = RG_SHOP.map(([id, base], i) => { const price = rgPrice(run, base); const ball = RG_BALLS.find(b => b[0] === id); return '<button type="button" class="rg-shopi' + (Rogue.pickShop === i ? " on" : "") + '" data-rshop="' + i + '" aria-pressed="' + (Rogue.pickShop === i) + '"' + (run.money < price ? " disabled" : "") + ">" + rgItemIcon(ball ? ball[2] : id) + "<span><b>" + esc(ball ? ball[1] : pretty(id)) + '</b><span class="note">' + esc(RG_ITEM_DESC[id] || "") + '</span><span class="mono note">₽' + price.toLocaleString() + "</span></span></button>"; }).join("");
   const targeting = Rogue.target ? '<div class="banner rg-targetbar">Choose a Pokémon for <b>' + esc(Rogue.target.name) + '</b>.<button class="btn sm" type="button" data-ract="cancel-target">Cancel</button></div>' : "";
   const heal = rgHealPlan(run);
   const rerollCost = run.freeRerolls > 0 ? 0 : rgPrice(run, 250 + run.rerollCost);
@@ -9277,17 +9375,83 @@ function renderRogueCamp() {
     '<div class="rg-camp"><div class="rg-col">' +
       (rw.length ? '<section class="panel"><div class="headrow"><h3>' + (run.taken ? "Reward taken" : "Pick a reward") + '</h3><div class="row">' + (!run.taken ? '<button class="btn sm" type="button" data-ract="reroll"' + (run.money < rerollCost ? " disabled" : "") + ">Reroll · " + (rerollCost ? "₽" + rerollCost.toLocaleString() : "free") + "</button>" : "") + "</div></div>" +
         '<div class="rg-rewards' + (normal.length > 3 ? " many" : "") + '">' + normal.map(r => rewardCard(r, rw.indexOf(r))).join("") + "</div>" +
-        (bonus.length ? '<div class="rg-rewards bonus">' + bonus.map(r => '<button type="button" class="rg-reward t2 bonus' + (r.claimed ? " claimed" : "") + (Rogue.target === r ? " on" : "") + '" data-rbonus="' + rw.indexOf(r) + '"' + (r.claimed ? " disabled" : "") + '><span class="rg-rw-tier">Boss bonus · free</span><span class="rg-rw-ico">' + rgImg(r.icon) + '</span><span class="rg-rw-txt"><b>' + esc(r.name) + '</b><span class="note">' + esc(r.desc) + "</span></span></button>").join("") + "</div>" : "") +
+        (bonus.length ? '<div class="rg-rewards bonus">' + bonus.map(r => '<button type="button" class="rg-reward t2 bonus' + (r.claimed ? " claimed" : "") + (Rogue.pickRw === rw.indexOf(r) ? " on" : "") + '" data-rbonus="' + rw.indexOf(r) + '"' + (r.claimed ? " disabled" : "") + '><span class="rg-rw-tier">Boss bonus · free</span><span class="rg-rw-ico">' + rgImg(r.icon) + '</span><span class="rg-rw-txt"><b>' + esc(r.name) + '</b><span class="note">' + esc(r.desc) + "</span></span></button>").join("") + "</div>" : "") +
+      rgConfirmBar(run) +
       "</section>" : "") +
       '<section class="panel"><div class="headrow"><h3>Next up</h3><span class="note">Wave ' + run.wave + "</span></div>" + rgEncLine(run) +
         '<div class="row rg-goRow"><button class="btn primary rg-go" type="button" data-ract="fight"' + (!rgAlive(run).length || run.prompts.length ? " disabled" : "") + ">" + (run.enc && run.enc.kind === "boss" ? "Challenge " + esc(run.enc.name) : "Head into wave " + run.wave) + ' → <span class="kbd">F</span></button>' + (!rgAlive(run).length ? '<span class="err">Every Pokémon has fainted. Use a Revive or heal up first.</span>' : "") + "</div></section>" +
       '<section class="panel"><div class="headrow"><h3>Poké Mart</h3>' + rgBag(run) + "</div>" +
-        (heal.plan.length ? '<div class="rg-healrow"><button class="btn" type="button" data-ract="heal-all"' + (run.money < heal.cost ? " disabled" : "") + '>🩹 Heal the whole team · ₽' + heal.cost.toLocaleString() + '</button><span class="note">Buys the cheapest Potions, Revives and Full Heals for everyone who needs them.</span></div>' : "") +
+        (heal.plan.length ? '<div class="rg-healrow"><button class="btn' + (Rogue.pickShop === "heal" ? " on" : "") + '" type="button" data-ract="heal-all" aria-pressed="' + (Rogue.pickShop === "heal") + '"' + (run.money < heal.cost ? " disabled" : "") + '>🩹 Heal the whole team · ₽' + heal.cost.toLocaleString() + '</button><span class="note">Buys the cheapest Potions, Revives and Full Heals for everyone who needs them.</span></div>' : "") +
         (rgBagItems(run) ? '<p class="label" style="margin:10px 0 0">In your bag</p><div class="rg-shop">' + rgBagItems(run) + "</div>" : "") +
-        '<p class="label" style="margin:12px 0 0">For sale</p><div class="rg-shop">' + shop + '</div><p class="note" style="margin:8px 0 0">Prices go up every 10 waves.' + (rgSk("discount") ? " Haggler discount: −" + 5 * rgSk("discount") + "%." : "") + "</p></section>" +
+        '<p class="label" style="margin:12px 0 0">For sale</p><div class="rg-shop">' + shop + '</div><p class="note" style="margin:8px 0 0">Prices go up every 10 waves.' + (rgSk("discount") ? " Haggler discount: −" + 5 * rgSk("discount") + "%." : "") + "</p>" + rgShopBar(run) + "</section>" +
     "</div>" +
     '<aside class="panel rg-party"><div class="headrow"><h3>Your team</h3><span class="note">' + run.party.length + " / 6</span></div>" + targeting + '<ol class="rg-pmlist">' + run.party.map((m, i) => rgPartyCard(m, i, run)).join("") + '</ol><p class="note" style="margin:8px 0 0">Tap a Pokémon or <b>Summary</b> for stats, moves and items. Tap an item icon to read what it does.</p></aside></div>' +
     (Rogue.sheet ? rgSheetHtml(run) : "");
+}
+/* What an item will do to this Pokémon, shown next to its Give button. */
+function rgPreview(rw, m) {
+  switch (rw.kind) {
+    case "heal": { const mx = rgMaxHp(m), hp = rgHp(m); return "HP " + hp + " → " + Math.min(mx, hp + Math.ceil(mx * rw.pct)); }
+    case "cure": return "Cures " + (STATUS_SHORT[m.rg.status] || "status");
+    case "revive": return "Revives with " + Math.max(1, Math.floor(rgMaxHp(m) * rw.pct)) + " HP";
+    case "pp": return "Restores all PP";
+    case "level": return "Lv. " + m.build.level + " → " + Math.min(100, m.build.level + rw.n);
+    case "evolve": return "Evolves now";
+    case "ability": { const i = m.abilities.findIndex(a => a.name === m.build.ability); return pretty(m.build.ability) + " → " + pretty(m.abilities[(i + 1) % m.abilities.length].name); }
+    case "mod": { const inf = rgModInfo(rw.mod), cur = m.rg.mods[rw.mod] || 0; return inf.name + " ×" + cur + " → ×" + Math.min(inf.max, cur + (rw.n || 1)) + " (max " + inf.max + ")"; }
+    case "held": return m.build.item ? "Replaces " + pretty(m.build.item) : "Battle item slot is empty";
+    case "tm": return m.build.moves.filter(Boolean).length < 4 ? "Learns it in a free slot" : "Forget a move to learn it";
+    default: return "";
+  }
+}
+/* Buying from the Poké Mart also needs a second, deliberate press. */
+function rgShopBar(run) {
+  const k = Rogue.pickShop;
+  if (k == null || Rogue.target) return "";
+  const money = run.money;
+  if (k === "heal") {
+    const h = rgHealPlan(run);
+    if (!h.plan.length) { Rogue.pickShop = null; return ""; }
+    const who = h.plan.map(x => x.m.displayName + (x.revive ? " (revive)" : x.cure ? " (cure + heal)" : "")).join(", ");
+    return '<div class="rg-confirm rg-shopbar" role="region" aria-label="Confirm purchase"><span class="rg-rw-ico" aria-hidden="true">🩹</span><div class="rg-confirm-txt"><span class="label">Poké Mart · selected</span><b>Heal the whole team</b><span class="note">Fully heals ' + esc(who) + ".</span>" +
+      '<span class="note mono">₽' + money.toLocaleString() + " → ₽" + (money - h.cost).toLocaleString() + "</span>" + (money < h.cost ? '<span class="err">Not enough money.</span>' : "") + "</div>" +
+      '<div class="rg-confirm-act"><button class="btn primary" type="button" data-ract="shop-buy"' + (money < h.cost ? " disabled" : "") + ">Pay ₽" + h.cost.toLocaleString() + ' <span class="kbd">Enter</span></button><button class="btn" type="button" data-ract="shop-cancel">Cancel <span class="kbd">Esc</span></button></div></div>';
+  }
+  const row = RG_SHOP[k];
+  if (!row) { Rogue.pickShop = null; return ""; }
+  const [id, base] = row, price = rgPrice(run, base), ball = RG_BALLS.find(x => x[0] === id);
+  const name = ball ? ball[1] : pretty(id);
+  const isBall = !!ball;
+  const maxQ = isBall ? Math.max(1, Math.min(99, Math.floor(money / price))) : 1;
+  const q = isBall ? Math.max(1, Math.min(maxQ, Rogue.shopQty || 1)) : 1;
+  Rogue.shopQty = q;
+  const total = price * q;
+  const kind = isBall ? "ball" : (id === "rare-candy" || ["potion", "super-potion", "hyper-potion", "full-heal", "revive", "elixir", "sitrus-berry"].includes(id)) ? "target" : "ball";
+  const anyone = kind !== "target" || run.party.some(m => rgCanTake(run, rgShopProbe(id), m));
+  return '<div class="rg-confirm rg-shopbar" role="region" aria-label="Confirm purchase"><span class="rg-rw-ico">' + rgImg(ball ? ball[2] : id) + "</span>" +
+    '<div class="rg-confirm-txt"><span class="label">Poké Mart · selected</span><b>' + esc(name) + (q > 1 ? " ×" + q : "") + '</b><span class="note">' + esc(RG_ITEM_DESC[id] || "") + "</span>" +
+      (isBall ? '<div class="rg-qty" role="group" aria-label="How many"><button class="btn sm" type="button" data-rqty="-1" aria-label="One fewer"' + (q <= 1 ? " disabled" : "") + '>−</button><b class="mono" aria-live="polite">' + q + '</b><button class="btn sm" type="button" data-rqty="1" aria-label="One more"' + (q >= maxQ ? " disabled" : "") + '>+</button>' + [5, 10].filter(n => n <= maxQ).map(n => '<button class="btn sm ghost" type="button" data-rqtyset="' + n + '">×' + n + "</button>").join("") + "</div>" : "") +
+      '<span class="note mono">₽' + money.toLocaleString() + " → ₽" + (money - total).toLocaleString() + "</span>" +
+      (money < total ? '<span class="err">Not enough money.</span>' : "") + (anyone ? "" : '<span class="err">None of your Pokémon need this right now.</span>') + "</div>" +
+    '<div class="rg-confirm-act"><button class="btn primary" type="button" data-ract="shop-buy"' + (money < total || !anyone ? " disabled" : "") + ">" + (kind === "target" ? "Buy · ₽" + total.toLocaleString() + " · choose a Pokémon →" : "Buy · ₽" + total.toLocaleString()) + ' <span class="kbd">Enter</span></button><button class="btn" type="button" data-ract="shop-cancel">Cancel <span class="kbd">Esc</span></button></div></div>';
+}
+const rgShopProbeCache = {};
+function rgShopProbe(id) {
+  const kinds = { potion: ["heal", 0.3], "super-potion": ["heal", 0.6], "hyper-potion": ["heal", 1], "full-heal": ["cure"], revive: ["revive", 0.5], elixir: ["pp"], "rare-candy": ["level"], "sitrus-berry": ["mod"] };
+  const k = kinds[id] || ["none"];
+  return rgShopProbeCache[id] || (rgShopProbeCache[id] = { kind: k[0], pct: k[1], mod: id === "sitrus-berry" ? "sitrus-berry" : null, n: 1 });
+}
+/* A reward is only taken after a second, deliberate press. */
+function rgConfirmBar(run) {
+  const i = Rogue.pickRw, r = i != null && run.rewards ? run.rewards[i] : null;
+  if (!r || (run.taken && !r.bonus) || r.claimed) { if (!Rogue.target) Rogue.pickRw = null; return ""; }
+  if (Rogue.target === r) return '<div class="rg-confirm picking"><span class="note">Now choose which Pokémon gets <b>' + esc(r.name) + '</b> in Your team. <button class="btn sm" type="button" data-ract="cancel-target">Back</button></span></div>';
+  const need = rgNeedsTarget(r);
+  const anyone = !need || run.party.some(m => rgCanTake(run, r, m));
+  return '<div class="rg-confirm t' + (r.tier || 0) + '" role="region" aria-label="Confirm reward"><span class="rg-rw-ico">' + (r.kind === "tm" ? '<span class="rg-tm" style="--tc:' + (TYPE_COLOR[r.mtype] || "#888") + '">TM</span>' : rgImg(r.icon)) + '</span>' +
+    '<div class="rg-confirm-txt"><span class="label">' + (r.bonus ? "Boss bonus · free" : RG_TIER_NAME[r.tier || 0] + " reward") + ' · selected</span><b>' + esc(r.name) + '</b><span class="note">' + esc(r.desc) + "</span>" +
+    (r.bonus ? "" : '<span class="note">You can only take one reward this wave.</span>') + (anyone ? "" : '<span class="err">None of your Pokémon can use this right now.</span>') + "</div>" +
+    '<div class="rg-confirm-act"><button class="btn primary" type="button" data-ract="rw-take"' + (anyone ? "" : " disabled") + ">" + (need ? "Choose a Pokémon →" : "Take it") + ' <span class="kbd">Enter</span></button><button class="btn" type="button" data-ract="rw-cancel">Cancel <span class="kbd">Esc</span></button></div></div>';
 }
 function renderRogueResults() {
   const run = Rogue.run, post = run.post || { lines: [], gains: [] };
@@ -9319,6 +9483,13 @@ function renderRoguePrompt() {
     const mv = n => { const d = moveInfo[n] || {}; return '<span class="rg-mvname" style="--tc:' + (TYPE_COLOR[d.type] || "#888") + '"><b>' + esc(pretty(n)) + '</b><span class="note">' + (d.type ? esc(pretty(d.type)) + " · " + esc(pretty(d.cat || "")) + (d.power ? " · " + d.power + " power" : "") + (d.acc ? " · " + d.acc + "%" : "") : "…") + '</span><span class="note rg-mvdesc">' + esc(d.desc || "") + "</span></span>"; };
     app.innerHTML = rgHead(run, m.displayName + " wants to learn " + pretty(p.move)) + '<section class="panel rg-prompt"><div class="rg-prompt-hero"><span class="rg-big">' + spriteImg(m, m.build.shiny) + '</span><div><p style="margin:0">' + (p.tm ? "You used the TM. " : "") + esc(m.displayName) + " already knows four moves. Forget one to make room for <b>" + esc(pretty(p.move)) + "</b>?</p>" + '<div class="rg-newmove">' + mv(p.move) + "</div></div></div>" +
       '<div class="rg-choices">' + m.build.moves.map((n, i) => n ? '<button class="rg-choice mv" type="button" data-rforget="' + i + '">' + mv(n) + '<span class="note"><b>Forget</b> <span class="kbd">' + (i + 1) + "</span></span></button>" : "").join("") + '</div><div class="row"><button class="btn" type="button" data-rforget="-1">Don’t learn ' + esc(pretty(p.move)) + ' <span class="kbd">Esc</span></button></div></section>';
+    return;
+  }
+  if (p.t === "ability") {
+    m.abilities.forEach(x => rgAbilityDesc(x.name));
+    app.innerHTML = rgHead(run, "Choose " + m.displayName + "’s Ability") + '<section class="panel rg-prompt rg-abilpick"><div class="rg-prompt-hero"><span class="rg-big">' + spriteImg(m, m.build.shiny) + '</span><div><p style="margin:0">' + (p.evolved ? esc(m.displayName) + " just evolved! " : "") + "Pick any of its Abilities, Hidden ones included.</p></div></div>" +
+      '<div class="rg-choices">' + m.abilities.map((x, i) => '<button class="rg-choice mv' + (x.name === m.build.ability ? " cur" : "") + '" type="button" data-rabil="' + esc(x.name) + '"><b>' + esc(pretty(x.name)) + (x.hidden ? ' <span class="badge">Hidden</span>' : "") + (x.name === m.build.ability ? ' <span class="badge evo">Current</span>' : "") + ' <span class="kbd">' + (i + 1) + '</span></b><span class="note">' + esc(Rogue.abDesc[x.name] || "…") + "</span></button>").join("") +
+      '</div><div class="row"><button class="btn" type="button" data-rabil="">Keep ' + esc(pretty(m.build.ability)) + ' <span class="kbd">Esc</span></button></div></section>';
     return;
   }
   if (p.t === "evolve") {
@@ -9373,6 +9544,7 @@ async function rgRunEvolution(m, opt) {
   await wait(reduce ? 400 : 1800);
   Rogue.evo = null;
   run.prompts.shift();
+  if (nm.abilities.length > 1) run.prompts.unshift({ t: "ability", uid: nm.uid, evolved: true });
   Rogue.msg = "Your " + m.displayName + " evolved into " + nm.displayName + "!";
   nm._canEvo = (await rgEvoOptions(nm, true).catch(() => [])).length > 0;
   rgSave(); render();
@@ -9431,6 +9603,7 @@ document.addEventListener("click", async e => {
     }
     return render();
   }
+  if (d.rability != null && d.ab != null) { const o = p.team[+d.rability]; if (o) { o.ability = d.ab; Sound.play("click"); rgRefreshTeamBox(); } return; }
   if (d.rdrop) { p.team.splice(+d.rdrop, 1); return render(); }
   if (d.rshow) { p.show = d.rshow; return render(); }
   if (d.rshinytog) {
@@ -9462,20 +9635,38 @@ document.addEventListener("click", async e => {
   if (d.rlead && run) { const i = +d.rlead; const [m] = run.party.splice(i, 1); run.party.unshift(m); Rogue.msg = m.displayName + " will lead the team."; Sound.play("click"); rgSave(); return render(); }
   if (d.rrelask) { Rogue.confirmRelease = +d.rrelask; return render(); }
   if (d.rrelease && run) { const [m] = run.party.splice(+d.rrelease, 1); Rogue.confirmRelease = null; Rogue.msg = "Bye-bye, " + m.displayName + "!"; rgSave(); return render(); }
-  if (d.rreward && run && run.rewards && !run.taken) {
-    const rw = run.rewards[+d.rreward];
-    if (!rw) return;
-    if (rgNeedsTarget(rw)) { if (!run.party.some(m => rgCanTake(run, rw, m))) return toast("None of your Pokémon can use that right now."); Rogue.target = rw; Rogue.msg = ""; return render(); }
-    await rgApply(rw, null); return render();
+  if ((d.rreward || d.rbonus) && run && run.rewards) {
+    const i = +(d.rreward || d.rbonus), rw = run.rewards[i];
+    if (!rw || rw.claimed || (run.taken && !rw.bonus)) return;
+    Rogue.pickRw = Rogue.pickRw === i ? null : i; Rogue.target = null; Rogue.msg = ""; Rogue.pickShop = null;
+    Sound.play("click"); render();
+    const bar = document.querySelector(".rg-confirm");
+    if (bar && bar.getBoundingClientRect().bottom > window.innerHeight) bar.scrollIntoView({ block: "nearest", behavior: reduceMotion() ? "auto" : "smooth" });
+    return;
   }
-  if (d.rbonus && run && run.rewards) { const rw = run.rewards[+d.rbonus]; if (!rw || rw.claimed) return; Rogue.target = rw; Rogue.msg = ""; return render(); }
+  if (d.rqty && run) { Rogue.shopQty = Math.max(1, (Rogue.shopQty || 1) + +d.rqty); return render(); }
+  if (d.rqtyset && run) { Rogue.shopQty = +d.rqtyset; return render(); }
   if (d.rshop && run) {
-    const [id, base] = RG_SHOP[+d.rshop]; const price = rgPrice(run, base);
-    if (run.money < price) return toast("Not enough money.");
+    const i = +d.rshop;
+    Rogue.pickRw = null; Rogue.target = null; Rogue.msg = "";
+    if (Rogue.pickShop !== i) Rogue.shopQty = 1;
+    Rogue.pickShop = Rogue.pickShop === i ? null : i;
+    Sound.play("click"); render();
+    const bar = document.querySelector(".rg-shopbar");
+    if (bar && bar.getBoundingClientRect().bottom > window.innerHeight) bar.scrollIntoView({ block: "nearest", behavior: reduceMotion() ? "auto" : "smooth" });
+    return;
+  }
+  if (d.ract === "shop-buy" && run && Rogue.pickShop != null) {
+    const k = Rogue.pickShop;
+    if (k === "heal") { Rogue.pickShop = null; return rgHealAll(); }
+    const [id, base] = RG_SHOP[k]; const price = rgPrice(run, base);
+    const q = RG_BALLS.some(x => x[0] === id) ? Math.max(1, Rogue.shopQty || 1) : 1;
+    if (run.money < price * q) return toast("Not enough money.");
     const rw = await rgMakeReward(run, id);
-    if (rw.kind === "ball") { rw.n = 1; rw.name = (RG_BALLS.find(b => b[0] === id) || [0, pretty(id)])[1]; }
-    if (rgNeedsTarget(rw)) { if (!run.party.some(m => rgCanTake(run, rw, m))) return toast("None of your Pokémon need that right now."); Rogue.target = Object.assign(rw, { shopPrice: price }); return render(); }
-    run.money -= price; await rgApply(rw, null, true); Sound.play("click"); return render();
+    Rogue.pickShop = null; Rogue.shopQty = 1;
+    if (rw.kind === "ball") { rw.n = q; rw.name = (RG_BALLS.find(b => b[0] === id) || [0, pretty(id)])[1] + (q > 1 ? "s ×" + q : ""); }
+    if (rgNeedsTarget(rw)) { if (!run.party.some(m => rgCanTake(run, rw, m))) { toast("None of your Pokémon need that right now."); return render(); } Rogue.target = Object.assign(rw, { shopPrice: price }); return render(); }
+    run.money -= price * q; await rgApply(rw, null, true); Rogue.msg = "Bought " + rw.name + " for ₽" + (price * q).toLocaleString() + "."; Sound.play("click"); return render();
   }
   if (d.rbag && run) {
     const k = d.rbag;
@@ -9491,12 +9682,18 @@ document.addEventListener("click", async e => {
     else if (rw.shopPrice) { if (run.money < rw.shopPrice) return toast("Not enough money."); run.money -= rw.shopPrice; await rgApply(rw, m, true); }
     else if (rw.bonus) { rw.claimed = true; await rgApply(rw, m, true); }
     else await rgApply(rw, m);
+    if (run.rewards && run.rewards.includes(rw)) Rogue.pickRw = null;
     return render();
   }
   if (d.rforget && run) {
     const pr = run.prompts[0], m = run.party.find(x => x.uid === pr.uid), i = +d.rforget;
     if (m && i >= 0) { const old = m.build.moves[i]; m.build.moves[i] = pr.move; if (m.rg.pp) delete m.rg.pp[old]; Rogue.msg = "1, 2 and… Poof! " + m.displayName + " forgot " + pretty(old) + " and learned " + pretty(pr.move) + "!"; Sound.play("statup"); }
     else if (m) Rogue.msg = m.displayName + " did not learn " + pretty(pr.move) + ".";
+    run.prompts.shift(); rgSave(); return render();
+  }
+  if (d.rabil != null && run && run.prompts.length && run.prompts[0].t === "ability") {
+    const pr = run.prompts[0], m = run.party.find(x => x.uid === pr.uid);
+    if (m && d.rabil && m.abilities.some(x => x.name === d.rabil)) { m.build.ability = d.rabil; Rogue.msg = m.displayName + "’s Ability is now " + pretty(d.rabil) + "."; Sound.play("statup"); }
     run.prompts.shift(); rgSave(); return render();
   }
   if (d.revo && run) {
@@ -9525,8 +9722,18 @@ document.addEventListener("click", async e => {
   if (act === "endless") { run.mode = "endless"; run.points = null; run.phase = "results"; rgSave(); return render(); }
   if (act === "to-camp") { Rogue.msg = ""; await rgEnterCamp(); return; }
   if (act === "fight") { Rogue.msg = ""; return rgFight(); }
-  if (act === "heal-all") return rgHealAll();
+  if (act === "heal-all") { Rogue.pickRw = null; Rogue.target = null; Rogue.pickShop = Rogue.pickShop === "heal" ? null : "heal"; Sound.play("click"); render(); const bar = document.querySelector(".rg-shopbar"); if (bar && bar.getBoundingClientRect().bottom > window.innerHeight) bar.scrollIntoView({ block: "nearest" }); return; }
+  if (act === "shop-cancel") { Rogue.pickShop = null; Rogue.shopQty = 1; return render(); }
   if (act === "cancel-target") { Rogue.target = null; return render(); }
+  if (act === "rw-cancel") { Rogue.pickRw = null; Rogue.target = null; return render(); }
+  if (act === "rw-take" && run && run.rewards) {
+    const rw = run.rewards[Rogue.pickRw];
+    if (!rw || rw.claimed || (run.taken && !rw.bonus)) { Rogue.pickRw = null; return render(); }
+    if (rgNeedsTarget(rw)) { if (!run.party.some(m => rgCanTake(run, rw, m))) return toast("None of your Pokémon can use that right now."); Rogue.target = rw; return render(); }
+    Rogue.pickRw = null;
+    if (rw.bonus) { rw.claimed = true; await rgApply(rw, null, true); } else await rgApply(rw, null);
+    return render();
+  }
   if (act === "reroll" && run && !run.taken) {
     const free = run.freeRerolls > 0;
     const cost = free ? 0 : rgPrice(run, 250 + run.rerollCost);
@@ -9535,7 +9742,7 @@ document.addEventListener("click", async e => {
     Rogue.busy = "Rerolling…"; render();
     const keepBonus = (run.rewards || []).filter(r => r.bonus);
     run.rewards = (await rgRollRewards(run, 0).catch(() => [])).concat(keepBonus);
-    Rogue.busy = ""; Rogue.target = null; rgSave(); return render();
+    Rogue.busy = ""; Rogue.target = null; Rogue.pickRw = null; rgSave(); return render();
   }
   if (act === "abandon") { Rogue.confirmAbandon = true; return render(); }
   if (act === "abandon-no") { Rogue.confirmAbandon = false; return render(); }
@@ -9548,18 +9755,25 @@ document.addEventListener("keydown", e => {
   const tag = (e.target && e.target.tagName) || "";
   if (/INPUT|TEXTAREA|SELECT/.test(tag)) return;
   const run = Rogue.run;
-  const click = sel => { const b = document.querySelector(sel); if (b && !b.disabled) { e.preventDefault(); b.click(); return true; } return false; };
-  if (e.key === "Escape") { if (Rogue.sheet) { Rogue.sheet = null; render(); return; } if (Rogue.target) { Rogue.target = null; render(); return; } if (click('[data-rforget="-1"]')) return; return; }
+  const click = sel => { const b = typeof sel === "string" ? document.querySelector(sel) : sel; if (b && !b.disabled) { e.preventDefault(); b.click(); return true; } return false; };
+  if (e.key === "Escape" && run && run.prompts.length && run.prompts[0].t === "ability" && !Rogue.view) return void click('[data-rabil=""]');
+  if (e.key === "Escape") { if (Rogue.sheet) { Rogue.sheet = null; render(); return; } if (Rogue.target) { Rogue.target = null; if (Rogue.pickRw != null && Rogue.run && Rogue.run.rewards && !Rogue.run.rewards[Rogue.pickRw]) Rogue.pickRw = null; render(); return; } if (Rogue.pickRw != null) { Rogue.pickRw = null; render(); return; } if (Rogue.pickShop != null) { Rogue.pickShop = null; render(); return; } if (click('[data-rforget="-1"]')) return; return; }
   if (!run || Rogue.view) return;
   if (run.phase === "results" && e.key === "Enter") return void click('[data-ract="to-camp"]');
   if (run.phase === "camp" && !run.prompts.length && !Rogue.sheet && (e.key === "f" || e.key === "F")) return void click('[data-ract="fight"]');
+  if (run.phase === "camp" && !run.prompts.length && !Rogue.sheet && !Rogue.target) {
+    if (/^[1-9]$/.test(e.key)) { const b = document.querySelectorAll("[data-rreward]:not([disabled])")[+e.key - 1]; if (b) { e.preventDefault(); b.click(); } return; }
+    if (e.key === "Enter" && Rogue.pickRw != null) return void click('[data-ract="rw-take"]');
+    if (e.key === "Enter" && Rogue.pickShop != null) return void click('[data-ract="shop-buy"]');
+  }
+  if (run.prompts.length && run.prompts[0].t === "ability") { if (/^[1-4]$/.test(e.key)) return void click(document.querySelectorAll("[data-rabil]")[+e.key - 1]); if (e.key === "Escape") return void click('[data-rabil=""]'); }
   if (run.prompts.length && run.prompts[0].t === "learn" && /^[1-4]$/.test(e.key)) return void click('[data-rforget="' + (+e.key - 1) + '"]');
 });
 function openRogue() {
   if (state.screen === "battle") return toast("Leave the battle first.");
   if (battle.room) return toast("Leave the online room first.");
   state.screen = "rogue";
-  Rogue.msg = ""; Rogue.target = null; Rogue.confirmAbandon = false; Rogue.sheet = null;
+  Rogue.msg = ""; Rogue.target = null; Rogue.pickRw = null; Rogue.pickShop = null; Rogue.confirmAbandon = false; Rogue.sheet = null;
   Rogue.view = "new";
   render(); window.scrollTo(0, 0);
 }
@@ -9637,7 +9851,7 @@ function qolShortcuts() {
     ["Anywhere", [["?", "Show or hide this list"], ["Esc", "Close a popup"]]],
     ["Draft", [["1 2 3", "Pick an option"], ["Shift + 1 2 3", "Reroll that option"], ["R", "Reroll all three (when that mode is on)"], ["F", "Fuse (Fusion mode)"]]],
     ["Battle", [["1 2 3 4", "Use a move"], ["Space / Enter", "Speed up the text"], ["S", "Skip to the end of the turn"], ["X", "Toggle fast battle text"], ["T", "Arm Terastallization"], ["B / Shift + B", "Throw a Poké Ball / your best ball (Roguelike)"], ["Enter", "Continue after a battle"]]],
-    ["Roguelike", [["F", "Head into the next wave"], ["Enter", "Continue from the results"], ["1 2 3 4", "Pick which move to forget"], ["Esc", "Close a summary or cancel giving an item"]]]
+    ["Roguelike", [["1 2 3", "Select a reward"], ["Enter", "Confirm the selected reward"], ["F", "Head into the next wave"], ["Enter", "Continue from the results"], ["1 2 3 4", "Pick which move to forget"], ["Esc", "Close a summary or cancel giving an item"]]]
   ];
   const el = document.createElement("div");
   el.id = "qol-keys"; el.className = "qol-keys";
@@ -9677,6 +9891,26 @@ document.addEventListener("keydown", e => {
     if ((e.key === "f" || e.key === "F") && state.mode === "fusion") return void click('[data-act="fuse"]');
   }
 });
+/* Sparkles when a shiny Pokémon appears or is sent out, in every mode. */
+async function shinySparkle(f, fast) {
+  Sound.play("sparkle");
+  const art = f && f.querySelector(".mon-art");
+  const layer = fxLayer(), p = arenaPoint(art);
+  if (!layer || !p || fast) return;
+  const n = 12;
+  for (let i = 0; i < n; i++) {
+    const s = document.createElement("span");
+    s.className = "shinystar" + (i % 3 === 0 ? " big" : "");
+    const ang = i / n * Math.PI * 2 + (i % 2) * 0.3, rad = p.w * (0.42 + (i % 3) * 0.1);
+    s.style.left = p.x + "px"; s.style.top = p.y + "px";
+    s.style.setProperty("--dx", (Math.cos(ang) * rad).toFixed(1) + "px"); s.style.setProperty("--dy", (Math.sin(ang) * rad).toFixed(1) + "px");
+    s.style.animationDelay = (i % 4) * 70 + "ms";
+    layer.appendChild(s);
+    setTimeout(() => s.remove(), 1400);
+  }
+  if (art) pulse(art, "shinyglow", 1000);
+  await wait(800);
+}
 
 /* ============ events ============ */
 document.addEventListener("click", e => {
