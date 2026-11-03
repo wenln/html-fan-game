@@ -1443,6 +1443,125 @@ body.noscroll{overflow:hidden}
 .rg-qty b{min-width:2ch;text-align:center;font-size:16px}
 .rg-qty .btn.sm{padding:4px 10px}
 
+
+/* ============ co-op roguelike ============ */
+.coopmode .tag{background:linear-gradient(135deg,#7b2ff7,#d8343b)}
+.rg-coopbtn{width:100%;justify-content:center}
+.coop-setup{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;align-items:start}
+.coop-setup .rg-seg{flex-wrap:wrap}
+#coopcode{width:110px;text-transform:uppercase;letter-spacing:.12em}
+.coop-players li{flex-wrap:wrap}
+.coop-players li.ready{border-color:var(--good);background:color-mix(in srgb,var(--good) 8%,var(--surface-2))}
+.co-num{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--ink);color:var(--surface);font-size:12px;font-weight:800;margin-right:8px;flex:none}
+.coop-picks{display:flex;flex-wrap:wrap;gap:0}
+.coop-picks .rg-mini,.coop-team .rg-mini{width:34px;height:34px}
+.coop-picks .rg-mini img,.coop-team .rg-mini img{width:34px;height:34px}
+.rg-mini.out img{filter:grayscale(1);opacity:.45}
+.coop-ready{margin-top:12px;display:grid;gap:10px}
+.coop-team{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.coop-team li{display:grid;grid-template-columns:minmax(110px,auto) 1fr auto;align-items:center;gap:10px;border:1.5px solid var(--line);border-radius:12px;padding:6px 12px;background:var(--surface-2)}
+.coop-team li .who{display:flex;align-items:center}
+.coop-team li.ready{border-color:var(--good)}
+.coop-team li.ready .note{color:var(--good);font-weight:700}
+.coop-team li.gone{opacity:.6;border-style:dashed}
+.rg-next.raid{border-color:#b5179e;background:linear-gradient(135deg,color-mix(in srgb,#b5179e 10%,var(--surface-2)),var(--surface-2))}
+.rg-next.raid .rg-next-av{background:#b5179e}
+.coop-catches li::marker{content:"✦ "}
+.rg-raidcatch{display:flex;gap:14px;align-items:center;border:2px solid #b5179e;border-radius:16px;padding:12px 14px;margin:6px 0 10px;background:color-mix(in srgb,#b5179e 7%,var(--surface))}
+.rg-raidcatch.done.ok{border-color:var(--good)}
+.rg-raidcatch>div{min-width:0;display:grid;gap:2px}
+.rg-askbar{--rc:var(--accent);margin-top:12px}
+.rg-choice.on,.btn.on{outline:3px solid color-mix(in srgb,var(--accent) 45%,transparent);outline-offset:1px}
+/* battle controls */
+.coop-order{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:0 0 12px;padding:0 0 10px;border-bottom:1.5px dashed var(--line)}
+.coop-order .label{margin-right:4px}
+.co-o{display:inline-flex;gap:5px;align-items:center;font-size:12.5px;font-weight:600;border:1.5px solid var(--line);border-radius:999px;padding:2px 10px 2px 3px;background:var(--surface-2)}
+.co-o b{display:inline-grid;place-items:center;min-width:22px;height:22px;border-radius:999px;background:var(--ink);color:var(--surface);font-size:11.5px;padding:0 4px}
+.co-o.me{border-color:var(--accent)}
+.co-o.me b{background:var(--accent);color:var(--accent-ink)}
+.co-o.foe b{background:#5b6580}
+.co-o.tie{border-style:dashed}
+.co-o .note{font-weight:500}
+.co-o-note{flex-basis:100%;font-size:11.5px}
+.coop-locked{margin:0 0 6px;padding:8px 12px;border-radius:10px;background:var(--surface-2);border:1.5px solid var(--line)}
+.coop-waitline{margin:4px 0 8px}
+.coop-flee{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:12px}
+.coop-emote{position:absolute;left:50%;top:-6%;transform:translateX(-50%);z-index:9;white-space:nowrap;background:var(--surface);color:var(--ink);border:1.5px solid var(--line);border-radius:999px;padding:3px 10px;font-size:13px;font-weight:700;box-shadow:0 6px 16px -8px rgba(0,0,0,.5);animation:coopemote 2.2s ease both;pointer-events:none}
+@keyframes coopemote{0%{opacity:0;transform:translate(-50%,8px)}12%{opacity:1;transform:translate(-50%,0)}80%{opacity:1}100%{opacity:0;transform:translate(-50%,-10px)}}
+.co-group{margin:0 0 12px}
+.co-group .label{margin:0 0 6px}
+.tm.small{padding:8px}
+.tm.small .tm-art{width:52px;height:52px}
+/* multi-spot arena: up to 6 a side */
+.arena2.multi{height:clamp(470px,60vw,620px);--colw:calc(94% / max(var(--nm),var(--nf)))}
+.arena2.multi .fighter2{width:min(calc(84% / max(var(--nf),2)),170px);aspect-ratio:1}
+.arena2.multi .fighter2.foe{right:auto;left:calc(4% + (92% / var(--nf)) * var(--i) + (92% / var(--nf)) / 2);transform:translateX(-50%);top:16%}
+.arena2.multi .fighter2.me{width:min(calc(84% / max(var(--nm),2)),160px);left:calc(4% + (92% / var(--nm)) * var(--i) + (92% / var(--nm)) / 2);transform:translateX(-50%);bottom:36%}
+.arena2.multi.raid .fighter2.foe{width:min(30%,240px);top:6%}
+.arena2.multi .plate2{width:calc(92% / var(--nm) - 6px);max-width:240px;padding:4px 8px;gap:2px;transform:translateX(-50%);border-radius:10px}
+.arena2.multi .plate2.foe{left:calc(4% + (92% / var(--nf)) * var(--i) + (92% / var(--nf)) / 2);top:2.5%;width:calc(92% / var(--nf) - 6px)}
+.arena2.multi .plate2.me{right:auto;left:calc(4% + (92% / var(--nm)) * var(--i) + (92% / var(--nm)) / 2);bottom:24%}
+.arena2.multi.raid .plate2.foe{width:min(60%,360px);max-width:none}
+.arena2.multi .plate2 .p-top b{font-size:13px}
+.arena2.multi .plate2 .p-top .note{font-size:10.5px}
+.arena2.multi .plate2 .hp{height:7px}
+.arena2.multi .plate2 .p-bot{min-height:0;gap:3px}
+.arena2.multi .plate2 .p-bot .boost,.arena2.multi .plate2 .p-bot .st{font-size:9px;padding:0 4px}
+.arena2.multi .plate2 .hpnum{font-size:10.5px;margin-left:auto}
+.arena2.multi .plate2.gone{opacity:.42}
+.arena2.multi .plate2.mine{border-color:var(--accent);box-shadow:0 0 0 2px color-mix(in srgb,var(--accent) 40%,transparent),0 6px 18px -10px rgba(0,0,0,.45)}
+.arena2.multi .fighter2.me.mine .pad{filter:drop-shadow(0 0 6px color-mix(in srgb,var(--accent) 70%,transparent))}
+.arena2.multi .fieldtags.foe{top:auto;bottom:58%;right:2%}
+.arena2.multi .fieldtags.me{bottom:46%;left:2%}
+.arena2.multi .globaltags{top:auto;bottom:52%}
+.arena2.multi .dialog{min-height:15%;bottom:2.5%}
+.co-own{font-size:10.5px;font-weight:700;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.co-own.me{color:var(--accent)}
+.co-rank{display:inline-grid;place-items:center;min-width:18px;height:18px;border-radius:999px;background:var(--ink);color:var(--surface);font-size:10.5px;font-weight:800;padding:0 4px;margin-right:4px;flex:none}
+.arena2.multi .p-top{justify-content:flex-start;gap:4px}
+.arena2.multi .p-top b{flex:1;min-width:0}
+@media (max-width:860px){
+  .coop-setup{grid-template-columns:minmax(0,1fr)}
+  .arena2.multi{height:clamp(520px,150vw,680px)}
+  .arena2.multi[style*="--nm:6"] .plate2 .p-bot .boost{display:none}
+  .arena2.multi .plate2{padding:3px 5px}
+  .arena2.multi .plate2 .p-top b{font-size:11px}
+  .arena2.multi .plate2 .p-top .note,.arena2.multi .co-own{font-size:9.5px}
+  .coop-team li{grid-template-columns:1fr;gap:4px}
+}
+
+.arena2.multi .plate2{grid-template-columns:minmax(0,1fr);overflow:hidden;min-width:0}
+.arena2.multi .plate2>*{min-width:0}
+.arena2.multi .plate2 .p-top{overflow:hidden}
+.arena2.multi .plate2 .p-top b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.arena2.multi.cm6 .plate2.me,.arena2.multi.cf6 .plate2.foe,.arena2.multi.cm3 .plate2.me,.arena2.multi.cf3 .plate2.foe{padding:3px 5px}
+.arena2.multi.cm6 .plate2.me .p-top .note,.arena2.multi.cf6 .plate2.foe .p-top .note{display:none}
+.arena2.multi.cm6 .plate2.me .p-top b,.arena2.multi.cf6 .plate2.foe .p-top b{font-size:11.5px}
+.arena2.multi.cm6 .plate2.me .hpnum,.arena2.multi.cf6 .plate2.foe .hpnum{font-size:9.5px}
+.arena2.multi.cm6 .plate2.me .boost,.arena2.multi.cf6 .plate2.foe .boost{display:none}
+.arena2.multi.cm6 .co-rank,.arena2.multi.cf6 .co-rank{min-width:15px;height:15px;font-size:9.5px;margin-right:2px}
+.arena2.multi.cm6 .co-own{font-size:9.5px}
+.arena2.multi.cm6 .fighter2.me{bottom:34%}
+/* multi-spot layout v2: foes up and to the right, your team down and to the left, like a regular battle */
+.arena2.multi{--fx0:4%;--fw:92%;--mx0:4%;--mw:92%}
+.arena2.multi.cf1,.arena2.multi.cf2,.arena2.multi.cf3{--fx0:31%;--fw:66%}
+.arena2.multi.cm2,.arena2.multi.cm3{--mx0:3%;--mw:66%}
+.arena2.multi .fighter2.foe{left:calc(var(--fx0) + var(--fw) / var(--nf) * (var(--i) + .5));width:min(calc(var(--fw) / var(--nf) - 10px),150px);top:13%}
+.arena2.multi .fighter2.me{left:calc(var(--mx0) + var(--mw) / var(--nm) * (var(--i) + .5));width:min(calc(var(--mw) / var(--nm) - 10px),160px);bottom:31%}
+.arena2.multi.cf1 .fighter2.foe{width:min(30%,220px);top:9%}
+.arena2.multi .plate2.foe{left:calc(var(--fx0) + var(--fw) / var(--nf) * (var(--i) + .5));width:calc(var(--fw) / var(--nf) - 8px);max-width:250px;top:2%}
+.arena2.multi .plate2.me{left:calc(var(--mx0) + var(--mw) / var(--nm) * (var(--i) + .5));width:calc(var(--mw) / var(--nm) - 8px);max-width:250px;bottom:23%}
+.arena2.multi.cf1 .plate2.foe{width:min(60%,340px);max-width:none}
+.arena2.multi.cm6 .fighter2.me{bottom:33%}
+.arena2.multi .fieldtags.foe{top:auto;bottom:62%;right:2%}
+.arena2.multi .fieldtags.me{top:auto;bottom:62%;left:2%}
+.arena2.multi .globaltags{top:auto;bottom:56%;right:2%}
+@media (max-width:860px){ .arena2.multi .fighter2.me{bottom:31%} }
+.arena2.multi .plate2.me{bottom:19.5%}
+.arena2.multi .fighter2.me{bottom:33%}
+.arena2.multi.cm6 .fighter2.me{bottom:32%}
+.arena2.multi .dialog{min-height:14%;bottom:2%}
+@media (max-width:860px){ .arena2.multi .fighter2.me{bottom:32%} .arena2.multi .plate2.me{bottom:18.5%} }
 </style>
 </head>
 <body>
@@ -1701,22 +1820,49 @@ var BattleEngine = (function () {
 
   function newBattle(teams, names, moveDB, rng, opts) {
     opts = opts || {};
-    const slots = opts.format === "doubles" ? 2 : 1;
-    const B = { turn: 0, log: [], snaps: [], ev: [], evId: 0, winner: null, phase: "move", choices: [null, null], needSwitch: [[], []], pivot: null, queue: [], rng: rng || Math.random, sides: [], weather: null, terrain: null, trickRoom: 0, gravity: 0, magicRoom: 0, wonderRoom: 0, backdrop: opts.backdrop || "grass", moveDB: moveDB || {}, lastMoveUsed: null, slots, format: slots === 2 ? "doubles" : "singles" };
+    const slots = opts.slots ? Math.max(1, Math.min(6, Math.floor(opts.slots))) : opts.format === "doubles" ? 2 : 1;
+    const B = { turn: 0, log: [], snaps: [], ev: [], evId: 0, winner: null, phase: "move", choices: [null, null], needSwitch: [[], []], pivot: null, queue: [], rng: rng || Math.random, sides: [], weather: null, terrain: null, trickRoom: 0, gravity: 0, magicRoom: 0, wonderRoom: 0, backdrop: opts.backdrop || "grass", moveDB: moveDB || {}, lastMoveUsed: null, slots, format: slots === 1 ? "singles" : slots === 2 ? "doubles" : "multi", coop: !!opts.coop, catches: [] };
     CB = B;
     B.teraAllowed = opts.tera !== false;
     B.sides = [0, 1].map(i => ({ name: names[i] || "Player " + (i + 1), team: teams[i].map((m, j) => makeFighter(m, i, j, moveDB)), active: [], teraUsed: false, haz: { rocks: false, spikes: 0, tspikes: 0, web: false }, scr: { reflect: 0, light: 0, veil: 0, tailwind: 0, safeguard: 0, mist: 0, luckyChant: 0 }, wish: null, healWish: false, faintedLastTurn: false, wideGuard: false, quickGuard: false, matBlock: false, craftyShield: false }));
     B.wild = !!opts.wild; B.sureCatch = !!opts.sureCatch; B.catchBonus = opts.catchBonus || 1;
-    B.sides.forEach(s => { const alive = s.team.map((q, k) => k).filter(k => !s.team[k].fainted); s.active = (alive.length ? alive : [0]).slice(0, slots); s.active.forEach((i, pos) => { s.team[i].pos = pos; }); });
+    /* Co-op: every Pokémon on side 0 belongs to one player, and player k always fills spot k. */
+    if (Array.isArray(opts.owners) && opts.owners.length === B.sides[0].team.length) {
+      const s0 = B.sides[0];
+      s0.owners = opts.owners.map(o => Math.max(0, Math.min(5, Math.floor(o) || 0)));
+      s0.ownerNames = (opts.ownerNames || []).map(n => String(n || "").slice(0, 24));
+      s0.teraBy = {};
+      B.teraOwners = Array.isArray(opts.teraOwners) ? opts.teraOwners.map(Boolean) : null;
+    }
+    if (opts.raid) {
+      const boss = B.sides[1].team[0];
+      const mult = Math.max(1, +opts.raid.hp || 1);
+      boss.raidBoss = true; boss.maxhp = Math.round(boss.maxhp * mult); boss.hp = boss.maxhp; boss.stats.hp = boss.maxhp; boss.orig.stats.hp = boss.maxhp;
+      B.raid = { actions: Math.max(1, Math.min(4, Math.floor(opts.raid.actions) || 1)) };
+    }
+    B.sides.forEach((s, si) => {
+      const n = si === 1 && opts.foeSlots ? Math.max(1, Math.min(6, Math.floor(opts.foeSlots))) : slots;
+      if (s.owners) {
+        s.active = [];
+        for (let pos = 0; pos < n; pos++) {
+          const mine = s.team.map((q, k) => k).filter(k => s.owners[k] === pos);
+          const alive = mine.filter(k => !s.team[k].fainted);
+          if (mine.length) s.active.push(alive.length ? alive[0] : mine[0]);
+        }
+      } else { const alive = s.team.map((q, k) => k).filter(k => !s.team[k].fainted); s.active = (alive.length ? alive : [0]).slice(0, n); }
+      s.active.forEach((i, pos) => { s.team[i].pos = pos; });
+    });
     if (B.wild) log(B, "A wild " + actives(B, 1).map(p => p.name).join(" and a wild ") + " appeared!" + (opts.wildNote ? " " + opts.wildNote : ""));
     else log(B, B.sides[1].name + " wants to battle!");
     B.sides.forEach((s, i) => {
       actives(B, i).forEach(p => setIllusion(B, p));
       if (B.wild && i === 1) { actives(B, i).forEach(p => ev(B, { t: "switch", si: i, pos: p.pos })); return; }
-      log(B, s.name + " sent out " + actives(B, i).map(shownName).join(" and ") + "!");
+      if (s.owners) actives(B, i).forEach(p => { if (!p.fainted) log(B, trainerOf(B, p) + " sent out " + shownName(p) + "!"); });
+      else log(B, s.name + " sent out " + actives(B, i).map(shownName).join(" and ") + "!");
       actives(B, i).forEach(p => ev(B, { t: "switch", si: i, pos: p.pos }));
     });
-    bySpeed(B, allActive(B)).forEach(p => onSwitchIn(B, p, true));
+    if (B.raid) log(B, "The raid boss " + B.sides[1].team[0].name + " radiates overwhelming power!");
+    bySpeed(B, allActive(B).filter(p => !p.fainted)).forEach(p => onSwitchIn(B, p, true));
     return B;
   }
   function shownName(p) { return p.vol && p.vol.illusion != null ? CB.sides[p.si].team[p.vol.illusion].name : p.name; }
@@ -1731,13 +1877,16 @@ var BattleEngine = (function () {
     const s = B.sides[p.si];
     const b = {}; Object.keys(p.boosts).forEach(k => { if (p.boosts[k]) b[k] = p.boosts[k]; });
     const ill = p.vol.illusion != null ? s.team[p.vol.illusion] : null;
-    return { a: ill ? ill.slot : p.slot, hp: p.hp, mx: p.maxhp, st: p.status, b, cf: !!p.vol.confused, tr: p.terastallized ? p.teraType : null, f: p.fainted, ty: (ill ? ill.types : defTypes(p)).slice(),
-      vr: ill ? ill.variety : p.variety, nm: ill ? ill.name : p.name, fm: ill ? !!ill.isForm : !!p.isForm, sub: !!p.vol.sub,
-      ra: p.slot, rvr: p.variety, rnm: p.name, rfm: !!p.isForm, rty: defTypes(p).slice() };
+    const o = { a: ill ? ill.slot : p.slot, hp: p.hp, mx: p.maxhp, st: p.status, b, cf: !!p.vol.confused, tr: p.terastallized ? p.teraType : null, f: p.fainted, ty: (ill ? ill.types : defTypes(p)).slice(),
+      vr: ill ? ill.variety : p.variety, nm: ill ? ill.name : p.name, fm: ill ? !!ill.isForm : !!p.isForm, sub: !!p.vol.sub };
+    if (ill || !B.coop) Object.assign(o, { ra: p.slot, rvr: p.variety, rnm: p.name, rfm: !!p.isForm, rty: defTypes(p).slice() });
+    if (p.caughtBy) o.cb = 1;
+    return o;
   }
   function sideSnap(B, si) {
     const s = B.sides[si];
     const ms = actives(B, si).map(p => monSnap(B, p));
+    if (B.coop || B.slots > 2) return Object.assign({}, ms[0], { ps: ms, hz: [s.haz.rocks ? 1 : 0, s.haz.spikes, s.haz.tspikes, s.haz.web ? 1 : 0], sc: [s.scr.reflect, s.scr.light, s.scr.veil, s.scr.tailwind, s.scr.safeguard, s.scr.mist], fnt: s.team.map(q => q.fainted ? 1 : 0) });
     return Object.assign({}, ms[0], { p2: ms[1] || null, hz: [s.haz.rocks ? 1 : 0, s.haz.spikes, s.haz.tspikes, s.haz.web ? 1 : 0], sc: [s.scr.reflect, s.scr.light, s.scr.veil, s.scr.tailwind, s.scr.safeguard, s.scr.mist], fnt: s.team.map(q => q.fainted ? 1 : 0) });
   }
   function log(B, line) {
@@ -1755,9 +1904,11 @@ var BattleEngine = (function () {
   function foes(B, p) { return actives(B, 1 - p.si).filter(q => !q.fainted); }
   function allyOf(B, p) { return actives(B, p.si).find(q => q !== p && !q.fainted) || null; }
   function foeOf(B, p) { const f = foes(B, p); if (!f.length) return act(B, 1 - p.si, 0); return f.find(q => q.pos === p.pos) || f[0]; }
-  function benchOf(B, si) { const s = B.sides[si]; return s.team.map((q, i) => i).filter(i => !s.team[i].fainted && !s.active.includes(i)); }
-  function cleanTarget(t) { if (!t || typeof t !== "object") return null; if (t.side === "ally") return { side: "ally" }; if (t.side === "foe" && (t.pos === 0 || t.pos === 1)) return { side: "foe", pos: t.pos }; return null; }
-  function who(B, p) { return B.wild && p.si === 1 ? "the wild " + shownName(p) : B.sides[p.si].name + "'s " + shownName(p); }
+  function benchOf(B, si, pos) { const s = B.sides[si]; return s.team.map((q, i) => i).filter(i => !s.team[i].fainted && !s.team[i].caughtBy && !s.active.includes(i) && (pos == null || !s.owners || s.owners[i] === pos)); }
+  function alliesOf(B, p) { return actives(B, p.si).filter(q => q !== p && !q.fainted); }
+  function trainerOf(B, p) { const s = B.sides[p.si]; return s.owners && s.ownerNames && s.ownerNames[s.owners[p.slot]] ? s.ownerNames[s.owners[p.slot]] : s.name; }
+  function cleanTarget(t) { if (!t || typeof t !== "object") return null; const okPos = Number.isInteger(t.pos) && t.pos >= 0 && t.pos < 6; if (t.side === "ally") return okPos ? { side: "ally", pos: t.pos } : { side: "ally" }; if (t.side === "foe" && okPos) return { side: "foe", pos: t.pos }; return null; }
+  function who(B, p) { return B.wild && p.si === 1 ? "the wild " + shownName(p) : trainerOf(B, p) + "'s " + shownName(p); }
   function showAbility(B, p) { p.rev.ability = true; log(B, "[" + who(B, p) + "'s " + tc(p.ability) + "]"); ev(B, { t: "ability", si: p.si, pos: p.pos, ability: p.ability }); }
   function revealItem(p) { p.rev.item = true; }
   function useItem(B, p) { p.consumed = p.item; p.itemUsed = true; revealItem(p); if (ab(p) === "unburden") p.vol.unburden = true; }
@@ -1817,8 +1968,9 @@ var BattleEngine = (function () {
   function slotRequest(B, si, pos) {
     const side = B.sides[si], p = act(B, si, pos);
     if (!p || p.fainted) return { skip: true, pos };
-    const canSwitch = benchOf(B, si).length > 0 && !trapped(B, p);
-    const base = { pos, canSwitch, canTera: B.teraAllowed && !side.teraUsed && !p.terastallized, teraType: p.teraType };
+    const canSwitch = benchOf(B, si, pos).length > 0 && !trapped(B, p);
+    const teraOk = side.owners ? !!(B.teraOwners && B.teraOwners[side.owners[p.slot]]) && !side.teraBy[side.owners[p.slot]] : B.teraAllowed && !side.teraUsed;
+    const base = { pos, canSwitch, canTera: teraOk && !p.terastallized, teraType: p.teraType, owner: side.owners ? side.owners[p.slot] : null };
     if (p.vol.recharge) return Object.assign(base, { usable: p.moves.map(() => false), struggle: false, recharge: true, canSwitch: false, canTera: false });
     let forced = p.vol.charging || (p.vol.rampage && p.vol.rampage.move) || (p.vol.rolling && p.vol.rolling.move) || (p.vol.bide && p.vol.bide.move) || (p.vol.uproar && p.vol.uproar.move);
     if (forced && !p.moves.some(m => m.name === forced)) { clearLocks(p); p.vol.bide = null; forced = null; }
@@ -1843,14 +1995,14 @@ var BattleEngine = (function () {
     const acts = Array.isArray(choice.actions) ? choice.actions : [choice];
     const side = B.sides[si];
     const out = [];
-    const okBench = (i, used) => Number.isInteger(i) && side.team[i] && !side.team[i].fainted && !side.active.includes(i) && !used.has(i);
+    const okBench = (i, used, pos) => Number.isInteger(i) && side.team[i] && !side.team[i].fainted && !side.team[i].caughtBy && !side.active.includes(i) && !used.has(i) && (!side.owners || pos == null || side.owners[i] === pos);
     if (req.kind === "switch") {
       if (acts.length !== req.slots.length) return err(req.slots.length > 1 ? "Choose a Pokémon for each empty spot." : "Choose a Pokémon to send out.");
       const used = new Set();
       for (let k = 0; k < acts.length; k++) {
         const a = acts[k];
         if (!a || a.type !== "switch") return err("Choose a Pokémon to send out.");
-        if (!okBench(a.index, used)) return err("That Pokémon can't switch in.");
+        if (!okBench(a.index, used, req.slots[k])) return err("That Pokémon can't switch in.");
         used.add(a.index); out.push({ type: "switch", index: a.index, pos: req.slots[k] });
       }
     } else {
@@ -1860,14 +2012,14 @@ var BattleEngine = (function () {
       for (let k = 0; k < live.length; k++) {
         const r = live[k], a = acts[k];
         if (a && a.type === "ball") {
-          if (!B.wild || si !== 0 || live.length !== 1) return err("You can’t throw a ball right now.");
+          if (!B.wild || si !== 0 || B.raid || (live.length !== 1 && !B.coop)) return err("You can’t throw a ball right now.");
           if (!BALLS[a.ball]) return err("Unknown ball.");
-          out.push({ type: "ball", ball: a.ball, pos: r.pos }); continue;
+          out.push({ type: "ball", ball: a.ball, pos: r.pos, target: cleanTarget(a.target), bonus: Math.max(1, Math.min(2, +a.bonus || 1)) }); continue;
         }
         if (!a || (a.type !== "move" && a.type !== "switch")) return err("Unknown choice.");
         if (a.type === "switch") {
           if (!r.canSwitch) return err("It can't switch out right now.");
-          if (!okBench(a.index, used)) return err("That Pokémon can't switch in.");
+          if (!okBench(a.index, used, r.pos)) return err("That Pokémon can't switch in.");
           if (a.tera) return err("You can’t Terastallize right now.");
           used.add(a.index); out.push({ type: "switch", index: a.index, pos: r.pos });
         } else {
@@ -1875,7 +2027,7 @@ var BattleEngine = (function () {
           if (r.recharge) { if (i !== -2) return err("It must recharge this turn."); }
           else if (r.struggle) { if (i !== -1) return err("No moves left. Use Struggle."); }
           else if (!Number.isInteger(i) || !r.usable[i]) return err("That move can't be used right now.");
-          if (a.tera) { if (!r.canTera) return err("You can’t Terastallize right now."); teras++; }
+          if (a.tera) { if (!r.canTera) return err("You can’t Terastallize right now."); if (!side.owners) teras++; }
           out.push({ type: "move", index: i, pos: r.pos, tera: !!a.tera, target: cleanTarget(a.target) });
         }
       }
@@ -1919,8 +2071,12 @@ var BattleEngine = (function () {
     allActive(B).forEach(p => { p.vol.endure = false; p.vol.magicCoat = false; p.vol.wasHitThisTurn = false; p.vol.moved = false; p.vol.dmgTaken = null; p.vol.choice = null; p.vol.helped = false; p.vol.followMe = false; });
     B.sides.forEach(sd => { sd.wideGuard = false; sd.quickGuard = false; sd.matBlock = false; sd.craftyShield = false; });
     acts.forEach(a => { a.p.vol.choice = a; });
-    const ballAct = acts.find(a => a.type === "ball");
-    if (ballAct && throwBall(B, ballAct.si, ballAct.ball)) return;
+    const ballActs = acts.filter(a => a.type === "ball");
+    if (ballActs.length && !B.coop) { if (throwBall(B, ballActs[0].si, ballActs[0].ball)) return; }
+    else if (ballActs.length) {
+      for (const a of bySpeed(B, ballActs.map(x => x.p)).map(p => ballActs.find(x => x.p === p))) { coopThrow(B, a); if (B.winner !== null) return; }
+      if (B.sides[1].active.some(i => B.sides[1].team[i].caughtBy != null)) { postTurnCaught(B); }
+    }
     bySpeed(B, acts.filter(a => a.type === "switch").map(a => a.p)).forEach(p => {
       const a = acts.find(x => x.p === p && x.type === "switch");
       acts.filter(x => x.type === "move" && x.si !== a.si && !x.done && x.index >= 0 && !x.p.fainted && x.p.moves[x.index] && x.p.moves[x.index].name === "pursuit").forEach(x => {
@@ -1945,7 +2101,20 @@ var BattleEngine = (function () {
       else if (it(p) === "custap-berry" && p.hp <= p.maxhp / 4) { useItem(B, p); log(B, who(B, p) + " ate its Custap Berry and can move first!"); first = 1; }
       const last = it(p) === "lagging-tail" || ab(p) === "stall" || (ab(p) === "mycelium-might" && mv.cat === "status") ? 1 : 0;
       return { si: a.si, p, index: a.index, target: a.target, prio, qc: first, last, spe: speedOf(B, p), r: B.rng() };
-    }).sort((a, b) => b.prio - a.prio || b.qc - a.qc || a.last - b.last || tr * (b.spe - a.spe) || a.r - b.r);
+    });
+    /* A raid boss acts more than once a turn; its extra actions come later in the turn. */
+    const boss = B.raid ? act(B, 1, 0) : null;
+    if (boss && !boss.fainted && B.queue.some(q => q.p === boss)) {
+      for (let k = 1; k < B.raid.actions; k++) {
+        const r = slotRequest(B, 1, 0);
+        if (r.skip || r.recharge || r.struggle) break;
+        const c = aiSlot(B, 1, Object.assign({}, r, { canSwitch: false }), new Set(), true);
+        if (!c || c.type !== "move" || c.index < 0) continue;
+        const mv = boss.moves[c.index];
+        B.queue.push({ si: 1, p: boss, index: c.index, target: c.target, prio: Math.min(0, movePriority(B, boss, mv, c.index)), qc: 0, last: 0, spe: speedOf(B, boss) * (B.raid.actions - k) / B.raid.actions, r: B.rng(), extra: k });
+      }
+    }
+    B.queue.sort((a, b) => b.prio - a.prio || b.qc - a.qc || a.last - b.last || tr * (b.spe - a.spe) || a.r - b.r);
     runQueue(B);
   }
   const BALLS = { "poke-ball": ["Poké Ball", 1], "great-ball": ["Great Ball", 1.5], "ultra-ball": ["Ultra Ball", 2], "rogue-ball": ["Rogue Ball", 3], "master-ball": ["Master Ball", 255] };
@@ -1980,10 +2149,33 @@ var BattleEngine = (function () {
     log(B, ["Oh no! The Pokémon broke free!", "Aww! It appeared to be caught!", "Aargh! Almost had it!", "Gah! It was so close, too!"][Math.min(3, shakes)]);
     return false;
   }
+  /* Co-op: any player can throw at any wild Pokémon still on the field. A catch takes it out of the battle and the rest fight on. */
+  function coopThrow(B, a) {
+    const side1 = B.sides[1];
+    const live = actives(B, 1).filter(f => !f.fainted);
+    if (!live.length) return;
+    let foe = a.target && a.target.side === "foe" ? act(B, 1, a.target.pos) : null;
+    if (!foe || foe.fainted) foe = live[0];
+    const b = BALLS[a.ball];
+    log(B, trainerOf(B, a.p) + " threw a" + (/^[AEIOU]/.test(b[0]) ? "n " : " ") + b[0] + "!");
+    const ch = catchChance(foe, a.ball, (a.bonus || 1) * B.catchBonus);
+    const shakeP = Math.pow(ch, 0.25);
+    let shakes = 0;
+    while (shakes < 4 && B.rng() < shakeP) shakes++;
+    if (B.sureCatch) shakes = 4;
+    const ok = shakes >= 4;
+    ev(B, { t: "ball", si: foe.si, pos: foe.pos, ball: a.ball, shakes: Math.min(3, shakes), ok, by: a.pos });
+    if (!ok) { log(B, ["Oh no! The Pokémon broke free!", "Aww! It appeared to be caught!", "Aargh! Almost had it!", "Gah! It was so close, too!"][Math.min(3, shakes)]); return; }
+    foe.caughtBy = a.pos + 1; foe.fainted = true;
+    B.catches.push({ slot: foe.slot, by: a.pos });
+    log(B, "Gotcha! " + foe.name + " was caught by " + trainerOf(B, a.p) + "!");
+    if (!side1.team.some(f => !f.fainted)) { B.winner = 0; B.queue = []; log(B, B.sides[0].name + " won the battle!"); ev(B, { t: "end", si: 0 }); }
+  }
+  function postTurnCaught(B) { }
   function terastallize(B, p) {
-    const si = p.si;
-    if (p.fainted || B.sides[si].teraUsed) return;
-    p.terastallized = true; B.sides[si].teraUsed = true;
+    const si = p.si, side = B.sides[si], own = side.owners ? side.owners[p.slot] : null;
+    if (p.fainted || (side.owners ? side.teraBy[own] : side.teraUsed)) return;
+    p.terastallized = true; if (side.owners) side.teraBy[own] = true; else side.teraUsed = true;
     log(B, who(B, p) + " Terastallized into the " + tc(p.teraType) + " type!");
     ev(B, { t: "tera", si, type: p.teraType });
     if (/^embody-aspect/.test(ab(p))) { showAbility(B, p); changeStat(B, p, { "embody-aspect-teal": "spe", "embody-aspect-hearthflame": "atk", "embody-aspect-wellspring": "spd", "embody-aspect-cornerstone": "def" }[ab(p)] || "atk", 1); }
@@ -2005,7 +2197,7 @@ var BattleEngine = (function () {
   }
 
   function requestPivot(B, p) {
-    if (!p || p.pos == null || !benchOf(B, p.si).length) return false;
+    if (!p || p.pos == null || !benchOf(B, p.si, p.pos).length) return false;
     B.pivot = { si: p.si, pos: p.pos }; B.phase = "pivot"; B.needSwitch = [[], []]; B.needSwitch[p.si] = [p.pos]; B.choices = [null, null];
     return true;
   }
@@ -2030,7 +2222,7 @@ var BattleEngine = (function () {
       ev(B, { t: "end", si: B.winner === -1 ? 0 : B.winner });
       return;
     }
-    B.needSwitch = [0, 1].map(si => { const sd = B.sides[si]; const bench = benchOf(B, si).length; return sd.active.map((i, pos) => sd.team[i].fainted ? pos : -1).filter(pos => pos >= 0).slice(0, bench); });
+    B.needSwitch = [0, 1].map(si => { const sd = B.sides[si]; if (sd.owners) return sd.active.map((i, pos) => sd.team[i].fainted && benchOf(B, si, pos).length ? pos : -1).filter(pos => pos >= 0); const bench = benchOf(B, si).length; return sd.active.map((i, pos) => sd.team[i].fainted ? pos : -1).filter(pos => pos >= 0).slice(0, bench); });
     B.phase = B.needSwitch.some(n => n.length) ? "switch" : "move";
   }
 
@@ -2072,14 +2264,14 @@ var BattleEngine = (function () {
 
   function performSwitch(B, si, pos, idx, silentWithdraw, dragged) {
     const side = B.sides[si], old = act(B, si, pos);
-    if (!old.fainted && !silentWithdraw) log(B, side.name + " withdrew " + shownName(old) + "!");
+    if (!old.fainted && !silentWithdraw) log(B, trainerOf(B, old) + " withdrew " + shownName(old) + "!");
     resetOnLeave(B, old);
     old.pos = null;
     side.active[pos] = idx;
     const p = act(B, si, pos);
     p.pos = pos; p.turnsIn = 0; p.enteredTurn = B.turn;
     setIllusion(B, p);
-    log(B, dragged ? who(B, p) + " was dragged out!" : side.name + " sent out " + shownName(p) + "!");
+    log(B, dragged ? who(B, p) + " was dragged out!" : trainerOf(B, p) + " sent out " + shownName(p) + "!");
     ev(B, { t: "switch", si, pos });
     if (side.healWish && !p.fainted) {
       side.healWish = false;
@@ -2201,6 +2393,13 @@ var BattleEngine = (function () {
     if (a === "shields-down") shieldsUpdate(B, p);
     if (a === "power-construct" && p.alt && !p.formAlt && p.hp <= half) { showAbility(B, p); log(B, "You sense the presence of many!"); setForm(B, p, true, who(B, p) + " transformed into its Complete Forme!"); }
     if (before > half && p.hp <= half) {
+      if (p.raidBoss && !p.raidAura) {
+        p.raidAura = true;
+        log(B, "The raid boss's aura flared up!");
+        Object.keys(p.boosts).forEach(k => { if (p.boosts[k] < 0) p.boosts[k] = 0; });
+        if (p.status) { p.status = null; p.toxN = 0; log(B, who(B, p) + " shook off its status condition!"); }
+        changeStat(B, p, "def", 1); changeStat(B, p, "spd", 1);
+      }
       if (a === "berserk") { showAbility(B, p); changeStat(B, p, "spa", 1); }
       if (a === "anger-shell") { showAbility(B, p); changeStat(B, p, "atk", 1); changeStat(B, p, "spa", 1); changeStat(B, p, "spe", 1); changeStat(B, p, "def", -1); changeStat(B, p, "spd", -1); }
       if ((a === "emergency-exit" || a === "wimp-out") && B.inMove) { showAbility(B, p); B.ejectRequest = p; }
@@ -2372,8 +2571,8 @@ var BattleEngine = (function () {
     if (!p || p.fainted || p.pos == null) return;
     if (ab(p) === "suction-cups" || ab(p) === "guard-dog") { showAbility(B, p); log(B, who(B, p) + " anchors itself!"); return; }
     if (p.vol.ingrain) { log(B, who(B, p) + " anchored itself with its roots!"); return; }
-    const opts = benchOf(B, p.si);
-    if (!opts.length) { log(B, "But it failed!"); return; }
+    const opts = benchOf(B, p.si, p.pos);
+    if (!opts.length || p.raidBoss) { log(B, "But it failed!"); return; }
     performSwitch(B, p.si, p.pos, opts[Math.floor(B.rng() * opts.length)], true, true);
   }
   function transform(B, p, target) {
@@ -2426,19 +2625,20 @@ var BattleEngine = (function () {
   const ALLY_TARGETS = new Set(["ally", "all-allies"]);
   const SPREAD_TARGETS = new Set(["all-opponents", "all-other-pokemon"]);
   function pickSingle(B, user, spec) {
-    if (spec && spec.side === "ally") { const a = allyOf(B, user); return a; }
+    if (spec && spec.side === "ally") { if (spec.pos != null) { const q = act(B, user.si, spec.pos); if (q && q !== user && !q.fainted) return q; } return allyOf(B, user); }
     if (spec && spec.side === "foe") { const f = act(B, 1 - user.si, spec.pos); if (f && !f.fainted) return f; }
     const fs = foes(B, user);
     return fs.find(q => q.pos === user.pos) || fs[0] || null;
   }
   function moveTargets(B, user, mv, spec) {
     const t = mv.target;
-    if (ALLY_TARGETS.has(t)) { const a = allyOf(B, user); return a ? [a] : []; }
-    if (t === "user-or-ally") { if (spec && spec.side === "ally") { const a = allyOf(B, user); if (a) return [a]; } return []; }
+    if (t === "all-allies") return alliesOf(B, user);
+    if (ALLY_TARGETS.has(t)) { const a = pickSingle(B, user, { side: "ally", pos: spec && spec.side === "ally" ? spec.pos : null }); return a ? [a] : []; }
+    if (t === "user-or-ally") { if (spec && spec.side === "ally") { const a = pickSingle(B, user, spec); if (a) return [a]; } return []; }
     if (SELF_TARGETS.has(t) || t === "all-pokemon") return [];
     const fs = foes(B, user);
     if (t === "all-opponents") return fs;
-    if (t === "all-other-pokemon") { const a = allyOf(B, user); return a ? fs.concat([a]) : fs; }
+    if (t === "all-other-pokemon") return fs.concat(alliesOf(B, user));
     if (t === "random-opponent") return fs.length ? [fs[Math.floor(B.rng() * fs.length)]] : [];
     if (t === "specific-move") { const d = user.vol.dmgTaken; if (d && d.by && !d.by.fainted && d.by.pos != null) return [d.by]; return fs.length ? [fs[0]] : []; }
     let tgt = pickSingle(B, user, spec);
@@ -2664,6 +2864,7 @@ var BattleEngine = (function () {
     if (WIND.has(lm.name) && tAb(user, target) === "wind-rider" && lm.cat !== "status") { showAbility(B, target); changeStat(B, target, "atk", 1); return false; }
     if (lm.cat === "status" && target.vol.sub && !SOUND.has(lm.name) && ab(user) !== "infiltrator" && lm.target !== "users-field" && !["roar", "whirlwind", "transform", "curse", "haze", "taunt", "encore", "disable", "torment", "spite", "psych-up", "role-play", "skill-swap", "gastro-acid", "worry-seed", "simple-beam", "entrainment", "imprison", "perish-song", "spikes", "stealth-rock", "toxic-spikes", "sticky-web", "defog"].includes(lm.name)) { log(B, "But it failed!"); return false; }
     if (lm.mcat === "ohko") {
+      if (target.raidBoss) { log(B, T + " is protected by its raid aura!"); return false; }
       if (target.level > user.level || defTypes(target).includes(lm.name === "sheer-cold" ? "ice" : "???") || tAb(user, target) === "sturdy" || B.rng() * 100 >= 30 + (user.level - target.level)) { log(B, U + "'s attack missed!"); ev(B, { t: "miss", si: target.si, pos: target.pos, pos: target.pos }); return false; }
     } else if (lm.acc != null && ab(user) !== "no-guard" && tAb(user, target) !== "no-guard" && !user.vol.lockOn && !(lm.name === "toxic" && defTypes(user).includes("poison"))) {
       const w = weatherOn(B);
@@ -3630,7 +3831,7 @@ var BattleEngine = (function () {
         if (!target.fainted && !cloak && mv.ailment !== "none" && (mv.mcat === "damage+ailment" || mv.sdFx)) {
           if (B.rng() * 100 < (mv.ailChance || 100) * chanceMul) applyAilment(B, target, mv.ailment === "tri" ? ["burn", "paralysis", "freeze"][Math.floor(B.rng() * 3)] : mv.ailment, false, !!mv.ailTox, user);
         }
-        if (!target.fainted && !cloak && mv.flinch && B.rng() * 100 < mv.flinch * chanceMul && ab(target) !== "inner-focus" && !target.vol.moved) target.vol.flinch = true;
+        if (!target.fainted && !cloak && mv.flinch && !target.raidBoss && B.rng() * 100 < mv.flinch * chanceMul && ab(target) !== "inner-focus" && !target.vol.moved) target.vol.flinch = true;
         if (!target.fainted && !cloak && !mv.flinch && ["kings-rock", "razor-fang"].includes(it(user)) && B.rng() < 0.1 && ab(target) !== "inner-focus") { revealItem(user); target.vol.flinch = true; }
         else if (!target.fainted && !cloak && !mv.flinch && md(user, "kings-rock") && !target.vol.moved && B.rng() < 0.1 * md(user, "kings-rock") && ab(target) !== "inner-focus") target.vol.flinch = true;
         const selfStats = mv.statSelf != null ? mv.statSelf : mv.mcat === "damage+raise";
@@ -3760,18 +3961,30 @@ var BattleEngine = (function () {
   }
 
   /* ---------- views ---------- */
-  function viewFor(B, si) {
+  /* Who moves first this turn, ignoring priority moves. Equal speeds are settled at random each turn. */
+  function speedOrder(B) {
+    const tr = B.trickRoom > 0 ? -1 : 1;
+    const list = allActive(B).filter(p => !p.fainted).map(p => ({ side: p.si, pos: p.pos, s: speedOf(B, p), extra: 0 }));
+    const boss = B.raid ? act(B, 1, 0) : null;
+    if (boss && !boss.fainted) for (let k = 1; k < B.raid.actions; k++) list.push({ side: 1, pos: 0, s: speedOf(B, boss) * (B.raid.actions - k) / B.raid.actions, extra: k });
+    list.sort((a, b) => tr * (b.s - a.s));
+    let rank = 0;
+    list.forEach((x, i) => { if (i === 0 || Math.abs(x.s - list[i - 1].s) > 1e-6) rank = i + 1; x.rank = rank; });
+    list.forEach(x => { x.tie = list.filter(y => y.rank === x.rank).length; delete x.s; });
+    return list;
+  }
+  function viewFor(B, si, win) {
     CB = B;
     const me = B.sides[si], foe = B.sides[1 - si];
     const pub = p => ({ mods: Object.assign({}, p.mods || {}), cry: p.cry || null, name: p.name, speciesName: p.speciesName, variety: p.variety, isMega: p.isMega, isForm: p.isForm, fallback: p.fallback, shiny: p.shiny, types: p.types, curTypes: defTypes(p), level: p.level, status: p.status, fainted: p.fainted, boosts: p.boosts, confused: !!p.vol.confused, terastallized: p.terastallized, teraType: p.terastallized ? p.teraType : null, taunt: p.vol.taunt || 0, seeded: !!p.vol.seeded, sub: !!p.vol.sub, extra: volList(p) });
     const sideField = s => ({ haz: s.haz, scr: s.scr, wish: !!s.wish });
     const firstLine = Math.max(0, B.log.length - 400);
-    const stepFrom = Math.max(0, B.log.length - 120);
-    const real = x => x && Object.assign({}, x, { a: x.ra, vr: x.rvr, nm: x.rnm, fm: x.rfm, ty: x.rty });
+    const stepFrom = Math.max(0, B.log.length - (win || 120));
+    const real = x => x && (x.ra == null ? x : Object.assign({}, x, { a: x.ra, vr: x.rvr, nm: x.rnm, fm: x.rfm, ty: x.rty }));
     const hide = x => { if (!x) return x; const o = Object.assign({}, x, { hp: x.hp > 0 ? Math.max(1, Math.ceil(x.hp / x.mx * 100)) : 0, mx: 100 }); delete o.ra; delete o.rvr; delete o.rnm; delete o.rfm; delete o.rty; return o; };
-    const conv = snap => ({ w: snap.w, te: snap.te, tr: snap.tr, g: snap.g, me: Object.assign(real(snap.s[si]), { p2: real(snap.s[si].p2) }), foe: Object.assign(hide(snap.s[1 - si]), { p2: hide(snap.s[1 - si].p2) }) });
-    const foeTeam = foe.team.map(p => Object.assign(pub(p), { hpPct: p.hp > 0 ? Math.max(1, Math.ceil(p.hp / p.maxhp * 100)) : 0, ability: p.rev.ability ? p.ability : null, item: p.rev.item ? (p.item || null) : null, itemUsed: p.rev.item ? (p.itemUsed || !p.item) : false }));
-    const foeShown = foe.active.map(i => { const p = foe.team[i]; return p.vol.illusion != null && !p.fainted && !foe.active.includes(p.vol.illusion) ? p.vol.illusion : i; });
+    const conv = snap => { const m = snap.s[si], f = snap.s[1 - si]; return { w: snap.w, te: snap.te, tr: snap.tr, g: snap.g, me: Object.assign(real(m), m.ps ? { ps: m.ps.map(real) } : { p2: real(m.p2) }), foe: Object.assign(hide(f), f.ps ? { ps: f.ps.map(hide) } : { p2: hide(f.p2) }) }; };
+    const foeTeam = foe.team.map(p => Object.assign(pub(p), { raidBoss: !!p.raidBoss, caughtBy: p.caughtBy ? p.caughtBy - 1 : null, catchRate: B.wild ? p.catchRate : null, hpPct: p.hp > 0 ? Math.max(1, Math.ceil(p.hp / p.maxhp * 100)) : 0, ability: p.rev.ability ? p.ability : null, item: p.rev.item ? (p.item || null) : null, itemUsed: p.rev.item ? (p.itemUsed || !p.item) : false }));
+    const foeShown = foe.active.map(i => { const p = foe.team[i]; if (!p) return i; return p.vol.illusion != null && !p.fainted && !foe.active.includes(p.vol.illusion) ? p.vol.illusion : i; });
     foe.active.forEach((i, pos) => {
       const shown = foeShown[pos];
       if (shown === i) return;
@@ -3787,9 +4000,9 @@ var BattleEngine = (function () {
       events: B.ev.filter(e => e.li >= stepFrom).map(e => Object.assign({}, e, { side: e.si === si ? "me" : "foe", pos: e.pos || 0 })),
       winner: B.winner === null ? null : B.winner === -1 ? "draw" : B.winner === si ? "you" : "foe",
       weather: B.weather ? { type: B.weather.type, turns: B.weather.turns } : null, terrain: B.terrain ? { type: B.terrain.type, turns: B.terrain.turns } : null,
-      wild: !!B.wild, caught: B.caught != null ? B.caught : null, format: B.format, slots: B.slots, trickRoom: B.trickRoom, gravity: B.gravity, magicRoom: B.magicRoom, wonderRoom: B.wonderRoom, backdrop: B.backdrop,
+      wild: !!B.wild, caught: B.caught != null ? B.caught : null, format: B.format, slots: B.slots, coop: !!B.coop, raid: !!B.raid, catches: B.catches.slice(), order: B.coop || B.slots > 2 ? speedOrder(B) : null, ownerNames: me.ownerNames || null, trickRoom: B.trickRoom, gravity: B.gravity, magicRoom: B.magicRoom, wonderRoom: B.wonderRoom, backdrop: B.backdrop,
       you: {
-        name: me.name, active: me.active[0], actives: me.active.slice(), teraUsed: me.teraUsed, teraAllowed: B.teraAllowed, field: sideField(me), team: me.team.map(p => Object.assign(pub(p), {
+        name: me.name, active: me.active[0], actives: me.active.slice(), teraUsed: me.teraUsed, teraAllowed: me.owners ? !!(B.teraOwners && B.teraOwners.some(Boolean)) : B.teraAllowed, teraBy: me.teraBy || null, field: sideField(me), team: me.team.map(p => Object.assign(pub(p), { owner: me.owners ? me.owners[p.slot] : null, caughtBy: p.caughtBy ? p.caughtBy - 1 : null,
           hp: p.hp, maxhp: p.maxhp, item: p.item, itemUsed: p.itemUsed, ability: p.ability, stats: p.stats, locked: p.vol.locked || (p.vol.encore && p.vol.encore.move) || null, teraType: p.teraType,
           moves: p.moves.map(m => ({ name: m.name, type: m.type, cat: m.cat, power: m.power, acc: m.acc, ppLeft: m.ppLeft, maxpp: m.maxpp, prio: m.prio, target: m.target }))
         }))
@@ -4020,7 +4233,7 @@ var BattleEngine = (function () {
         const foe = foes(B, act(B, si, pos))[0] || act(B, 1 - si, 0);
         let best = -1, bestScore = -Infinity;
         side.team.forEach((p, i) => {
-          if (p.fainted || side.active.includes(i) || used.has(i)) return;
+          if (p.fainted || side.active.includes(i) || used.has(i) || (side.owners && side.owners[i] !== pos)) return;
           const off = Math.max(0.5, ...p.moves.filter(m => m.cat !== "status").map(m => effectiveness(m.type, defTypes(foe))));
           const def = foe.fainted ? 1 : Math.max(0.25, ...foe.types.map(t => effectiveness(t, defTypes(p))));
           const score = off / def + p.hp / p.maxhp + B.rng();
@@ -4091,7 +4304,7 @@ var BattleEngine = (function () {
     });
     const tera = !teraDone && req.canTera && (p.hp < p.maxhp * 0.6 || B.rng() < 0.2);
     if (req.canSwitch && p.turnsIn > 0 && B.rng() < 0.12 && !foe.fainted && Math.max(...foe.types.map(t => effectiveness(t, defTypes(p)))) >= 2) {
-      const opts = side.team.map((q, i) => i).filter(i => !side.active.includes(i) && !side.team[i].fainted && !used.has(i));
+      const opts = side.team.map((q, i) => i).filter(i => !side.active.includes(i) && !side.team[i].fainted && !used.has(i) && (!side.owners || side.owners[i] === req.pos));
       if (opts.length) return { type: "switch", index: opts[Math.floor(B.rng() * opts.length)] };
     }
     if (best < 0) best = req.usable.findIndex(Boolean);
@@ -4104,7 +4317,7 @@ var BattleEngine = (function () {
     if (m) return "minior-" + m[1];
     return null;
   }
-  return { SHINY_BUFFS, fighterStats, catchChance, BALLS, MOD_KEYS, newBattle, submit, requestFor, viewFor, aiChoose, compactMove, SPREAD_TARGETS, ALLY_TARGETS, effectiveness, defTypes, tc, NAME_FIX, TERA_TYPES, SUPPORTED_ABILITIES, DOUBLES_ABILITIES, SUPPORTED_ITEMS, STAT_NAME, formSwapTarget, DOUBLES_ONLY };
+  return { speedOrder, SHINY_BUFFS, fighterStats, catchChance, BALLS, MOD_KEYS, newBattle, submit, requestFor, viewFor, aiChoose, compactMove, SPREAD_TARGETS, ALLY_TARGETS, effectiveness, defTypes, tc, NAME_FIX, TERA_TYPES, SUPPORTED_ABILITIES, DOUBLES_ABILITIES, SUPPORTED_ITEMS, STAT_NAME, formSwapTarget, DOUBLES_ONLY };
 })();
 if (typeof module !== "undefined") module.exports = BattleEngine;
 </script>
@@ -5425,6 +5638,7 @@ function render() {
   if (state.screen === "card") return renderCard();
   if (state.screen === "gyms") return renderGyms();
   if (state.screen === "rogue") return renderRogue();
+  if (state.screen === "coop") return renderCoop();
 }
 
 /* ============ title ============ */
@@ -5444,7 +5658,8 @@ function renderTitle() {
         '<button class="mode" data-act="start" data-mode="normal" type="button"><span class="tag">NORMAL</span><span><h3>Normal mode</h3><p>Keep one of three each round. Full builder, battles, Showdown export.</p></span><span aria-hidden="true">→</span></button>' +
         '<button class="mode" data-act="start" data-mode="fusion" type="button"><span class="tag alt">FUSION</span><span><h3>Fusion mode</h3><p>Fuse all three each round. Pick each stat, the typing and the sprite from any of them, and use all their moves and abilities.</p></span><span aria-hidden="true">→</span></button>' +
         '<button class="mode gymmode" data-act="gyms" type="button"><span class="tag gymtag">GYMS</span><span><h3>Gym Challenge</h3><p>Take your drafted team through 8 type-themed gyms, the Elite Four and the Champion. Earn badges along the way.' + (GymSave.data.badges.length ? " You have " + GymSave.data.badges.length + " of 8." : "") + '</p></span><span aria-hidden="true">→</span></button>' +
-        '<button class="mode rogmode" data-act="rogue" type="button"><span class="tag rogtag">ROGUE</span><span><h3>Roguelike</h3><p>Pick starters, climb through waves, catch teammates and stack held items. Unlock new starters, shinies and Mega Stones, and grow a permanent skill tree.' + (Rogue.run && Rogue.run.phase !== "over" && Rogue.run.phase !== "victory" ? " Run in progress: wave " + Rogue.run.wave + "." : RogueSave.meta().best ? " Best: wave " + RogueSave.meta().best + "." : "") + '</p></span><span aria-hidden="true">→</span></button>' +
+        '<button class="mode rogmode coopmode" data-act="coop" type="button"><span class="tag rogtag">CO-OP</span><span><h3>Co-op Roguelike</h3><p>Climb the roguelike with 2, 3 or 6 friends online. Double, triple or 6-on-6 battles, rare raid bosses, shared catches and friendship, and your own money, rewards and skill tree.' + (Coop.on ? " You’re in a co-op room." : "") + '</p></span><span aria-hidden="true">→</span></button>' +
+        '<button class="mode rogmode" data-act="rogue" type="button"><span class="tag rogtag">ROGUE</span><span><h3>Roguelike</h3><p>Pick starters, climb through waves, catch teammates and stack held items. Unlock new starters, shinies and Mega Stones, and grow a permanent skill tree.' + (Rogue.run && !Rogue.run.coop && Rogue.run.phase !== "over" && Rogue.run.phase !== "victory" ? " Run in progress: wave " + Rogue.run.wave + "." : RogueSave.meta().best ? " Best: wave " + RogueSave.meta().best + "." : "") + '</p></span><span aria-hidden="true">→</span></button>' +
         onlineCard() +
       "</div>") +
     "</section>" + settingsPanel();
@@ -6583,6 +6798,15 @@ function closeNet() {
   if (battle.lobby === "waiting") battle.lobby = "";
 }
 function leaveBattle() {
+  if (battle.rogue && battle.rogue.coop) {
+    const v = currentView();
+    if (!battle.disconnected && v && v.winner && Coop.result) return rgCoopAfterBattle();
+    if (!battle.disconnected && !battle.confirmLeave) { battle.confirmLeave = true; toast("Press “Leave co-op” again to leave the room. The AI takes over your spot until you rejoin."); setTimeout(() => { battle.confirmLeave = false; }, 4000); return; }
+    battle.confirmLeave = false;
+    Sound.stopMusic(); Sound.lowHp(false);
+    Object.assign(battle, { mode: null, B: null, view: null, shownLine: null, domKey: null, playing: false, rogue: null, disconnected: false });
+    coopLeave(false); state.screen = "coop"; return render();
+  }
   if (battle.rogue) {
     if (battle.B && battle.B.winner !== null && !battle.rogue.done) return rgAfterBattle();
     Sound.stopMusic(); Sound.lowHp(false);
@@ -7150,6 +7374,7 @@ function pushState() {
 
 /* ============ battle screen ============ */
 function currentView() {
+  if (battle.mode === "coop") return battle.B ? coopViewFor(battle.B, 120) : battle.view;
   if (battle.mode === "guest") return battle.view;
   if (battle.B) return BattleEngine.viewFor(battle.B, 0);
   return null;
@@ -7232,6 +7457,7 @@ function reduceMotion() { return !!(window.matchMedia && matchMedia("(prefers-re
 /* ---------- layout ---------- */
 function battleKey(v) { return (battle.mode || "") + ":" + (v.slots || 1) + ":" + v.you.name + ":" + v.foe.name + ":" + (battle.B ? battle.B.sides[0].team.length : "g") + ":" + (battle.startedAt || 0); }
 function buildBattleSkeleton(v) {
+  if (v.coop) return coopSkeleton(v);
   const modeLabel = (battle.rogue ? "Roguelike · Wave " + battle.rogue.wave : battle.mode === "cpu" ? "Practice vs CPU" : "Online battle") + (v.slots === 2 ? " · Doubles" : "");
   app.innerHTML =
     '<div class="stagehead"><div><p class="label" id="bt-label">' + modeLabel + "</p><h2>" + esc(v.you.name) + " vs " + esc(v.wild ? "Wild " + ((v.foe.team[0] || {}).name || "Pokémon") : v.foe.name) + '</h2></div><div class="row"><button class="btn sm" type="button" data-act="skip" id="bt-skip" hidden>Skip ▸▸</button><button class="btn sm" type="button" id="bt-speed" data-qspeed="1" aria-pressed="' + QoL.fast + '" title="Battle text speed (X)">' + qolSpeedLabel() + '</button><button class="btn" data-act="leave" type="button">Leave battle</button></div></div>' +
@@ -7310,15 +7536,19 @@ function applyMon(v, side, pos, s, anim) {
   if (s.tr) art.style.setProperty("--tc", TYPE_COLOR[s.tr] || "#888");
   const oldBar = plate.querySelector(".hp b");
   const oldWidth = oldBar ? oldBar.style.width : null;
-  plate.innerHTML = plateHtml(mon, s, side, pos);
+  if (v.coop) { plate.classList.toggle("gone", !!s.f); f.classList.toggle("caughtby", !!s.cb); }
+  plate.innerHTML = v.coop ? plateHtmlMulti(v, mon, s, side, pos) : plateHtml(mon, s, side, pos);
   const bar = plate.querySelector(".hp b");
   if (oldWidth && bar && anim) { const w = bar.style.width; bar.style.width = oldWidth; void bar.offsetWidth; bar.style.width = w; }
 }
 function applySide(v, side, s, anim) {
   if (!s) return;
   fieldArt(side, s);
-  applyMon(v, side, 0, s, anim);
-  if ((v.slots || 1) > 1) applyMon(v, side, 1, s.p2 || null, anim);
+  if (s.ps) { const n = side === "me" ? (v.you.actives || []).length : (v.foe.actives || []).length; for (let pos = 0; pos < n; pos++) applyMon(v, side, pos, s.ps[pos] || null, anim); }
+  else {
+    applyMon(v, side, 0, s, anim);
+    if ((v.slots || 1) > 1) applyMon(v, side, 1, s.p2 || null, anim);
+  }
   const ft = document.getElementById("ft-" + side);
   if (ft) {
     const hz = s.hz || [0, 0, 0, 0], sc = s.sc || [0, 0, 0, 0];
@@ -7347,6 +7577,13 @@ function finalStep(v) {
   const foeSnap = (i) => { const p = v.foe.team[i]; return p ? { a: i, hp: p.hpPct, mx: 100, st: p.status, b: nz(p.boosts), cf: p.confused, tr: p.terastallized ? p.teraType : null, f: p.fainted, ty: p.curTypes || p.types, vr: p.variety, nm: p.name, fm: p.isForm, sub: !!p.sub } : null; };
   const mf = v.you.field, ff = v.foe.field;
   const hz = f => [f.haz.rocks ? 1 : 0, f.haz.spikes, f.haz.tspikes, f.haz.web ? 1 : 0], sc = f => [f.scr.reflect, f.scr.light, f.scr.veil, f.scr.tailwind, f.scr.safeguard || 0, f.scr.mist || 0];
+  if (v.coop) {
+    const fs = (i => { const p = v.foe.team[i]; const o = foeSnap(i); if (o && p && p.caughtBy != null) o.cb = 1; return o; });
+    const ms = v.you.actives.map(meSnap), fps = v.foe.actives.map(fs);
+    return { w: v.weather ? v.weather.type : null, te: v.terrain ? v.terrain.type : null, tr: v.trickRoom, g: v.gravity || 0,
+      me: Object.assign({}, ms[0], { ps: ms, hz: hz(mf), sc: sc(mf), fnt: v.you.team.map(p => p.fainted ? 1 : 0) }),
+      foe: Object.assign({}, fps[0], { ps: fps, hz: hz(ff), sc: sc(ff), fnt: v.foe.team.map(p => p.fainted ? 1 : 0) }) };
+  }
   return {
     w: v.weather ? v.weather.type : null, te: v.terrain ? v.terrain.type : null, tr: v.trickRoom, g: v.gravity || 0,
     me: { p2: v.you.actives && v.you.actives.length > 1 ? meSnap(v.you.actives[1]) : null, a: v.you.active, hp: me.hp, mx: me.maxhp, st: me.status, b: nz(me.boosts), cf: me.confused, tr: me.terastallized ? me.teraType : null, f: me.fainted, ty: me.curTypes || me.types, hz: hz(mf), sc: sc(mf), fnt: v.you.team.map(p => p.fainted ? 1 : 0), vr: me.variety, nm: me.name, fm: me.isForm, sub: !!me.sub },
@@ -7360,6 +7597,18 @@ function dialogueText(line, v, keepHp) {
   if (!keepHp && / lost \d+% of its HP\.$/.test(line)) return null;
   const me = v.you.name, foe = v.foe.name;
   if (!me || !foe || me === foe) return line;
+  if (v.coop) {
+    if (line === me + " won the battle!") return v.raid ? "The raid boss was defeated!" : "Your team won!";
+    if (line === foe + " won the battle!") return "Your team is out of usable Pokémon…";
+    const you = coopMeName();
+    let c = line;
+    if (c.startsWith(you + " sent out ")) c = "Go! " + c.slice((you + " sent out ").length);
+    else if (c.startsWith(you + " withdrew ")) c = c.slice((you + " withdrew ").length).replace(/!$/, "") + ", come back!";
+    else if (c.startsWith(you + " threw ")) c = "You threw " + c.slice((you + " threw ").length);
+    c = c.split(you + "'s ").join("your ").replace(/caught by your$/, "caught by you").replace(/ caught by ([^!]+)!$/, (x, n) => n === you ? " caught by you!" : x);
+    c = c.split(foe + "'s ").join(v.raid ? "the raid boss " : "the opposing ");
+    return c.replace(/(^|[.!?]\s+|\[)(the opposing|your|the raid boss)/g, (m0, a, b) => a + b.charAt(0).toUpperCase() + b.slice(1));
+  }
   if (v.wild && line === me + " won the battle!") return v.caught != null ? null : "You defeated the wild " + ((v.foe.team[0] || {}).name || "Pokémon") + "!";
   if (v.wild && line === foe + " won the battle!") return "You’re out of usable Pokémon…";
   if (line === me + " won the battle!") return "You defeated " + foe + "!";
@@ -7702,7 +7951,7 @@ function monAt(v, side, pos) {
 }
 function checkLowHp(v, step) {
   if (!step || !step.me) return;
-  const low = [step.me, step.me.p2].some(s => s && !s.f && s.hp > 0 && s.hp / s.mx <= 0.25);
+  const low = (step.me.ps ? step.me.ps.filter((s, pos) => pos === Coop.me) : [step.me, step.me.p2]).some(s => s && !s.f && s.hp > 0 && s.hp / s.mx <= 0.25);
   Sound.lowHp(low && !v.winner);
 }
 async function playEvent(e, v) {
@@ -7825,7 +8074,7 @@ async function playLines() {
       appendLog(v, i);
       if (text && text.startsWith("## ")) {
         const lbl = document.getElementById("bt-label");
-        if (lbl) lbl.textContent = (battle.rogue ? "Roguelike · Wave " + battle.rogue.wave : battle.mode === "cpu" ? "Practice vs CPU" : "Online battle") + (battle.room ? " · Room " + battle.room.code : "") + " · " + text.slice(3);
+        if (lbl) lbl.textContent = (battle.rogue && battle.rogue.coop ? "Co-op · Wave " + battle.rogue.wave : battle.rogue ? "Roguelike · Wave " + battle.rogue.wave : battle.mode === "cpu" ? "Practice vs CPU" : "Online battle") + (battle.room ? " · Room " + battle.room.code : "") + " · " + text.slice(3);
         continue;
       }
       if (battle.introUntil && battle.introUntil > Date.now() && !battle.fast) await wait(battle.introUntil - Date.now());
@@ -7895,6 +8144,7 @@ function matchupChips(p, foe) {
 function renderTeamPanel(v) {
   const el = document.getElementById("bt-team");
   if (!el || !v) return;
+  if (v.coop) return coopTeamPanel(v, el);
   const foe = v.foe.team[v.foe.active];
   const req = v.request || {};
   const canPick = !battle.playing && ((req.kind === "move" && req.canSwitch) || req.kind === "switch");
@@ -7952,6 +8202,7 @@ function renderControls(v, busy) {
   hideMoveTip();
   const el = document.getElementById("controls");
   if (!el || !v) return;
+  if (v.coop) { if (busy) { el.innerHTML = coopOrderStrip(v) + '<p class="note" style="margin:0">…</p>'; return; } if (v.winner || (v.request && v.request.kind === "end")) { onBattleEnd(v); el.innerHTML = coopEndBanner(v); return; } return renderCoopControls(v, el); }
   if ((v.slots || 1) > 1 && !busy && !(battle.disconnected && !v.winner) && !(v.request && v.request.kind === "end") && !v.winner) return renderDoublesControls(v, el);
   const me = v.you.team[v.you.active], foe = v.foe.team[v.foe.active];
   const req = v.request || { kind: "wait" };
@@ -8391,7 +8642,7 @@ function rgSkillOpen(s) { return !s.req || rgSk(s.req[0]) >= s.req[1]; }
 const RogueSave = {
   key: "rd-rogue", metaKey: "rd-rogue-meta",
   strip(k, v) { return k === "evos" || k === "_finals" || k === "node" || k === "built" || k === "_canEvo" ? undefined : v; },
-  save() { try { if (Rogue.run) localStorage.setItem(this.key, JSON.stringify(Rogue.run, this.strip)); else localStorage.removeItem(this.key); } catch (e) { } },
+  save() { try { if (Rogue.run) localStorage.setItem(Rogue.run.coop ? "rd-coop" : this.key, JSON.stringify(Rogue.run, this.strip)); else localStorage.removeItem(this.key); } catch (e) { } },
   load() { try { const r = JSON.parse(localStorage.getItem(this.key) || "null"); return r && (r.v === 1 || r.v === 2) && Array.isArray(r.party) && r.party.length ? r : null; } catch (e) { return null; } },
   fresh() { return { best: 0, runs: 0, clears: 0, caught: 0, rare: 0, shinies: 0, points: 0, earned: 0, skills: {}, fam: {} }; },
   meta() { return rgMeta(); },
@@ -8438,12 +8689,12 @@ function rgLoadAbilities(id) {
     const t = (rgPickState().team || []).find(o => o.id === id);
     if (t && !t.ability) t.ability = (Rogue.abil[id].find(x => !x.hidden) || Rogue.abil[id][0] || {}).name || "";
     Rogue.abil[id].forEach(x => rgAbilityDesc(x.name));
-    if (state.screen === "rogue" && Rogue.view === "new") rgRefreshTeamBox();
+    if ((state.screen === "rogue" && Rogue.view === "new") || state.screen === "coop") rgRefreshTeamBox();
   }).catch(() => { Rogue.abil[id] = null; });
 }
 function rgAbilityDesc(name) {
   if (!name) return "";
-  if (Rogue.abDesc[name] == null) { Rogue.abDesc[name] = ""; detail("ability", name).then(d => { Rogue.abDesc[name] = d ? englishEffect(d) || "" : ""; if (state.screen === "rogue") { if (Rogue.view === "new") rgRefreshTeamBox(); else if (document.querySelector(".rg-abilpick")) render(); } }); }
+  if (Rogue.abDesc[name] == null) { Rogue.abDesc[name] = ""; detail("ability", name).then(d => { Rogue.abDesc[name] = d ? englishEffect(d) || "" : ""; if (state.screen === "coop") rgRefreshTeamBox(); if (state.screen === "rogue") { if (Rogue.view === "new") rgRefreshTeamBox(); else if (document.querySelector(".rg-abilpick")) render(); } }); }
   return Rogue.abDesc[name];
 }
 function rgOptCost(o) { return rgCost(o.root) + (o.mega ? 1 : 0); }
@@ -8611,7 +8862,7 @@ function rgEncounter(run) {
 }
 function rgEnemyMods(run, enc, m) {
   const w = run.wave;
-  let n = enc.kind === "boss" ? Math.floor(w / 8) + 1 : enc.kind === "trainer" ? Math.floor(w / 12) : (w > 20 && Math.random() < 0.3 ? 1 : 0);
+  let n = enc.kind === "boss" || enc.kind === "raid" ? Math.floor(w / 8) + 1 : enc.kind === "trainer" ? Math.floor(w / 12) : (w > 20 && Math.random() < 0.3 ? 1 : 0);
   if (w > 70) n += Math.floor((w - 70) / 10);
   const mods = {};
   const pool = ["leftovers", "quick-claw", "focus-band", "scope-lens", "shell-bell", "sitrus-berry", "kings-rock", "expert-belt", "rocky-helmet"].concat(m.types.map(t => "tb-" + t), m.types.map(t => "tb-" + t), STATS.map(k => "v-" + k));
@@ -8622,12 +8873,12 @@ function rgEnemyMods(run, enc, m) {
 async function rgBuildFoes(run, enc) {
   if (Rogue.encBuilt && Rogue.encBuilt.wave === enc.wave && Rogue.encBuilt.foes) return Rogue.encBuilt.foes.map(m => JSON.parse(JSON.stringify(m)));
   const foes = [];
-  if (enc.kind === "wild") {
+  if (enc.kind === "wild" || enc.kind === "raid") {
     for (const s of enc.mons) {
       let m;
       try { m = s.variety ? await rgMonFromVariety(s.variety) : await buildMon(s.id, { rollMega: false }); }
       catch (e) { m = await buildMon(rgSpecies(run, s.level, { biome: enc.biome }), { rollMega: false }); s.rare = null; enc.rare = null; }
-      await rgInit(m, s.level, { shiny: s.shiny, smart: run.wave >= 20 || !!s.rare, mods: rgEnemyMods(run, enc, m), met: { wave: run.wave, biome: enc.biome } });
+      await rgInit(m, s.level, { shiny: s.shiny, smart: run.wave >= 20 || !!s.rare || enc.kind === "raid", mods: rgEnemyMods(run, enc, m), met: { wave: run.wave, biome: enc.biome } });
       foes.push(m);
     }
   } else {
@@ -8654,11 +8905,12 @@ async function rgBuildFoes(run, enc) {
 }
 
 /* ---------- starting a run ---------- */
-async function rgStartRun(team, mode, challenge) {
+async function rgStartRun(team, mode, challenge, coop) {
   Rogue.busy = "Getting your team ready…"; render();
   try {
     const run = { v: 2, mode, challenge, wave: 1, money: 600 + 300 * rgSk("cash"), balls: { "poke-ball": 5 + 3 * rgSk("balls"), "great-ball": 0, "ultra-ball": rgSk("ultra"), "rogue-ball": 0, "master-ball": rgSk("master") }, bag: { potion: 2 }, keys: {}, party: [], biomes: [], gymOrder: rgShuffle([0, 1, 2, 3, 4, 5, 6, 7]), phase: "camp", enc: null, rewards: null, taken: false, rerollCost: 0, freeRerolls: 0, prompts: [], post: null, caught: 0, kos: 0, bosses: 0, lives: rgSk("wind"), started: Date.now() };
     if (rgSk("candy")) run.bag["rare-candy"] = rgSk("candy");
+    if (coop) { run.coop = { runId: coop.runId, size: coop.size, me: coop.me, role: coop.role, players: coop.players, biomes: coop.biomes || [], next: null }; run.gymOrder = coop.gymOrder || run.gymOrder; run.wave = coop.wave || 1; }
     const care = rgSk("care");
     for (const o of team) {
       const m = await buildMon(o.id, { rollMega: false, rollRegion: false });
@@ -8673,7 +8925,7 @@ async function rgStartRun(team, mode, challenge) {
     }
     const meta = rgMeta(); meta.runs++; rgMetaSave();
     Rogue.run = run; Rogue.encBuilt = null; Rogue.target = null; Rogue.msg = ""; Rogue.unlocks = [];
-    run.enc = rgEncounter(run);
+    run.enc = coop ? coop.enc : rgEncounter(run);
     rgSave();
   } catch (e) { Rogue.msg = "Couldn’t load your starters. " + e.message; }
   Rogue.busy = ""; render(); window.scrollTo(0, 0);
@@ -8684,6 +8936,7 @@ const RG_RARE_NOTE = { op: "An overwhelming power fills the air!!", big: "It rad
 async function rgFight() {
   const run = Rogue.run;
   if (!run || Rogue.busy) return;
+  if (run.coop) return coopToggleReady();
   if (!rgAlive(run).length) return toast("All your Pokémon have fainted. Revive one first.");
   if (run.prompts.length) return toast("Finish the choice above first.");
   if (!run.enc) run.enc = rgEncounter(run);
@@ -8710,6 +8963,7 @@ async function rgFight() {
   }
 }
 function rgThrow(ball) {
+  if (battle.rogue && battle.rogue.coop) return coopThrow(ball);
   const run = Rogue.run;
   if (!battle.B || !battle.rogue || !run || battle.playing) return;
   if (!(run.balls[ball] > 0)) return toast("You don’t have any of those.");
@@ -8763,6 +9017,7 @@ function rgEndBanner(v) {
   return '<div class="banner ' + (v.winner === "you" ? "good" : "bad") + '"><b>' + msg + '</b><div class="row"><button class="btn primary" type="button" data-ract="after-battle">' + (v.winner === "you" ? "Continue" : "Continue…") + ' <span class="kbd">Enter</span></button></div></div>' + (caught ? "" : summaryHtml(v));
 }
 async function rgAfterBattle() {
+  if (battle.rogue && battle.rogue.coop) return rgCoopAfterBattle();
   const run = Rogue.run, B = battle.B, ctx = battle.rogue;
   if (!run || !B || !ctx || ctx.done) return;
   ctx.done = true;
@@ -9125,8 +9380,14 @@ async function rgEnterCamp() {
   run.lastFled = !!(run.post && run.post.fled);
   run.phase = "camp";
   run.post = null;
-  run.wave++;
-  run.enc = rgEncounter(run);
+  if (run.coop) {
+    const nx = run.coop.next;
+    if (nx && nx.wave) { run.wave = nx.wave; run.enc = nx.enc; } else { run.wave = Coop.on ? Coop.wave : run.wave + 1; run.enc = Coop.on ? Coop.enc : null; }
+    run.coop.next = null; Coop.myReady = false;
+  } else {
+    run.wave++;
+    run.enc = rgEncounter(run);
+  }
   run.rewards = null; run.taken = false; run.rerollCost = 0; run.freeRerolls = rgSk("reroll");
   Rogue.encBuilt = null; Rogue.unlocks = []; Rogue.pickRw = null; Rogue.target = null;
   rgSave();
@@ -9138,9 +9399,12 @@ async function rgPrepareCamp() {
   if (!run.rewards && run.wave > 1 && run.lastFled) { run.rewards = []; }
   if (!run.rewards && run.wave > 1) {
     Rogue.busy = "Opening your rewards…"; render();
-    const lastWasBoss = (run.wave - 1) % 10 === 0;
+    const lastWasBoss = (run.wave - 1) % 10 === 0 || !!run.lastRaid;
     run.rewards = await rgRollRewards(run, lastWasBoss ? 2 : 0).catch(() => []);
     if (lastWasBoss) run.rewards.push(Object.assign(await rgMakeReward(run, "rare-candy-3"), { tier: 2, bonus: true }));
+    /* raids pay out more: an extra top-tier pick on the house */
+    if (run.lastRaid) { const extra = (await rgRollRewards(Object.assign({}, run), 3).catch(() => []))[0]; if (extra) run.rewards.push(Object.assign(extra, { tier: Math.max(3, extra.tier || 0), bonus: true, raid: true })); }
+    run.lastRaid = false;
     Rogue.busy = "";
     rgSave();
   }
@@ -9224,13 +9488,14 @@ function rgEncLine(run) {
   if (!e) return "";
   const biome = RG_BIOMES[e.biome] || { name: "Battle Tower" };
   if (e.kind === "boss") return '<div class="rg-next boss" style="--gc:' + (e.type ? TYPE_COLOR[e.type] : "#d4a017") + '"><span class="rg-next-av">' + esc(e.name.split(" ").pop().charAt(0)) + '</span><div><span class="label">' + esc(e.title) + " · " + e.count + " Pokémon · around Lv. " + e.level + "</span><b>" + esc(e.name) + "</b>" + (e.type ? '<span class="rg-next-t">' + typeChipsSmall([e.type]) + "</span>" : "") + '<span class="gym-quote">“' + esc(e.quote) + "”</span></div></div>";
+  if (e.kind === "raid") return '<div class="rg-next boss raid" style="--gc:#b5179e"><span class="rg-next-av">!</span><div><span class="label">Raid boss · 1 huge Pokémon vs your whole team · Lv. ' + e.level + "</span><b>A raid boss is blocking the path!</b><span class=\"note\">It has many times the HP, acts more than once a turn with 3+ players, and toughens up at half HP. Beat it for big rewards and a throw each.</span></div></div>";
   if (e.kind === "trainer") return '<div class="rg-next"><span class="rg-next-av t">' + esc(e.title.charAt(0)) + '</span><div><span class="label">Trainer battle · ' + e.count + " Pokémon · around Lv. " + e.level + "</span><b>" + esc(e.name) + " wants to battle!</b><span class=\"note\">" + esc(biome.name) + "</span></div></div>";
-  return '<div class="rg-next wild"><span class="rg-next-av w">?</span><div><span class="label">Wild Pokémon · around Lv. ' + e.level + "</span><b>Something is rustling in the " + esc(biome.name) + "…</b><span class=\"note\">" + esc(biome.name) + " Pokémon are often " + biome.types.map(pretty).join(", ") + " types.</span></div></div>";
+  return '<div class="rg-next wild"><span class="rg-next-av w">?</span><div><span class="label">' + (e.mons && e.mons.length > 1 ? e.mons.length + " wild Pokémon" : "Wild Pokémon") + " · around Lv. " + e.level + "</span><b>Something is rustling in the " + esc(biome.name) + "…</b><span class=\"note\">" + esc(biome.name) + " Pokémon are often " + biome.types.map(pretty).join(", ") + " types.</span></div></div>";
 }
 function rgHead(run, title, sub) {
   const pts = rgMeta().points;
-  return '<div class="stagehead"><div><p class="label">Roguelike' + (run ? " · " + (run.mode === "endless" ? "Endless" : "Classic") + " · " + RG_CHALLENGE[run.challenge][0] : "") + "</p><h2>" + title + "</h2>" + (sub ? '<p class="note" style="margin:4px 0 0">' + sub + "</p>" : "") + "</div>" +
-    '<div class="row">' + '<button class="btn sm rg-ptsbtn" type="button" data-ract="tree" title="Skill tree">🌳 Skill tree' + (pts ? ' <b class="mono">' + pts + "</b>" : "") + "</button>" + (run && run.phase === "camp" && Rogue.view !== "tree" ? (Rogue.confirmAbandon ? '<button class="btn sm danger" type="button" data-ract="abandon-yes">Yes, end this run</button><button class="btn sm" type="button" data-ract="abandon-no">Keep going</button>' : '<button class="btn sm ghost" type="button" data-ract="abandon">Abandon run</button>') : "") + '<button class="btn" type="button" data-act="home-title">← Start screen</button></div></div>';
+  return '<div class="stagehead"><div><p class="label">Roguelike' + (run && run.coop ? " · Co-op" + (Coop.on && Coop.code ? " · Room " + esc(Coop.code) : " · offline") : "") + (run ? " · " + (run.mode === "endless" ? "Endless" : "Classic") + " · " + RG_CHALLENGE[run.challenge][0] : "") + "</p><h2>" + title + "</h2>" + (sub ? '<p class="note" style="margin:4px 0 0">' + sub + "</p>" : "") + "</div>" +
+    '<div class="row">' + '<button class="btn sm rg-ptsbtn" type="button" data-ract="tree" title="Skill tree">🌳 Skill tree' + (pts ? ' <b class="mono">' + pts + "</b>" : "") + "</button>" + (run && run.coop && Rogue.view !== "tree" ? (Rogue.confirmAbandon ? '<button class="btn sm danger" type="button" data-ract="coop-leave-yes">Yes, leave the room</button><button class="btn sm" type="button" data-ract="abandon-no">Stay</button>' : '<button class="btn sm ghost" type="button" data-ract="abandon">Leave co-op</button>') : run && run.phase === "camp" && Rogue.view !== "tree" ? (Rogue.confirmAbandon ? '<button class="btn sm danger" type="button" data-ract="abandon-yes">Yes, end this run</button><button class="btn sm" type="button" data-ract="abandon-no">Keep going</button>' : '<button class="btn sm ghost" type="button" data-ract="abandon">Abandon run</button>') : "") + '<button class="btn" type="button" data-act="home-title">← Start screen</button></div></div>';
 }
 function rgBagItems(run) {
   return Object.keys(run.bag || {}).filter(k => run.bag[k] > 0).map(k => '<button type="button" class="rg-shopi rg-bagbtn" data-rbag="' + k + '">' + rgItemIcon(k) + "<span><b>" + esc(pretty(k)) + '</b><span class="note">' + esc(RG_ITEM_DESC[k] || "") + '</span><span class="mono note">×' + run.bag[k] + " · free</span></span></button>").join("");
@@ -9288,7 +9553,7 @@ function rgRosterGrid() {
   return list.map(o => {
     const inTeam = p.team.find(t => t.id === o.id);
     const cost = rgCost(o.root);
-    const tooMuch = !inTeam && (used + cost > budget || p.team.length >= 6);
+    const tooMuch = !inTeam && (used + cost > budget || p.team.length >= rgTeamCap());
     const shinyOn = inTeam ? inTeam.shiny : false;
     return '<div class="rg-opt' + (inTeam ? " on" : "") + (tooMuch ? " dim" : "") + '">' +
       '<button type="button" class="rg-opt-main" data-ropt="' + o.id + '" aria-pressed="' + !!inTeam + '" title="' + esc(o.d.name + " · cost " + cost + (tooMuch ? " · over budget" : "")) + '">' +
@@ -9338,6 +9603,7 @@ function renderRogueStart() {
       '<div id="rg-teambox">' + rgTeamBox() + "</div>" +
       '<span class="label">Mode</span>' + seg("mode", p.mode, [["classic", "Classic", "50 waves. Beat the Champion on wave 50 to win."], ["endless", "Endless", "No finish line. Waves keep getting harder."]]) +
       '<span class="label">Challenge</span>' + seg("challenge", p.challenge, [["casual", "Casual", "Opponents are 3 levels lower and play softer."], ["standard", "Standard", "The intended balance."], ["hard", "Hard", "Opponents are 3 levels higher and play smarter."]]) +
+      '<button class="btn rg-coopbtn" type="button" data-act="coop">👥 Play co-op with friends instead</button>' +
       '<button class="btn primary rg-go" type="button" data-ract="begin"' + (p.team.length ? "" : " disabled") + ">" + (p.team.length ? "Begin the run →" : "Pick at least one starter") + "</button>" +
       '<details class="rg-how"><summary>How it works</summary><ul class="rg-rules"><li><b>Waves.</b> Wild Pokémon, a trainer every 5 waves and a Gym Leader every 10, who heals your team when beaten.</li><li><b>Catch.</b> Throw balls at wild Pokémon. Lower HP and status conditions raise the odds.</li><li><b>Rare finds.</b> Every wild Pokémon has a 5% chance to be shiny, 3% to be a Mythical, Mega, pseudo-legendary or smaller Legendary/Paradox, 2% to be a big Legendary/Paradox, and 0.5% to be something overwhelming.</li><li><b>Shiny bonus.</b> Shinies get a bonus based on their type, like +25% damage for Fire or +25% HP for Water.</li><li><b>Stacking items.</b> Pick one of the rewards after each win. Leftovers, King’s Rock, Multi Lens, type boosters and more stack on one Pokémon.</li><li><b>Unlocks.</b> Friendship builds up across runs and unlocks Pokémon as starters (as their first evolution). Catching a shiny unlocks it straight away, shiny included. Mega Stones only unlock by catching that Mega.</li><li><b>Skill tree.</b> Every run earns points for waves cleared, bosses beaten and catches. Spend them on permanent upgrades.</li></ul></details>' +
       '<p class="note">Best wave: <b>' + meta.best + "</b> · Runs: " + meta.runs + " · Champion clears: " + meta.clears + " · Caught: " + meta.caught + "</p></aside></div>";
@@ -9378,14 +9644,14 @@ function renderRogueCamp() {
         (bonus.length ? '<div class="rg-rewards bonus">' + bonus.map(r => '<button type="button" class="rg-reward t2 bonus' + (r.claimed ? " claimed" : "") + (Rogue.pickRw === rw.indexOf(r) ? " on" : "") + '" data-rbonus="' + rw.indexOf(r) + '"' + (r.claimed ? " disabled" : "") + '><span class="rg-rw-tier">Boss bonus · free</span><span class="rg-rw-ico">' + rgImg(r.icon) + '</span><span class="rg-rw-txt"><b>' + esc(r.name) + '</b><span class="note">' + esc(r.desc) + "</span></span></button>").join("") + "</div>" : "") +
       rgConfirmBar(run) +
       "</section>" : "") +
-      '<section class="panel"><div class="headrow"><h3>Next up</h3><span class="note">Wave ' + run.wave + "</span></div>" + rgEncLine(run) +
-        '<div class="row rg-goRow"><button class="btn primary rg-go" type="button" data-ract="fight"' + (!rgAlive(run).length || run.prompts.length ? " disabled" : "") + ">" + (run.enc && run.enc.kind === "boss" ? "Challenge " + esc(run.enc.name) : "Head into wave " + run.wave) + ' → <span class="kbd">F</span></button>' + (!rgAlive(run).length ? '<span class="err">Every Pokémon has fainted. Use a Revive or heal up first.</span>' : "") + "</div></section>" +
+      '<section class="panel"><div class="headrow"><h3>Next up</h3><span class="note">Wave ' + run.wave + "</span></div>" + rgEncLine(run) + (run.coop ? coopReadyPanel(run) : "") +
+        (run.coop ? "" : '<div class="row rg-goRow"><button class="btn primary rg-go" type="button" data-ract="fight"' + (!rgAlive(run).length || run.prompts.length ? " disabled" : "") + ">" + (run.enc && run.enc.kind === "boss" ? "Challenge " + esc(run.enc.name) : "Head into wave " + run.wave) + ' → <span class="kbd">F</span></button>' + (!rgAlive(run).length ? '<span class="err">Every Pokémon has fainted. Use a Revive or heal up first.</span>' : "") + "</div>") + "</section>" +
       '<section class="panel"><div class="headrow"><h3>Poké Mart</h3>' + rgBag(run) + "</div>" +
         (heal.plan.length ? '<div class="rg-healrow"><button class="btn' + (Rogue.pickShop === "heal" ? " on" : "") + '" type="button" data-ract="heal-all" aria-pressed="' + (Rogue.pickShop === "heal") + '"' + (run.money < heal.cost ? " disabled" : "") + '>🩹 Heal the whole team · ₽' + heal.cost.toLocaleString() + '</button><span class="note">Buys the cheapest Potions, Revives and Full Heals for everyone who needs them.</span></div>' : "") +
         (rgBagItems(run) ? '<p class="label" style="margin:10px 0 0">In your bag</p><div class="rg-shop">' + rgBagItems(run) + "</div>" : "") +
         '<p class="label" style="margin:12px 0 0">For sale</p><div class="rg-shop">' + shop + '</div><p class="note" style="margin:8px 0 0">Prices go up every 10 waves.' + (rgSk("discount") ? " Haggler discount: −" + 5 * rgSk("discount") + "%." : "") + "</p>" + rgShopBar(run) + "</section>" +
     "</div>" +
-    '<aside class="panel rg-party"><div class="headrow"><h3>Your team</h3><span class="note">' + run.party.length + " / 6</span></div>" + targeting + '<ol class="rg-pmlist">' + run.party.map((m, i) => rgPartyCard(m, i, run)).join("") + '</ol><p class="note" style="margin:8px 0 0">Tap a Pokémon or <b>Summary</b> for stats, moves and items. Tap an item icon to read what it does.</p></aside></div>' +
+    '<aside class="panel rg-party"><div class="headrow"><h3>Your team</h3><span class="note">' + run.party.length + " / " + rgTeamCap(run) + "</span></div>" + targeting + '<ol class="rg-pmlist">' + run.party.map((m, i) => rgPartyCard(m, i, run)).join("") + '</ol><p class="note" style="margin:8px 0 0">Tap a Pokémon or <b>Summary</b> for stats, moves and items. Tap an item icon to read what it does.</p></aside></div>' +
     (Rogue.sheet ? rgSheetHtml(run) : "");
 }
 /* What an item will do to this Pokémon, shown next to its Give button. */
@@ -9453,6 +9719,17 @@ function rgConfirmBar(run) {
     (r.bonus ? "" : '<span class="note">You can only take one reward this wave.</span>') + (anyone ? "" : '<span class="err">None of your Pokémon can use this right now.</span>') + "</div>" +
     '<div class="rg-confirm-act"><button class="btn primary" type="button" data-ract="rw-take"' + (anyone ? "" : " disabled") + ">" + (need ? "Choose a Pokémon →" : "Take it") + ' <span class="kbd">Enter</span></button><button class="btn" type="button" data-ract="rw-cancel">Cancel <span class="kbd">Esc</span></button></div></div>';
 }
+function rgRaidPanel(run, post) {
+  const rc = post.raidCatch;
+  if (!rc) return "";
+  const m = rc.mon;
+  if (rc.done) return '<div class="rg-raidcatch done' + (rc.ok ? " ok" : "") + '"><span class="rg-big">' + spriteImg(m, m.build.shiny) + "</span><div><b>" + esc(rc.text || "") + "</b></div></div>";
+  const balls = RG_BALLS.filter(([k]) => run.balls[k] > 0);
+  return '<div class="rg-raidcatch"><span class="rg-big">' + spriteImg(m, m.build.shiny) + '</span><div><span class="label">Raid catch · one throw</span><b>' + esc(m.displayName) + (m.build.shiny ? ' <span class="rg-shinytxt">✦</span>' : "") + " is worn out!</b>" +
+    '<p class="note" style="margin:2px 0 8px">Everyone gets one throw. If you catch it, the Pokémon is yours and it goes in everyone’s dex. Better balls and Steady Hand raise the odds.</p><div class="rg-balls">' +
+    (balls.length ? balls : [["free", "Raid Ball (free)", "poke-ball", ""]]).map(([k, name, icon]) => '<button class="rg-ballbtn" type="button" data-rraid="' + k + '"><span class="rg-ico">' + rgImg(icon) + '</span><span><b>' + esc(name) + '</b><span class="note">~' + Math.round(Math.min(1, (RG_RAID_ODDS[k === "free" ? "poke-ball" : k] || 0.3) * rgCatchBonus()) * 100) + "%" + (k === "free" ? "" : " · ×" + run.balls[k]) + "</span></span></button>").join("") +
+    "</div></div></div>";
+}
 function renderRogueResults() {
   const run = Rogue.run, post = run.post || { lines: [], gains: [] };
   const rows = post.gains.map(g => { const m = run.party.find(x => x.uid === g.uid); return '<li class="rg-gain">' + (m ? '<span class="rg-mini">' + spriteImg(m, m.build.shiny) + "</span>" : "") + "<b>" + esc(g.name) + "</b>" + (g.gain ? '<span class="mono">+' + g.gain.toLocaleString() + " Exp.</span>" : "") + (g.friend ? '<span class="rg-heart mono">♥ +' + g.friend + "</span>" : "") + (g.to > g.from ? '<span class="rg-lvup">Lv. ' + g.from + " → " + g.to + "</span>" : '<span class="note">Lv. ' + g.to + "</span>") + "</li>"; }).join("");
@@ -9460,16 +9737,31 @@ function renderRogueResults() {
     rgUnlockBanner(post.unlocks) +
     '<section class="panel rg-results">' +
       (post.caught ? '<div class="rg-caught"><span class="label">New catch</span><b>' + esc(post.caught) + "</b></div>" : "") +
+      (post.coopCatches && post.coopCatches.length ? '<ul class="rg-lines coop-catches">' + post.coopCatches.map(l => "<li>" + esc(l) + "</li>").join("") + "</ul>" : "") +
+      rgRaidPanel(run, post) +
       (post.fled ? "" : '<div class="rg-earn"><span class="label">Prize money</span><b class="mono">+₽' + post.money.toLocaleString() + "</b></div>") +
       (rows ? '<ol class="rg-gains">' + rows + "</ol>" : "") +
       (post.lines.length ? '<ul class="rg-lines">' + post.lines.map(l => "<li>" + esc(l) + "</li>").join("") + "</ul>" : "") +
-      '<div class="row"><button class="btn primary" type="button" data-ract="to-camp">Continue → <span class="kbd">Enter</span></button></div></section>';
+      '<div class="row"><button class="btn primary" type="button" data-ract="to-camp"' + (post.raidCatch && !post.raidCatch.done ? ' title="You can skip your raid throw"' : "") + ">" + (post.raidCatch && !post.raidCatch.done ? "Skip the throw and continue" : "Continue") + ' → <span class="kbd">Enter</span></button></div></section>';
+}
+/* "Are you sure?" before a move is forgotten, a new one is skipped, or an Ability is changed. */
+function rgForgetConfirm(m, p) {
+  const i = Rogue.forgetAsk;
+  if (i == null || Rogue.forgetFor !== p) return "";
+  const text = i >= 0 ? "Forget <b>" + esc(pretty(m.build.moves[i])) + "</b> and learn <b>" + esc(pretty(p.move)) + "</b>? This can’t be undone." : "Give up on learning <b>" + esc(pretty(p.move)) + "</b>? " + esc(m.displayName) + (p.tm ? " won’t get another chance from this TM." : " won’t be asked again.");
+  return '<div class="rg-confirm rg-askbar" role="alertdialog" aria-label="Are you sure?"><div class="rg-confirm-txt"><span class="label">Are you sure?</span><span>' + text + '</span></div><div class="rg-confirm-act"><button class="btn primary" type="button" data-ract="forget-yes">' + (i >= 0 ? "Yes, learn it" : "Yes, skip it") + ' <span class="kbd">Enter</span></button><button class="btn" type="button" data-ract="forget-no">Go back <span class="kbd">Esc</span></button></div></div>';
+}
+function rgAbilConfirm(m, p) {
+  const a = Rogue.abilAsk;
+  if (a == null || Rogue.abilFor !== p) return "";
+  const text = a ? "Change " + esc(m.displayName) + "’s Ability from <b>" + esc(pretty(m.build.ability)) + "</b> to <b>" + esc(pretty(a)) + "</b>?" : "Keep <b>" + esc(pretty(m.build.ability)) + "</b>? You won’t be asked again until you use an Ability Capsule.";
+  return '<div class="rg-confirm rg-askbar" role="alertdialog" aria-label="Are you sure?"><div class="rg-confirm-txt"><span class="label">Are you sure?</span><span>' + text + '</span></div><div class="rg-confirm-act"><button class="btn primary" type="button" data-ract="abil-yes">' + (a ? "Yes, change it" : "Yes, keep it") + ' <span class="kbd">Enter</span></button><button class="btn" type="button" data-ract="abil-no">Go back <span class="kbd">Esc</span></button></div></div>';
 }
 function renderRoguePrompt() {
   const run = Rogue.run, p = run.prompts[0];
   if (p.t === "full") {
     const m = p.mon;
-    app.innerHTML = rgHead(run, "Your team is full") + '<section class="panel rg-prompt"><div class="rg-prompt-hero">' + '<span class="rg-big">' + spriteImg(m, m.build.shiny) + "</span><div><b>" + esc(m.displayName) + '</b> <span class="mono note">Lv. ' + m.build.level + "</span>" + typeChips(m.types) + '<p class="note">You can carry 6 Pokémon. Choose one to release, or let ' + esc(m.displayName) + " go. Unlocks and friendship you’ve already earned are kept either way.</p></div></div>" +
+    app.innerHTML = rgHead(run, "Your team is full") + '<section class="panel rg-prompt"><div class="rg-prompt-hero">' + '<span class="rg-big">' + spriteImg(m, m.build.shiny) + "</span><div><b>" + esc(m.displayName) + '</b> <span class="mono note">Lv. ' + m.build.level + "</span>" + typeChips(m.types) + '<p class="note">You can carry ' + rgTeamCap(run) + ' Pokémon. Choose one to release, or let ' + esc(m.displayName) + " go. Unlocks and friendship you’ve already earned are kept either way.</p></div></div>" +
       '<div class="rg-choices">' + run.party.map((x, i) => '<button class="rg-choice" type="button" data-rswap="' + i + '"><span class="rg-mini">' + spriteImg(x, x.build.shiny) + "</span><b>" + esc(x.displayName) + '</b><span class="note">Lv. ' + x.build.level + " · release</span></button>").join("") +
       '</div><div class="row"><button class="btn" type="button" data-rswap="-1">Let ' + esc(m.displayName) + " go</button></div></section>";
     return;
@@ -9482,14 +9774,14 @@ function renderRoguePrompt() {
     if (need.length) loadMoveInfos(need, () => { if (state.screen === "rogue") render(); });
     const mv = n => { const d = moveInfo[n] || {}; return '<span class="rg-mvname" style="--tc:' + (TYPE_COLOR[d.type] || "#888") + '"><b>' + esc(pretty(n)) + '</b><span class="note">' + (d.type ? esc(pretty(d.type)) + " · " + esc(pretty(d.cat || "")) + (d.power ? " · " + d.power + " power" : "") + (d.acc ? " · " + d.acc + "%" : "") : "…") + '</span><span class="note rg-mvdesc">' + esc(d.desc || "") + "</span></span>"; };
     app.innerHTML = rgHead(run, m.displayName + " wants to learn " + pretty(p.move)) + '<section class="panel rg-prompt"><div class="rg-prompt-hero"><span class="rg-big">' + spriteImg(m, m.build.shiny) + '</span><div><p style="margin:0">' + (p.tm ? "You used the TM. " : "") + esc(m.displayName) + " already knows four moves. Forget one to make room for <b>" + esc(pretty(p.move)) + "</b>?</p>" + '<div class="rg-newmove">' + mv(p.move) + "</div></div></div>" +
-      '<div class="rg-choices">' + m.build.moves.map((n, i) => n ? '<button class="rg-choice mv" type="button" data-rforget="' + i + '">' + mv(n) + '<span class="note"><b>Forget</b> <span class="kbd">' + (i + 1) + "</span></span></button>" : "").join("") + '</div><div class="row"><button class="btn" type="button" data-rforget="-1">Don’t learn ' + esc(pretty(p.move)) + ' <span class="kbd">Esc</span></button></div></section>';
+      '<div class="rg-choices">' + m.build.moves.map((n, i) => n ? '<button class="rg-choice mv' + (Rogue.forgetAsk === i ? " on" : "") + '" type="button" data-rforget="' + i + '" aria-pressed="' + (Rogue.forgetAsk === i) + '">' + mv(n) + '<span class="note"><b>Forget</b> <span class="kbd">' + (i + 1) + "</span></span></button>" : "").join("") + '</div><div class="row"><button class="btn' + (Rogue.forgetAsk === -1 ? " on" : "") + '" type="button" data-rforget="-1">Don’t learn ' + esc(pretty(p.move)) + ' <span class="kbd">Esc</span></button></div>' + rgForgetConfirm(m, p) + "</section>";
     return;
   }
   if (p.t === "ability") {
     m.abilities.forEach(x => rgAbilityDesc(x.name));
     app.innerHTML = rgHead(run, "Choose " + m.displayName + "’s Ability") + '<section class="panel rg-prompt rg-abilpick"><div class="rg-prompt-hero"><span class="rg-big">' + spriteImg(m, m.build.shiny) + '</span><div><p style="margin:0">' + (p.evolved ? esc(m.displayName) + " just evolved! " : "") + "Pick any of its Abilities, Hidden ones included.</p></div></div>" +
-      '<div class="rg-choices">' + m.abilities.map((x, i) => '<button class="rg-choice mv' + (x.name === m.build.ability ? " cur" : "") + '" type="button" data-rabil="' + esc(x.name) + '"><b>' + esc(pretty(x.name)) + (x.hidden ? ' <span class="badge">Hidden</span>' : "") + (x.name === m.build.ability ? ' <span class="badge evo">Current</span>' : "") + ' <span class="kbd">' + (i + 1) + '</span></b><span class="note">' + esc(Rogue.abDesc[x.name] || "…") + "</span></button>").join("") +
-      '</div><div class="row"><button class="btn" type="button" data-rabil="">Keep ' + esc(pretty(m.build.ability)) + ' <span class="kbd">Esc</span></button></div></section>';
+      '<div class="rg-choices">' + m.abilities.map((x, i) => '<button class="rg-choice mv' + (x.name === m.build.ability ? " cur" : "") + (Rogue.abilAsk === x.name ? " on" : "") + '" type="button" data-rabil="' + esc(x.name) + '"><b>' + esc(pretty(x.name)) + (x.hidden ? ' <span class="badge">Hidden</span>' : "") + (x.name === m.build.ability ? ' <span class="badge evo">Current</span>' : "") + ' <span class="kbd">' + (i + 1) + '</span></b><span class="note">' + esc(Rogue.abDesc[x.name] || "…") + "</span></button>").join("") +
+      '</div><div class="row"><button class="btn" type="button" data-rabil="">Keep ' + esc(pretty(m.build.ability)) + ' <span class="kbd">Esc</span></button></div>' + rgAbilConfirm(m, p) + "</section>";
     return;
   }
   if (p.t === "evolve") {
@@ -9519,7 +9811,7 @@ function renderRogueOver(won) {
       '<p class="note">' + run.caught + " caught · " + run.kos + " opponents knocked out · Best wave ever: " + meta.best + "</p>" +
       '<div class="rg-hall">' + run.party.map(m => '<div class="rg-hof"><span class="rg-big">' + spriteImg(m, m.build.shiny) + "</span><b>" + esc(m.displayName) + '</b><span class="mono note">Lv. ' + m.build.level + '</span><span class="rg-heart mono">♥ ' + (m.rg.friend || 0) + "</span></div>").join("") + "</div>" +
       '<div class="rg-points"><span class="label">Skill points earned</span>' + pts.rows.map(r => '<div class="rg-prow"><span>' + esc(r[0]) + '</span><b class="mono">+' + r[1] + "</b></div>").join("") + '<div class="rg-prow total"><span>Total</span><b class="mono">+' + pts.total + '</b></div><p class="note" style="margin:6px 0 0">You have <b>' + meta.points + "</b> points to spend.</p></div>" +
-      '<div class="row">' + (won ? '<button class="btn" type="button" data-ract="endless">Keep going in Endless</button>' : "") + '<button class="btn primary" type="button" data-ract="tree">🌳 Spend points</button><button class="btn" type="button" data-ract="new">Start a new run</button></div></section>';
+      '<div class="row">' + (won ? '<button class="btn" type="button" data-ract="endless">Keep going in Endless</button>' : "") + '<button class="btn primary" type="button" data-ract="tree">🌳 Spend points</button>' + (run.coop ? '<button class="btn" type="button" data-cact="leave">Back to co-op</button>' : '<button class="btn" type="button" data-ract="new">Start a new run</button>') + "</div>" + (run.coop ? '<p class="note" style="margin:8px 0 0">Every player earned these points in full for their own skill tree.</p>' : "") + "</section>";
 }
 
 /* ---------- evolution animation ---------- */
@@ -9586,7 +9878,7 @@ document.addEventListener("click", async e => {
   if (!t) return;
   const d = t.dataset;
   if (d.rball) return rgThrow(d.rball);
-  if (state.screen !== "rogue" && !d.ract) return;
+  if (state.screen !== "rogue" && state.screen !== "coop" && !d.ract) return;
   const run = Rogue.run;
   const p = rgPickState();
   if (d.ropt) {
@@ -9596,7 +9888,7 @@ document.addEventListener("click", async e => {
       const o = rgStarterOptions().find(x => x.id === id);
       if (!o) return;
       const used = p.team.reduce((s, x) => s + rgOptCost(x), 0);
-      if (p.team.length >= 6) return toast("Your team is full.");
+      if (p.team.length >= rgTeamCap()) return toast(rgTeamCap() < 6 ? "In a " + Coop.size + "-player co-op run you each bring " + rgTeamCap() + "." : "Your team is full.");
       if (used + rgCost(o.root) > rgBudget()) return toast("Over budget. Remove someone or upgrade Bigger Team in the skill tree.");
       p.team.push({ id, root: o.root, shiny: false, mega: null });
       Sound.play("click");
@@ -9608,7 +9900,7 @@ document.addEventListener("click", async e => {
   if (d.rshow) { p.show = d.rshow; return render(); }
   if (d.rshinytog) {
     const id = +d.rshinytog; let o = p.team.find(x => x.id === id);
-    if (!o) { const opt = rgStarterOptions().find(x => x.id === id); const used = p.team.reduce((s, x) => s + rgOptCost(x), 0); if (!opt || p.team.length >= 6 || used + rgCost(opt.root) > rgBudget()) return toast("Over budget."); o = { id, root: opt.root, shiny: false, mega: null }; p.team.push(o); }
+    if (!o) { const opt = rgStarterOptions().find(x => x.id === id); const used = p.team.reduce((s, x) => s + rgOptCost(x), 0); if (!opt || p.team.length >= rgTeamCap() || used + rgCost(opt.root) > rgBudget()) return toast("Over budget."); o = { id, root: opt.root, shiny: false, mega: null }; p.team.push(o); }
     o.shiny = !o.shiny; Sound.play("sparkle"); return render();
   }
   if (d.rmegatog) {
@@ -9616,7 +9908,7 @@ document.addEventListener("click", async e => {
     const megas = rgFamOf(opt.root).megas || [];
     let o = p.team.find(x => x.id === id);
     const used = p.team.reduce((s, x) => s + rgOptCost(x), 0);
-    if (!o) { if (p.team.length >= 6 || used + rgCost(opt.root) + 1 > rgBudget()) return toast("Over budget."); o = { id, root: opt.root, shiny: false, mega: null }; p.team.push(o); o.mega = megas[0]; return render(); }
+    if (!o) { if (p.team.length >= rgTeamCap() || used + rgCost(opt.root) + 1 > rgBudget()) return toast("Over budget."); o = { id, root: opt.root, shiny: false, mega: null }; p.team.push(o); o.mega = megas[0]; return render(); }
     const k = megas.indexOf(o.mega);
     const next = k < 0 ? megas[0] : megas[k + 1] || null;
     if (next && !o.mega && used + 1 > rgBudget()) return toast("Over budget.");
@@ -9668,6 +9960,7 @@ document.addEventListener("click", async e => {
     if (rgNeedsTarget(rw)) { if (!run.party.some(m => rgCanTake(run, rw, m))) { toast("None of your Pokémon need that right now."); return render(); } Rogue.target = Object.assign(rw, { shopPrice: price }); return render(); }
     run.money -= price * q; await rgApply(rw, null, true); Rogue.msg = "Bought " + rw.name + " for ₽" + (price * q).toLocaleString() + "."; Sound.play("click"); return render();
   }
+  if (d.rraid && run) return rgRaidThrow(d.rraid);
   if (d.rbag && run) {
     const k = d.rbag;
     if (!(run.bag[k] > 0)) return;
@@ -9685,14 +9978,23 @@ document.addEventListener("click", async e => {
     if (run.rewards && run.rewards.includes(rw)) Rogue.pickRw = null;
     return render();
   }
-  if (d.rforget && run) {
-    const pr = run.prompts[0], m = run.party.find(x => x.uid === pr.uid), i = +d.rforget;
+  if (d.rforget && run) { const pr = run.prompts[0]; Rogue.forgetAsk = +d.rforget; Rogue.forgetFor = pr; Sound.play("click"); render(); const bar = document.querySelector(".rg-askbar"); if (bar) { bar.scrollIntoView({ block: "nearest" }); const y = bar.querySelector("[data-ract]"); if (y) y.focus({ preventScroll: true }); } return; }
+  if ((d.ract === "forget-no" || d.ract === "abil-no") && run) { Rogue.forgetAsk = null; Rogue.abilAsk = null; return render(); }
+  if (d.ract === "forget-yes" && run && run.prompts.length && run.prompts[0].t === "learn" && Rogue.forgetAsk != null) {
+    const pr = run.prompts[0], m = run.party.find(x => x.uid === pr.uid), i = Rogue.forgetAsk;
+    Rogue.forgetAsk = null; Rogue.forgetFor = null;
     if (m && i >= 0) { const old = m.build.moves[i]; m.build.moves[i] = pr.move; if (m.rg.pp) delete m.rg.pp[old]; Rogue.msg = "1, 2 and… Poof! " + m.displayName + " forgot " + pretty(old) + " and learned " + pretty(pr.move) + "!"; Sound.play("statup"); }
     else if (m) Rogue.msg = m.displayName + " did not learn " + pretty(pr.move) + ".";
     run.prompts.shift(); rgSave(); return render();
   }
   if (d.rabil != null && run && run.prompts.length && run.prompts[0].t === "ability") {
     const pr = run.prompts[0], m = run.party.find(x => x.uid === pr.uid);
+    if (m && d.rabil === m.build.ability) { Rogue.abilAsk = null; Rogue.abilFor = null; run.prompts.shift(); Rogue.msg = m.displayName + " kept " + pretty(m.build.ability) + "."; rgSave(); return render(); }
+    Rogue.abilAsk = d.rabil; Rogue.abilFor = pr; Sound.play("click"); render(); const bar = document.querySelector(".rg-askbar"); if (bar) { bar.scrollIntoView({ block: "nearest" }); const y = bar.querySelector("[data-ract]"); if (y) y.focus({ preventScroll: true }); } return;
+  }
+  if (d.ract === "abil-yes" && run && run.prompts.length && run.prompts[0].t === "ability" && Rogue.abilAsk != null) {
+    const pr = run.prompts[0], m = run.party.find(x => x.uid === pr.uid);
+    d.rabil = Rogue.abilAsk; Rogue.abilAsk = null; Rogue.abilFor = null;
     if (m && d.rabil && m.abilities.some(x => x.name === d.rabil)) { m.build.ability = d.rabil; Rogue.msg = m.displayName + "’s Ability is now " + pretty(d.rabil) + "."; Sound.play("statup"); }
     run.prompts.shift(); rgSave(); return render();
   }
@@ -9711,8 +10013,8 @@ document.addEventListener("click", async e => {
   if (!act) return;
   if (act === "after-battle") return rgAfterBattle();
   if (act === "flee") return rgFlee();
-  if (act === "tree") { Rogue.prevView = Rogue.view; Rogue.view = "tree"; Rogue.msg = ""; return render(); }
-  if (act === "tree-back") { Rogue.view = Rogue.prevView && Rogue.prevView !== "tree" ? Rogue.prevView : null; Rogue.msg = ""; Rogue.confirmRespec = false; return render(); }
+  if (act === "tree") { Rogue.treeFromCoop = state.screen === "coop"; if (Rogue.treeFromCoop) { Rogue.prevView = null; state.screen = "rogue"; } else Rogue.prevView = Rogue.view; Rogue.view = "tree"; Rogue.msg = ""; return render(); }
+  if (act === "tree-back") { Rogue.view = Rogue.prevView && Rogue.prevView !== "tree" ? Rogue.prevView : null; Rogue.msg = ""; Rogue.confirmRespec = false; if (Rogue.treeFromCoop) { Rogue.treeFromCoop = false; Rogue.view = null; state.screen = "coop"; } return render(); }
   if (act === "respec") { Rogue.confirmRespec = true; return render(); }
   if (act === "respec-no") { Rogue.confirmRespec = false; return render(); }
   if (act === "respec-yes") { const meta = rgMeta(); let back = 0; RG_SKILLS.forEach(s => { for (let l = 0; l < rgSk(s.id); l++) back += rgSkillCost(s, l); }); meta.skills = {}; meta.points += back; rgMetaSave(); Rogue.confirmRespec = false; Rogue.msg = "Refunded " + back + " points."; return render(); }
@@ -9746,6 +10048,7 @@ document.addEventListener("click", async e => {
   }
   if (act === "abandon") { Rogue.confirmAbandon = true; return render(); }
   if (act === "abandon-no") { Rogue.confirmAbandon = false; return render(); }
+  if (act === "coop-leave-yes") { Rogue.confirmAbandon = false; coopLeave(false); state.screen = "coop"; Coop.error = "You left the co-op room. Your run is saved on this device if you want to rejoin."; return render(); }
   if (act === "abandon-yes") { Rogue.confirmAbandon = false; run.phase = "over"; rgBest(false); rgAwardPoints(run, false); rgSave(); return render(); }
   if (act === "evo-stop") { if (Rogue.evo) Rogue.evo.stopped = true; return; }
 });
@@ -9756,6 +10059,10 @@ document.addEventListener("keydown", e => {
   if (/INPUT|TEXTAREA|SELECT/.test(tag)) return;
   const run = Rogue.run;
   const click = sel => { const b = typeof sel === "string" ? document.querySelector(sel) : sel; if (b && !b.disabled) { e.preventDefault(); b.click(); return true; } return false; };
+  if ((e.key === "Escape" || e.key === "Enter") && run && run.prompts.length && (Rogue.forgetAsk != null || Rogue.abilAsk != null) && !Rogue.view) {
+    const yes = Rogue.forgetAsk != null ? "forget-yes" : "abil-yes", no = Rogue.forgetAsk != null ? "forget-no" : "abil-no";
+    return void click('[data-ract="' + (e.key === "Enter" ? yes : no) + '"]');
+  }
   if (e.key === "Escape" && run && run.prompts.length && run.prompts[0].t === "ability" && !Rogue.view) return void click('[data-rabil=""]');
   if (e.key === "Escape") { if (Rogue.sheet) { Rogue.sheet = null; render(); return; } if (Rogue.target) { Rogue.target = null; if (Rogue.pickRw != null && Rogue.run && Rogue.run.rewards && !Rogue.run.rewards[Rogue.pickRw]) Rogue.pickRw = null; render(); return; } if (Rogue.pickRw != null) { Rogue.pickRw = null; render(); return; } if (Rogue.pickShop != null) { Rogue.pickShop = null; render(); return; } if (click('[data-rforget="-1"]')) return; return; }
   if (!run || Rogue.view) return;
@@ -9772,6 +10079,8 @@ document.addEventListener("keydown", e => {
 function openRogue() {
   if (state.screen === "battle") return toast("Leave the battle first.");
   if (battle.room) return toast("Leave the online room first.");
+  if (Coop.on && Rogue.run && Rogue.run.coop) { state.screen = "rogue"; Rogue.view = null; return render(); }
+  if (Coop.on) { Coop.error = "You’re in a co-op room. Leave it to play solo."; state.screen = "coop"; return render(); }
   state.screen = "rogue";
   Rogue.msg = ""; Rogue.target = null; Rogue.pickRw = null; Rogue.pickShop = null; Rogue.confirmAbandon = false; Rogue.sheet = null;
   Rogue.view = "new";
@@ -9783,7 +10092,7 @@ async function rgCatchAnim(f, e) {
   const art = f && f.querySelector(".mon-art");
   const layer = fxLayer(), p = arenaPoint(art);
   const arena = document.getElementById("arena");
-  if (fast || !layer || !p || !arena) { if (e.ok && arena) arena.classList.add("caught"); Sound.play(e.ok ? "badge" : "pop"); return; }
+  if (fast || !layer || !p || !arena) { if (e.ok && arena && !(battle.rogue && battle.rogue.coop)) arena.classList.add("caught"); Sound.play(e.ok ? "badge" : "pop"); return; }
   const icon = { "poke-ball": "", "great-ball": " great", "ultra-ball": " ultra", "rogue-ball": " rogue", "master-ball": " master" }[e.ball] || "";
   const b = document.createElement("span"); b.className = "pball" + icon;
   layer.appendChild(b);
@@ -9813,8 +10122,8 @@ async function rgCatchAnim(f, e) {
     Sound.play("badge");
     b.classList.add("caughtball");
     for (let s = 0; s < 3; s++) { const st = document.createElement("span"); st.className = "rg-star"; st.style.left = (p.x + (s - 1) * 22) + "px"; st.style.top = (gy - 10) + "px"; st.style.setProperty("--dx", (s - 1) * 26 + "px"); layer.appendChild(st); setTimeout(() => st.remove(), 1200); }
-    arena.classList.add("caught");
-    await wait(900);
+    if (battle.rogue && battle.rogue.coop) { await wait(700); b.remove(); if (art) { art.classList.remove("rg-suck"); } }
+    else { arena.classList.add("caught"); await wait(900); }
   } else {
     await wait(160);
     b.classList.add("open");
@@ -9960,6 +10269,7 @@ document.addEventListener("click", e => {
   if (t.dataset.lv) { const m = state.team[state.active]; m.build.level = +t.dataset.lv; document.getElementById("level").value = t.dataset.lv; return updateStats(m); }
   const act = t.dataset.act;
   if (act === "rogue") return openRogue();
+  if (act === "coop") return openCoop();
   if (act === "cpu") return startCpu();
   if (act === "host") return createRoom();
   if (act === "join") return joinRoom();
@@ -10174,6 +10484,1051 @@ document.addEventListener("change", e => {
     });
   }
 });
+
+/* ============ Co-op roguelike: 2, 3 or 6 players, one Pokémon each on the field ============ */
+/* The host runs every battle and decides the encounters. Each player keeps their own run on their own device:
+   party, money, rewards, Poké Mart, bag and skill tree. Catches, friendship and skill points are shared, never split. */
+const COOP_SIZES = { 2: { per: 3, label: "Double battles" }, 3: { per: 2, label: "Triple battles" }, 6: { per: 1, label: "6-player battles" } };
+const Coop = {
+  on: false, role: null, code: "", peer: null, conn: null, conns: new Map(), connecting: false, error: "",
+  pid: (() => { try { let p = localStorage.getItem("rd-coop-pid"); if (!p) { p = Math.random().toString(36).slice(2, 12); localStorage.setItem("rd-coop-pid", p); } return p; } catch (e) { return Math.random().toString(36).slice(2, 12); } })(),
+  size: 2, me: 0, players: [], phase: "lobby", mode: "classic", challenge: "standard", runId: null,
+  wave: 1, enc: null, hb: null, result: null, starting: false, lobbyReady: false, setup: { size: 2, mode: "classic", challenge: "standard" }
+};
+function coopPer(size) { return (COOP_SIZES[size] || COOP_SIZES[2]).per; }
+function rgTeamCap(run) { if (run && run.coop) return coopPer(run.coop.size); if (!run && Coop.on && state.screen === "coop") return coopPer(Coop.size); return 6; }
+function coopPeerId(code) { return "rdcoop-" + code.toLowerCase(); }
+function coopSaved() { try { const r = JSON.parse(localStorage.getItem("rd-coop") || "null"); return r && r.coop && Array.isArray(r.party) && r.party.length && r.phase !== "over" && r.phase !== "victory" ? r : null; } catch (e) { return null; } }
+function coopName(i) { const p = Coop.players[i]; return p ? p.name : "Player " + (i + 1); }
+function coopMeName() { return coopName(Coop.me); }
+function coopUniqueName(name, idx) {
+  let n = cleanName(name) || "Trainer " + (idx + 1), k = 2;
+  while (Coop.players.some(p => p.idx !== idx && p.name === n)) n = (cleanName(name) || "Trainer") + " " + k++;
+  return n;
+}
+function coopPartySummary(run) { return run ? run.party.map(m => ({ v: m.variety, s: m.speciesName, n: m.displayName, l: m.build.level, sh: !!m.build.shiny, hp: rgMaxHp(m) ? Math.round(rgHp(m) / rgMaxHp(m) * 100) : 0, f: !!m.rg.fainted })) : []; }
+function coopMini(x) { return '<span class="rg-mini' + (x.f ? " out" : "") + '" title="' + esc(x.n + " · Lv. " + x.l) + '">' + spriteImg({ variety: x.v, speciesName: x.s, fallback: { normal: [], shiny: [] }, displayName: x.n }, x.sh) + "</span>"; }
+
+/* ---------- connections ---------- */
+function coopSend(msg) { try { if (Coop.conn && Coop.conn.open !== false) Coop.conn.send(msg); } catch (e) { } }
+function coopTo(idx, msg) { if (idx === Coop.me && Coop.role === "host") return coopGuestData(msg, true); const p = Coop.players[idx]; const c = p && p.pid ? Coop.conns.get(p.pid) : null; try { if (c) c.send(msg); } catch (e) { } }
+function coopBroadcast(msg) { Coop.conns.forEach(c => { try { c.send(msg); } catch (e) { } }); }
+function coopCloseNet() {
+  try { Coop.conns.forEach(c => { try { c.close(); } catch (e) { } }); } catch (e) { }
+  try { if (Coop.conn) Coop.conn.close(); } catch (e) { }
+  try { if (Coop.peer) Coop.peer.destroy(); } catch (e) { }
+  Coop.conns = new Map(); Coop.conn = null; Coop.peer = null;
+}
+/* Leaving co-op puts your solo run back. A co-op run in progress stays saved so you can rejoin it. */
+function coopLeave(silent) {
+  if (Coop.on && !silent) { if (Coop.role === "guest") coopSend({ t: "bye" }); else coopBroadcast({ t: "error", msg: "The host closed the co-op room." }); }
+  coopCloseNet();
+  const wasRun = Coop.on && Rogue.run && Rogue.run.coop;
+  if (wasRun) rgSave();
+  Object.assign(Coop, { on: false, role: null, code: "", players: [], phase: "lobby", hb: null, result: null, starting: false, lobbyReady: false, connecting: false, runId: null });
+  if (wasRun || (Rogue.run && Rogue.run.coop)) { Rogue.run = RogueSave.load(); Rogue.encBuilt = null; }
+  if (battle.rogue && battle.rogue.coop) Object.assign(battle, { mode: null, B: null, view: null, shownLine: null, domKey: null, playing: false, rogue: null });
+}
+function coopFail(msg) { coopLeave(true); Coop.error = msg; toast(msg.length > 90 ? msg.slice(0, 88) + "…" : msg); state.screen = "coop"; render(); }
+function openCoop() {
+  if (state.screen === "battle") return toast("Leave the battle first.");
+  if (battle.room) return toast("Leave the online room first.");
+  if (Coop.on && Coop.phase === "run" && Rogue.run && Rogue.run.coop) { state.screen = "rogue"; Rogue.view = null; return render(); }
+  state.screen = "coop"; Coop.error = ""; render(); window.scrollTo(0, 0);
+}
+async function coopOpenPeer(onConn) {
+  await loadPeer();
+  return new Promise((res, rej) => {
+    const tryOpen = attempt => {
+      const code = Coop.code && attempt === 0 && Coop.keepCode ? Coop.code : newCode();
+      const peer = new Peer(coopPeerId(code));
+      Coop.peer = peer;
+      peer.on("open", () => { if (Coop.peer !== peer) return; Coop.code = code; Coop.connecting = false; res(code); });
+      peer.on("error", err => {
+        if (Coop.peer !== peer) return;
+        if (err.type === "unavailable-id" && attempt < 4) { peer.destroy(); return tryOpen(attempt + 1); }
+        if (err.type === "peer-unavailable") return;
+        if (!Coop.code) rej(new Error(netError(err)));
+      });
+      peer.on("connection", conn => onConn(conn));
+    };
+    tryOpen(0);
+  });
+}
+async function coopHost(resume) {
+  const saved = resume ? coopSaved() : null;
+  if (resume && !saved) return toast("No co-op run to reopen.");
+  coopLeave(true);
+  Coop.error = "";
+  const st = Coop.setup;
+  Object.assign(Coop, { on: true, role: "host", me: 0, connecting: true, code: "", conns: new Map(), result: null, hb: null });
+  if (saved) {
+    const nx = saved.phase === "results" && saved.coop.next ? saved.coop.next : null;
+    Object.assign(Coop, { size: saved.coop.size, mode: saved.mode, challenge: saved.challenge, runId: saved.coop.runId, phase: "run", wave: nx ? nx.wave : saved.wave, enc: nx ? nx.enc : saved.enc });
+    Coop.players = saved.coop.players.map(p => ({ idx: p.idx, pid: p.idx === 0 ? Coop.pid : p.pid, name: p.name, here: p.idx === 0, party: p.idx === 0 ? coopPartySummary(saved) : [], waveReady: null }));
+    Rogue.run = saved; Rogue.encBuilt = null;
+  } else {
+    Object.assign(Coop, { size: st.size, mode: st.mode, challenge: st.challenge, runId: Math.random().toString(36).slice(2, 10), phase: "lobby", wave: 1, enc: null });
+    Coop.players = [{ idx: 0, pid: Coop.pid, name: myName(), here: true, picks: [], lobbyReady: false }];
+  }
+  state.screen = saved ? "rogue" : "coop"; Rogue.view = null; render(); window.scrollTo(0, 0);
+  try { await coopOpenPeer(conn => { conn.on("data", msg => coopHostData(conn, msg)); conn.on("close", () => coopHostClose(conn)); }); }
+  catch (e) { return coopFail(e.message || "Couldn’t open a room."); }
+  render();
+}
+async function coopJoin() {
+  const input = document.getElementById("coopcode");
+  const code = String(input ? input.value : "").trim().toUpperCase().replace(/[^A-Z0-9]/g, "");
+  if (code.length !== 5) { Coop.error = "Room codes are 5 letters and numbers."; toast(Coop.error); return render(); }
+  coopLeave(true);
+  Object.assign(Coop, { on: true, role: "guest", code, connecting: true, error: "", players: [], phase: "lobby", me: -1 });
+  state.screen = "coop"; render(); window.scrollTo(0, 0);
+  try { await loadPeer(); } catch (e) { return coopFail(e.message); }
+  const peer = new Peer();
+  Coop.peer = peer;
+  peer.on("open", () => {
+    if (Coop.peer !== peer) return;
+    const conn = peer.connect(coopPeerId(code), { reliable: true });
+    Coop.conn = conn;
+    conn.on("open", () => { const sv = coopSaved(); coopSend({ t: "hello", v: 1, pid: Coop.pid, name: myName(), runId: sv ? sv.coop.runId : null }); });
+    conn.on("data", msg => coopGuestData(msg));
+    conn.on("close", () => { if (Coop.conn === conn) coopHostGone(); });
+  });
+  peer.on("error", err => { if (Coop.peer !== peer) return; if (state.screen === "battle" && battle.rogue && battle.rogue.coop) return coopHostGone(); coopFail(netError(err)); });
+}
+function coopHostGone() {
+  if (!Coop.on || Coop.role !== "guest") return;
+  const inBattle = state.screen === "battle" && battle.rogue && battle.rogue.coop;
+  coopCloseNet();
+  Coop.lost = true;
+  if (Rogue.run && Rogue.run.coop) rgSave();
+  toast("The host left the co-op room. Your run is saved, so you can rejoin when they reopen it.");
+  if (inBattle) { battle.disconnected = true; battle.discText = "The host left the co-op room. Your run is saved; rejoin when they reopen it."; return renderBattle(); }
+  coopLeave(true); state.screen = "coop"; Coop.error = "The host left the co-op room. Your run is saved, so you can rejoin when they reopen it."; render();
+}
+
+/* ---------- host: messages from players ---------- */
+function coopPublicPlayers() { return Coop.players.map(p => ({ idx: p.idx, name: p.name, here: !!p.here, picks: p.picks || [], lobbyReady: !!p.lobbyReady, ready: !!(p.waveReady && p.waveReady.wave === Coop.wave), party: p.party || [] })); }
+function coopLobbyMsg() { return { t: "lobby", size: Coop.size, mode: Coop.mode, challenge: Coop.challenge, phase: Coop.phase, code: Coop.code, runId: Coop.runId, wave: Coop.wave, players: coopPublicPlayers() }; }
+function coopSync() {
+  if (Coop.role !== "host") return;
+  coopBroadcast(coopLobbyMsg());
+  coopRefresh();
+}
+function coopRefresh() {
+  if (state.screen === "coop") return render();
+  if (state.screen === "rogue" && Rogue.run && Rogue.run.coop) { const el = document.getElementById("coop-ready"); if (el) el.outerHTML = coopReadyPanel(Rogue.run); else if (!Rogue.busy && Rogue.run.phase === "camp" && !Rogue.run.prompts.length) render(); }
+}
+function coopHostData(conn, msg) {
+  if (Coop.role !== "host" || !msg || typeof msg !== "object") return;
+  let p = Coop.players.find(x => x.pid && x.pid === conn._pid);
+  if (msg.t === "hello") {
+    const pid = String(msg.pid || "").slice(0, 20);
+    const known = Coop.players.find(x => x.pid === pid && x.idx !== 0);
+    if (known) {
+      if (Coop.conns.get(pid) && Coop.conns.get(pid) !== conn) { try { Coop.conns.get(pid).close(); } catch (e) { } }
+      conn._pid = pid; Coop.conns.set(pid, conn); known.here = true; known.name = coopUniqueName(msg.name, known.idx);
+      toast(known.name + " is back!");
+    } else {
+      const reject = text => { try { conn.send({ t: "error", msg: text }); } catch (e) { } setTimeout(() => { try { conn.close(); } catch (e) { } }, 400); };
+      if (Coop.phase !== "lobby") {
+        const free = Coop.players.find(x => !x.here && x.idx !== 0 && !Coop.conns.get(x.pid));
+        if (!free || (msg.runId && msg.runId !== Coop.runId)) return reject("This co-op run has already started.");
+        free.pid = pid; conn._pid = pid; Coop.conns.set(pid, conn); free.here = true; free.name = coopUniqueName(msg.name, free.idx);
+      } else {
+        const used = new Set(Coop.players.map(x => x.idx));
+        let idx = -1; for (let i = 1; i < Coop.size; i++) if (!used.has(i)) { idx = i; break; }
+        if (idx < 0) return reject("That co-op room is full.");
+        conn._pid = pid; Coop.conns.set(pid, conn);
+        Coop.players.push({ idx, pid, name: coopUniqueName(msg.name, idx), here: true, picks: [], lobbyReady: false });
+        Coop.players.sort((a, b) => a.idx - b.idx);
+        toast(Coop.players.find(x => x.pid === pid).name + " joined!");
+      }
+    }
+    p = Coop.players.find(x => x.pid === pid);
+    conn.send({ t: "welcome", me: p.idx, name: p.name });
+    if (Coop.phase === "run") {
+      conn.send(coopStartMsg(p.idx, true));
+      if (Coop.hb) { conn.send({ t: "battle", ctx: Coop.hb.ctxMsg, view: coopViewFor(Coop.hb.B, 200) }); if (Coop.result) conn.send({ t: "result", res: Coop.result }); }
+    }
+    return coopSync();
+  }
+  if (!p) return;
+  if (msg.t === "bye") { p.here = false; Coop.conns.delete(p.pid); try { conn.close(); } catch (e) { } toast(p.name + " left."); if (Coop.phase === "lobby") { Coop.players = Coop.players.filter(x => x !== p); } coopSync(); coopHostTry(); return; }
+  if (msg.t === "pick") { p.picks = Array.isArray(msg.picks) ? msg.picks.slice(0, 6).map(x => ({ id: clampInt(x.id, 1, 1025, 1), shiny: !!x.shiny })) : []; p.lobbyReady = !!msg.ready && p.picks.length > 0; return coopSync(); }
+  if (msg.t === "ready") { coopHostReady(p, msg); return; }
+  if (msg.t === "unready") { p.waveReady = null; if (msg.party) p.party = msg.party; return coopSync(); }
+  if (msg.t === "party") { p.party = Array.isArray(msg.party) ? msg.party.slice(0, 6) : []; return coopSync(); }
+  if (msg.t === "choice") return coopHostChoice(p.idx, msg.a, msg.key);
+  if (msg.t === "flee") return coopHostFlee(p.idx, !!msg.on);
+  if (msg.t === "caught" && msg.mon) { coopBroadcast({ t: "caught", by: p.idx, mon: msg.mon }); coopNoteShared(p.idx, msg.mon); return; }
+  if (msg.t === "emote") { coopBroadcast({ t: "emote", from: p.idx, e: msg.e }); coopShowEmote(p.idx, msg.e); return; }
+}
+function coopHostClose(conn) {
+  const p = Coop.players.find(x => x.pid && x.pid === conn._pid);
+  if (!p || Coop.conns.get(p.pid) !== conn) return;
+  Coop.conns.delete(p.pid); p.here = false;
+  if (Coop.phase === "lobby") Coop.players = Coop.players.filter(x => x !== p);
+  toast(p.name + " disconnected." + (Coop.phase === "run" ? " They can rejoin with the same code; until then their Pokémon follow the AI." : ""));
+  coopSync(); coopHostTry(); coopHostMaybeBattle();
+}
+function coopStartMsg(idx, resume) {
+  return { t: "start", resume: !!resume, runId: Coop.runId, size: Coop.size, mode: Coop.mode, challenge: Coop.challenge, me: idx, wave: Coop.wave, enc: Coop.enc, gymOrder: Rogue.run && Rogue.run.gymOrder, players: Coop.players.map(p => ({ idx: p.idx, name: p.name, pid: p.pid })) };
+}
+
+/* ---------- guest (and host, for itself): messages from the host ---------- */
+async function coopGuestData(msg, local) {
+  if (!msg || typeof msg !== "object" || !Coop.on) return;
+  if (msg.t === "welcome") { Coop.me = msg.me; Coop.connecting = false; return render(); }
+  if (msg.t === "error") { const text = String(msg.msg || "The host closed the room.").slice(0, 200); if (Rogue.run && Rogue.run.coop) rgSave(); coopLeave(true); Coop.error = text; if (state.screen === "battle") state.screen = "coop"; if (state.screen !== "title") state.screen = "coop"; return render(); }
+  if (msg.t === "lobby") {
+    if (Coop.role === "guest") {
+      Object.assign(Coop, { size: msg.size, mode: msg.mode, challenge: msg.challenge, phase: msg.phase, runId: msg.runId, wave: msg.wave });
+      Coop.players = (msg.players || []).map(p => Object.assign({}, p));
+    }
+    return coopRefresh();
+  }
+  if (msg.t === "start") return coopBeginRun(msg);
+  if (msg.t === "battle") return coopEnterBattle(msg);
+  if (msg.t === "view") { if (!local && battle.rogue && battle.rogue.coop && !battle.B) { battle.view = msg.view; renderBattle(); } return; }
+  if (msg.t === "wait") { const v = currentView(); if (v && battle.rogue && battle.rogue.coop) { if (!battle.B && battle.view) { battle.view.coopWait = msg.wait; battle.view.coopFlee = msg.flee; } if (!battle.playing) renderControls(currentView(), false); } return; }
+  if (msg.t === "result") { Coop.result = msg.res; if (msg.res.fled) return rgCoopAfterBattle(); if (state.screen === "battle" && !battle.playing) renderControls(currentView(), false); return; }
+  if (msg.t === "caught" && !local) { coopNoteShared(msg.by, msg.mon); return; }
+  if (msg.t === "emote" && !local) { coopShowEmote(msg.from, msg.e); return; }
+  if (msg.t === "unreadyall") { Coop.myReady = false; return coopRefresh(); }
+  if (msg.t === "notice") { toast(String(msg.msg || "").slice(0, 140)); if (battle.cmine) { battle.cmine = null; if (state.screen === "battle" && !battle.playing) renderControls(currentView(), false); } return; }
+}
+
+/* ---------- lobby: picking starters, then the host starts the run ---------- */
+function coopSendPicks() {
+  const p = rgPickState();
+  const picks = p.team.map(o => ({ id: o.id, shiny: !!o.shiny }));
+  if (Coop.role === "host") { const me = Coop.players[0]; me.picks = picks; me.lobbyReady = Coop.lobbyReady && picks.length > 0; coopSync(); }
+  else coopSend({ t: "pick", picks, ready: Coop.lobbyReady });
+}
+async function coopHostStartRun() {
+  if (Coop.role !== "host" || Coop.phase !== "lobby") return;
+  const all = Coop.players.length === Coop.size && Coop.players.every(p => p.here && p.lobbyReady && p.picks && p.picks.length);
+  if (!all) return toast("Everyone needs to join and be ready first.");
+  Coop.phase = "run"; Coop.wave = 1;
+  const gymOrder = rgShuffle([0, 1, 2, 3, 4, 5, 6, 7]);
+  const tmp = { wave: 1, challenge: Coop.challenge, keys: {}, biomes: [], gymOrder };
+  Coop.enc = rgCoopEncounter(tmp, Coop.size);
+  Coop.biomes = tmp.biomes;
+  Coop.players.forEach(p => { p.waveReady = null; });
+  Coop.players.forEach(p => { if (p.idx !== 0) coopTo(p.idx, Object.assign(coopStartMsg(p.idx), { gymOrder })); });
+  coopBeginRun(Object.assign(coopStartMsg(0), { gymOrder, biomes: tmp.biomes }));
+}
+async function coopBeginRun(msg) {
+  Coop.phase = "run"; Coop.size = msg.size; Coop.me = msg.me; Coop.runId = msg.runId; Coop.mode = msg.mode; Coop.challenge = msg.challenge; Coop.wave = msg.wave;
+  if (Coop.role === "guest") Coop.players = (msg.players || []).map(p => Object.assign({ here: true, party: [] }, p));
+  const info = { runId: msg.runId, size: msg.size, me: msg.me, role: Coop.role, players: (msg.players || []).map(p => ({ idx: p.idx, name: p.name, pid: p.pid })), gymOrder: msg.gymOrder, wave: msg.wave, enc: msg.enc, biomes: msg.biomes };
+  const sv = coopSaved();
+  if (sv && sv.coop.runId === msg.runId) {
+    /* rejoining: keep your own saved party, money and items */
+    Rogue.run = sv; Rogue.encBuilt = null;
+    Object.assign(sv.coop, { me: msg.me, role: Coop.role, players: info.players, size: msg.size });
+    if (sv.phase === "camp" && (sv.wave !== msg.wave || !sv.enc)) { sv.wave = msg.wave; sv.enc = msg.enc; sv.rewards = sv.rewards || []; }
+    if (sv.phase === "results" && sv.coop.next && sv.coop.next.wave !== msg.wave) sv.coop.next = { wave: msg.wave, enc: msg.enc };
+    rgSave();
+    state.screen = "rogue"; Rogue.view = null; Rogue.msg = msg.resume ? "Welcome back! You’re in wave " + msg.wave + "." : "";
+    render(); coopPushParty(); return;
+  }
+  if (msg.resume) { Coop.error = "You don’t have this co-op run saved on this device, so you can’t rejoin it."; coopLeave(false); state.screen = "coop"; return render(); }
+  const p = rgPickState();
+  state.screen = "rogue"; Rogue.view = null;
+  await rgStartRun(p.team.slice(0, coopPer(msg.size)), msg.mode, msg.challenge, info);
+  coopPushParty();
+}
+function coopPushParty() {
+  const run = Rogue.run;
+  if (!run || !run.coop || !Coop.on) return;
+  const party = coopPartySummary(run);
+  if (Coop.role === "host") { const me = Coop.players[0]; if (me) me.party = party; coopSync(); }
+  else coopSend({ t: "party", party });
+}
+
+/* ---------- encounters (host only) ---------- */
+/* Only the first wild Pokémon of a pack gets the rare roll, so a wave is no more likely to hold a legend than in solo. Shiny odds are per Pokémon. */
+function rgCoopWildSpec(run, L, biome) {
+  const rare = null;
+  const spec = rare ? rgRareSpec(rare, L) : { id: rgSpecies(run, L, { biome }), level: Math.max(2, L + rand(3) - (run.wave <= 5 ? 2 : 1)) };
+  spec.shiny = rgShinyRoll(run);
+  return spec;
+}
+/* Raid bosses are rare, much stronger, and fought by the whole team at once. */
+function rgCoopEncounter(run, size) {
+  const enc = rgEncounter(run);
+  enc.size = size;
+  if (enc.kind === "wild") {
+    if (run.wave > 4 && Math.random() < 0.08) {
+      /* early raids are strong regular Pokémon; legends show up as the run goes on */
+      const w = run.wave, L = Math.min(100, rgLevel(run, w) + (w < 15 ? 3 : 5)), r = Math.random();
+      const odds = w < 15 ? [0, 0.15] : w < 30 ? [0.15, 0.5] : [0.3, 0.7];
+      let spec;
+      if (r < odds[0]) spec = rgRareSpec("big", L);
+      else if (r < odds[1]) spec = rgRareSpec("rare", L);
+      else { const hi = w < 15 ? 540 : 600; const pool = RG_DEX.filter(d => d.final && d.cls === 0 && d.bst >= 450 && d.bst <= hi); spec = { id: pick(pool).id, level: L }; }
+      spec.level = L; spec.shiny = rgShinyRoll(run);
+      return { kind: "raid", wave: run.wave, level: L, name: "Raid Boss", title: "Raid Boss", mons: [spec], ai: rgTier(run, "hard"), backdrop: enc.backdrop, biome: enc.biome, rare: spec.rare || null, size };
+    }
+    for (let k = 1; k < size; k++) enc.mons.push(rgCoopWildSpec(run, rgLevel(run, run.wave), enc.biome));
+    if (run.wave < 10) enc.mons.forEach(m => { if (!m.rare) m.level = Math.max(2, m.level - 1); });
+    const rareOne = enc.mons.find(m => m.rare);
+    enc.rare = rareOne ? rareOne.rare : null;
+  } else enc.count = Math.min(12, enc.count + size - 1);
+  return enc;
+}
+function coopNextEncounter(wave) {
+  const hostRun = Rogue.run;
+  const tmp = { wave, challenge: Coop.challenge, keys: hostRun ? hostRun.keys : {}, biomes: hostRun && hostRun.coop ? (hostRun.coop.biomes || (hostRun.coop.biomes = [])) : (Coop.biomes || []), gymOrder: hostRun ? hostRun.gymOrder : rgShuffle([0, 1, 2, 3, 4, 5, 6, 7]) };
+  return rgCoopEncounter(tmp, Coop.size);
+}
+
+/* ---------- camp: everyone readies up, then the host starts the battle ---------- */
+async function coopToggleReady() {
+  const run = Rogue.run;
+  if (!run || !run.coop || !Coop.on) return toast("You’re not connected to your co-op room. Rejoin it from the Co-op screen.");
+  if (run.prompts.length) return toast("Finish the choice above first.");
+  if (Coop.myReady) {
+    Coop.myReady = false;
+    if (Coop.role === "host") { Coop.players[0].waveReady = null; coopSync(); } else coopSend({ t: "unready", party: coopPartySummary(run) });
+    return render();
+  }
+  Coop.myReady = true; render();
+  try {
+    const mons = await withAltForms(run.party.map(rgBattleMon));
+    const data = { t: "ready", wave: run.wave, mons, uids: run.party.map(m => m.uid), lives: run.lives || 0, tera: !!run.keys["tera-orb"], party: coopPartySummary(run) };
+    if (!Coop.myReady) return;
+    if (Coop.role === "host") coopHostReady(Coop.players[0], data); else coopSend(data);
+  } catch (e) { Coop.myReady = false; toast("Couldn’t get your team ready. " + e.message); render(); }
+}
+function coopHostReady(p, msg) {
+  if (!msg || msg.wave !== Coop.wave || !Array.isArray(msg.mons)) { coopTo(p.idx, { t: "notice", msg: "Wave mismatch. Head back to camp and ready up again." }); return; }
+  p.waveReady = { wave: msg.wave, mons: msg.mons.slice(0, coopPer(Coop.size)), uids: (msg.uids || []).slice(0, 6), lives: clampInt(msg.lives, 0, 9, 0), tera: !!msg.tera };
+  p.lastTeam = p.waveReady;
+  if (msg.party) p.party = msg.party;
+  coopSync();
+  coopHostMaybeBattle();
+}
+async function coopHostMaybeBattle() {
+  if (Coop.role !== "host" || Coop.hb || Coop.starting || Coop.phase !== "run") return;
+  const here = Coop.players.filter(p => p.here);
+  if (!here.length || !here.every(p => p.waveReady && p.waveReady.wave === Coop.wave)) return;
+  const anyAlive = Coop.players.some(p => { const t = p.here ? p.waveReady : p.lastTeam; return t && t.mons.some(m => !(m.carry && m.carry.hp === 0)); });
+  if (!anyAlive) { coopBroadcast({ t: "notice", msg: "Everyone’s Pokémon have fainted. Heal up before the next battle." }); toast("Everyone’s Pokémon have fainted. Heal up before the next battle."); Coop.players.forEach(p => { p.waveReady = null; }); Coop.myReady = false; coopBroadcast({ t: "unreadyall" }); return coopSync(); }
+  Coop.starting = true;
+  try { await coopHostStartBattle(); }
+  catch (e) { toast("Couldn’t start the battle. " + e.message); coopBroadcast({ t: "notice", msg: "The host couldn’t start the battle. " + e.message }); }
+  finally { Coop.starting = false; }
+}
+function coopPlaceholder(k) {
+  return { displayName: "(empty)", speciesName: "unown", variety: "unown", isMega: false, isForm: false, fallback: { normal: [], shiny: [] }, types: ["normal"], base: { hp: 10, atk: 10, def: 10, spa: 10, spd: 10, spe: 1 }, weight: 1, carry: { hp: 0 }, build: { level: 1, nature: "hardy", ability: "", item: "", teraType: "normal", ivs: { hp: 0, atk: 0, def: 0, spa: 0, spd: 0, spe: 0 }, evs: { hp: 0, atk: 0, def: 0, spa: 0, spd: 0, spe: 0 }, moves: ["tackle", "", "", ""] }, placeholder: true };
+}
+async function coopHostStartBattle() {
+  const run = Rogue.run, enc = Coop.enc;
+  const team = [], owners = [], tera = [], uids = [];
+  for (let k = 0; k < Coop.size; k++) {
+    const p = Coop.players.find(x => x.idx === k);
+    const t = p ? (p.here ? p.waveReady : p.lastTeam) : null;
+    uids[k] = [];
+    if (t && t.mons.length) t.mons.forEach((m, j) => { team.push(m); owners.push(k); uids[k].push(t.uids[j]); });
+    else { team.push(coopPlaceholder(k)); owners.push(k); uids[k].push(null); }
+    tera[k] = !!(t && t.tera);
+  }
+  Rogue.encBuilt = Coop.encBuilt && Coop.encBuilt.wave === enc.wave ? Coop.encBuilt : null;
+  const foes = await rgBuildFoes(Object.assign({}, run, { wave: enc.wave }), enc);
+  Coop.encBuilt = Rogue.encBuilt;
+  const theirs = await withAltForms(foes.map(m => Object.assign(plainMon(m), { mods: m.rg.mods, catchRate: m.rg.catchRate, shinyBuff: rgShinyBuff(m) })));
+  const db = await loadMoveDB([...team, ...theirs].flatMap(m => m.build.moves.filter(Boolean)).concat(["tackle"]));
+  const raid = enc.kind === "raid";
+  const rareNote = enc.rare ? RG_RARE_NOTE[enc.rare] || "" : "";
+  const shinyNote = foes.some(m => m.build.shiny) && enc.kind === "wild" ? "A shiny Pokémon appeared!" : "";
+  const B = BattleEngine.newBattle([team, theirs], ["Your team", enc.kind === "wild" ? "Wild" : raid ? "Raid Boss" : enc.name], db, null, {
+    slots: Coop.size, foeSlots: raid ? 1 : null, coop: true, owners, ownerNames: Array.from({ length: Coop.size }, (_, k) => coopName(k)), teraOwners: tera,
+    backdrop: enc.backdrop || "grass", wild: enc.kind === "wild", wildNote: [rareNote, shinyNote].filter(Boolean).join(" "), sureCatch: !!enc.sure, catchBonus: 1,
+    raid: raid ? { hp: 1.5 + 1.25 * (Coop.size - 1), actions: 1 + Math.floor(Coop.size / 3) } : null
+  });
+  const ctxMsg = { wave: enc.wave, enc: { kind: enc.kind, name: enc.name, title: enc.title, type: enc.type, quote: enc.quote, level: enc.level, champion: !!enc.champion, rare: enc.rare }, cpuLevel: enc.ai };
+  Coop.hb = { B, enc, foes, uids, choices: {}, flee: {}, turnStarts: [0], ctxMsg, waitSince: Date.now() };
+  Coop.result = null;
+  coopAiFoes();
+  coopBroadcast({ t: "battle", ctx: ctxMsg, view: coopViewFor(B, 200) });
+  coopEnterBattle({ ctx: ctxMsg, local: true });
+  coopHostKick();
+}
+function coopViewFor(B, win) {
+  const hb = Coop.hb;
+  const ts = hb ? hb.turnStarts : [0];
+  const w = win || Math.min(180, Math.max(50, B.log.length - (ts.length > 1 ? ts[ts.length - 2] : 0) + 6));
+  return Object.assign(BattleEngine.viewFor(B, 0, w), { coopWait: coopWaiting(), coopFlee: hb ? Object.keys(hb.flee).filter(k => hb.flee[k]).map(Number) : [] });
+}
+function coopEnterBattle(msg) {
+  const ctx = msg.ctx || {};
+  const enc = ctx.enc || {};
+  Coop.result = null; battle.cmine = null; battle.csel = null; Coop.fleeOn = false;
+  battle.rogue = { wave: ctx.wave, enc, foes: null, coop: true, boss: enc.kind === "boss" ? { type: enc.type || "dragon", quote: enc.quote, name: enc.name } : enc.kind === "raid" ? { type: "dragon", quote: "A raid boss! Work together to bring it down.", name: "Raid Boss" } : null };
+  Object.assign(battle, { mode: "coop", mySide: 0, gym: null, cpuLevel: ctx.cpuLevel || "normal", lobby: "", disconnected: false, discText: "", oppName: enc.name || "", shownLine: null, domKey: null, startedAt: Date.now(), infoSide: null, playing: false, teraArmed: false, preview: null });
+  if (Coop.role === "host") battle.B = Coop.hb.B; else { battle.B = null; battle.view = msg.view; }
+  Coop.myReady = false;
+  Rogue.busy = "";
+  state.screen = "battle";
+  render(); window.scrollTo(0, 0);
+}
+function coopAiFoes() {
+  const B = Coop.hb && Coop.hb.B;
+  if (!B) return;
+  for (let g = 0; g < 4 && B.winner === null; g++) {
+    const r = BattleEngine.requestFor(B, 1);
+    if (r.kind !== "move" && r.kind !== "switch") break;
+    const c = BattleEngine.aiChoose(B, 1, battle.cpuLevel || Coop.hb.enc.ai || "normal");
+    if (!c) break;
+    BattleEngine.submit(B, 1, c);
+  }
+}
+
+/* ---------- host: turns ---------- */
+function coopTurnKey(B) { const r = BattleEngine.requestFor(B, 0); return B.turn + ":" + r.kind + ":" + B.log.length; }
+function coopNeeded(B) {
+  const r = BattleEngine.requestFor(B, 0);
+  if (r.kind === "move") return r.slots.filter(x => !x.skip).map(x => x.pos);
+  if (r.kind === "switch") return r.slots.slice();
+  return [];
+}
+function coopWaiting() {
+  const hb = Coop.hb;
+  if (!hb || hb.B.winner !== null) return [];
+  return coopNeeded(hb.B).filter(pos => !hb.choices[pos]);
+}
+function coopCheck(B, pos, a) {
+  if (!a || typeof a !== "object") return "Unknown choice.";
+  const req = BattleEngine.requestFor(B, 0), side = B.sides[0];
+  const ownBench = i => Number.isInteger(i) && side.team[i] && !side.team[i].fainted && !side.active.includes(i) && side.owners[i] === pos;
+  if (req.kind === "switch") {
+    if (!req.slots.includes(pos)) return "You don’t need to choose right now.";
+    if (a.type !== "switch" || !ownBench(a.index)) return "Choose one of your own Pokémon to send out.";
+    return null;
+  }
+  if (req.kind !== "move") return "It isn’t time to choose.";
+  const r = req.slots.find(x => x.pos === pos && !x.skip);
+  if (!r) return "Your Pokémon can’t act right now.";
+  if (a.type === "move") {
+    if (r.recharge) return a.index === -2 ? null : "It must recharge this turn.";
+    if (r.struggle) return a.index === -1 ? null : "No moves left. Use Struggle.";
+    if (!Number.isInteger(a.index) || !r.usable[a.index]) return "That move can’t be used right now.";
+    if (a.tera && !r.canTera) return "You can’t Terastallize right now.";
+    return null;
+  }
+  if (a.type === "switch") return r.canSwitch && ownBench(a.index) ? null : "That Pokémon can’t switch in.";
+  if (a.type === "ball") return B.wild && !B.raid && BattleEngine.BALLS[a.ball] ? null : "You can’t throw a ball right now.";
+  return "Unknown choice.";
+}
+function coopHostChoice(pos, a, key) {
+  const hb = Coop.hb;
+  if (!hb || hb.B.winner !== null) return;
+  if (key !== coopTurnKey(hb.B)) return coopTo(pos, { t: "notice", msg: "That turn already happened. Choose again." });
+  const err = coopCheck(hb.B, pos, a);
+  if (err) return coopTo(pos, { t: "notice", msg: err });
+  hb.choices[pos] = a.type === "move" ? { type: "move", index: a.index, tera: !!a.tera, target: a.target || null } : a.type === "ball" ? { type: "ball", ball: a.ball, target: a.target || null, bonus: Math.max(1, Math.min(1.5, +a.bonus || 1)) } : { type: "switch", index: a.index };
+  coopHostTry();
+}
+function coopHostFlee(pos, on) {
+  const hb = Coop.hb;
+  if (!hb || hb.B.winner !== null || !hb.B.wild) return;
+  hb.flee[pos] = on;
+  const voters = Coop.players.filter(p => p.here).map(p => p.idx);
+  if (voters.length && voters.every(k => hb.flee[k])) return coopHostFinish(true);
+  coopPushWait();
+}
+function coopAiFill() {
+  const hb = Coop.hb;
+  if (!hb || hb.B.winner !== null) return;
+  const need = coopNeeded(hb.B).filter(pos => !hb.choices[pos] && pos !== Coop.me);
+  if (!need.length) return;
+  const ai = BattleEngine.aiChoose(hb.B, 0, "normal");
+  const acts = ai ? (ai.actions || [ai]) : [];
+  const all = coopNeeded(hb.B);
+  need.forEach(pos => { hb.choices[pos] = acts[all.indexOf(pos)] || { type: "move", index: -1 }; coopTo(pos, { t: "notice", msg: "You took a while, so the host let the AI choose for you this turn." }); });
+  coopHostTry();
+}
+function coopPushWait() {
+  const hb = Coop.hb; if (!hb) return;
+  const msg = { t: "wait", wait: coopWaiting(), flee: Object.keys(hb.flee).filter(k => hb.flee[k]).map(Number) };
+  coopBroadcast(msg);
+  if (state.screen === "battle" && !battle.playing) renderControls(currentView(), false);
+}
+function coopHostTry() {
+  const hb = Coop.hb;
+  if (!hb || hb.B.winner !== null) return;
+  const B = hb.B;
+  const need = coopNeeded(B);
+  if (!need.length) return;
+  const here = new Set(Coop.players.filter(p => p.here).map(p => p.idx));
+  if (need.some(pos => !hb.choices[pos] && here.has(pos))) return coopPushWait();
+  /* players who dropped out are played by the AI until they come back */
+  const missing = need.filter(pos => !hb.choices[pos]);
+  if (missing.length) {
+    const ai = BattleEngine.aiChoose(B, 0, "normal");
+    const acts = ai ? (ai.actions || [ai]) : [];
+    missing.forEach(pos => { const k = need.indexOf(pos); hb.choices[pos] = acts[k] || { type: "move", index: -1 }; });
+  }
+  hb.turnStarts.push(B.log.length);
+  hb.waitSince = Date.now();
+  if (hb.turnStarts.length > 4) hb.turnStarts.shift();
+  const res = BattleEngine.submit(B, 0, { actions: need.map(pos => hb.choices[pos]) });
+  hb.choices = {};
+  if (!res.ok) {
+    /* should not happen after the per-player checks; let everyone choose again */
+    coopBroadcast({ t: "notice", msg: "That turn couldn’t be played (" + res.error + "). Choose again." }); toast("That turn couldn’t be played (" + res.error + ").");
+    return coopPushWait();
+  }
+  hb.flee = {};
+  coopAiFoes();
+  battle.cmine = null;
+  coopBroadcast({ t: "view", view: coopViewFor(B) });
+  renderBattle();
+  if (B.winner !== null) coopHostFinish(false);
+  else if (!coopNeeded(B).length) { coopAiFoes(); coopBroadcast({ t: "view", view: coopViewFor(B) }); renderBattle(); if (B.winner !== null) coopHostFinish(false); }
+  coopHostKick();
+}
+/* If the only choices left belong to players who are away, let the AI make them right away. */
+function coopHostKick() {
+  const hb = Coop.hb;
+  if (!hb || hb.B.winner !== null) return;
+  const here = new Set(Coop.players.filter(p => p.here).map(p => p.idx));
+  const need = coopNeeded(hb.B);
+  if (need.length && need.every(pos => !here.has(pos) || hb.choices[pos])) setTimeout(coopHostTry, 0);
+}
+
+/* ---------- host: the outcome, sent to everyone ---------- */
+function coopSerializeFoe(hb, i) {
+  const f = hb.B.sides[1].team[i], m = JSON.parse(JSON.stringify(hb.foes[i], RogueSave.strip));
+  m.rg.hp = f.hp >= f.maxhp ? null : Math.max(1, f.hp); m.rg.status = f.status || null; m.rg.fainted = false; m.rg.pp = {}; m.rg.mods = {}; m.rg.friend = 0;
+  return m;
+}
+function coopHostFinish(fled) {
+  const hb = Coop.hb;
+  if (!hb || hb.done) return;
+  hb.done = true;
+  const B = hb.B, enc = hb.enc, side = B.sides[0];
+  const won = !fled && B.winner === 0;
+  const players = [];
+  for (let k = 0; k < Coop.size; k++) players[k] = [];
+  const firstOf = {};
+  side.team.forEach((f, i) => {
+    const k = side.owners[i], uid = hb.uids[k] && hb.uids[k][side.team.filter((q, j) => j < i && side.owners[j] === k).length];
+    if (uid == null) return;
+    if (firstOf[k] == null) firstOf[k] = i;
+    const pp = {}; f.moves.forEach(x => { pp[x.name] = x.ppLeft; });
+    players[k].push({ uid, hp: f.hp, maxhp: f.maxhp, fainted: f.fainted, status: f.fainted ? null : f.status, pp, mods: { "sitrus-berry": f.mods["sitrus-berry"] || 0, "lum-berry": f.mods["lum-berry"] || 0, "reviver-seed": f.mods["reviver-seed"] || 0 }, fought: f.rec.dmg > 0 || f.rec.kos > 0 || f.turnsIn > 0 || side.active.includes(i) });
+  });
+  const friends = side.team.map((f, i) => {
+    const k = side.owners[i];
+    if (!hb.uids[k] || hb.uids[k][0] == null) return null;
+    const src = (Coop.players.find(p => p.idx === k) || {});
+    const t = src.here ? src.waveReady : src.lastTeam;
+    const j = side.team.filter((q, jj) => jj < i && side.owners[jj] === k).length;
+    const mon = t && t.mons[j];
+    return mon ? { owner: k, sp: mon.speciesName, v: mon.variety, fought: players[k][j] ? players[k][j].fought : false, lead: firstOf[k] === i, fainted: f.fainted, soothe: (mon.mods && mon.mods["soothe-bell"]) || 0 } : null;
+  }).filter(Boolean);
+  const defeated = B.sides[1].team.map((f, i) => ({ f, i })).filter(x => x.f.fainted).map(x => ({ L: x.f.level, baseExp: hb.foes[x.i] && hb.foes[x.i].rg ? hb.foes[x.i].rg.baseExp : 100, k: x.f.caughtBy ? 0.5 : enc.kind === "raid" ? 1.2 : 1.5 }));
+  const catches = B.catches.map(c => ({ by: c.by, mon: coopSerializeFoe(hb, c.slot) }));
+  const res = { wave: enc.wave, kind: enc.kind, name: enc.name, level: enc.level, champion: !!enc.champion, rare: enc.rare || null, biome: enc.biome, size: Coop.size, won, fled: !!fled, players, friends, defeated, catches, kos: B.sides[1].team.filter(f => f.fainted && !f.caughtBy).length };
+  if (won && enc.kind === "raid") res.raidMon = coopSerializeFoe(hb, 0);
+  if (!won && !fled) {
+    const withLives = Coop.players.map(p => ({ p, lives: ((p.here ? p.waveReady : p.lastTeam) || {}).lives || 0 })).filter(x => x.lives > 0).sort((a, b) => b.lives - a.lives);
+    if (withLives.length) { res.secondWind = withLives[0].p.idx; res.next = { wave: enc.wave, enc }; }
+    else res.over = true;
+  } else {
+    if (!(won && enc.champion && enc.wave === RG_CLASSIC_END && Coop.mode === "classic")) res.next = { wave: enc.wave + 1, enc: coopNextEncounter(enc.wave + 1) };
+    else res.next = { wave: enc.wave + 1, enc: coopNextEncounter(enc.wave + 1) };
+  }
+  if (res.next) { Coop.wave = res.next.wave; Coop.enc = res.next.enc; if (res.next.wave !== enc.wave) Coop.encBuilt = null; }
+  Coop.players.forEach(p => { p.waveReady = null; });
+  Coop.result = res;
+  coopBroadcast({ t: "result", res });
+  coopGuestData({ t: "result", res }, true);
+  coopSync();
+}
+
+/* ---------- applying the outcome to your own run ---------- */
+function rgAddFriendRoot(root, amt, soothe) {
+  const f = rgFam(root);
+  const gain = Math.max(1, Math.round(amt * (1 + 0.2 * rgSk("friend")) * (1 + 0.5 * (soothe || 0))));
+  f.f += gain;
+  if (!rgUnlocked(root) && f.f >= rgNeed(root)) { f.u = true; const d = RG_BY_ID.get(root); if (d) rgUnlockNote("friend", d); }
+  return gain;
+}
+function coopNoteShared(by, mon) {
+  if (!mon || !Rogue.run || !Rogue.run.coop || by === Coop.me) return;
+  rgNoteCatch(mon);
+  Rogue.run.caught++;
+  rgSave();
+  toast(coopName(by) + " caught " + (mon.displayName || "a Pokémon") + "! It’s in your dex too.");
+}
+async function rgCoopAfterBattle() {
+  const run = Rogue.run, res = Coop.result;
+  if (!run || !run.coop) return;
+  if (!res) return toast("Waiting for the host…");
+  if (battle.rogue && battle.rogue.done) return;
+  if (battle.rogue) battle.rogue.done = true;
+  if (Coop.role === "host") Coop.hb = null;
+  Sound.stopMusic(); Sound.lowHp(false);
+  Object.assign(battle, { mode: null, B: null, view: null, shownLine: null, domKey: null, playing: false, rogue: null, cmine: null, csel: null });
+  state.screen = "rogue";
+  Coop.result = null;
+  const mine = res.players[Coop.me] || [];
+  mine.forEach(s => {
+    const m = run.party.find(x => x.uid === s.uid);
+    if (!m) return;
+    m.rg.hp = s.fainted ? 0 : s.hp >= s.maxhp ? null : s.hp; m.rg.fainted = s.fainted; m.rg.status = s.fainted ? null : s.status; m.rg.pp = s.pp || {};
+    ["sitrus-berry", "lum-berry", "reviver-seed"].forEach(k => { if (m.rg.mods[k] != null) { m.rg.mods[k] = s.mods[k] || 0; if (!m.rg.mods[k]) delete m.rg.mods[k]; } });
+    m._fought = s.fought;
+  });
+  run.coop.next = res.next || null;
+  if (res.fled) {
+    run.post = { wave: res.wave, kind: res.kind, name: res.name, lines: ["Your team got away safely. No Exp., prize money or reward this time."], gains: [], money: 0, caught: null, fled: true };
+    run.phase = "results"; run.party.forEach(m => { delete m._fought; });
+    rgSave(); coopPushParty(); render(); window.scrollTo(0, 0); return;
+  }
+  if (!res.won) {
+    if (res.secondWind != null) {
+      if (res.secondWind === Coop.me) run.lives = Math.max(0, (run.lives || 0) - 1);
+      run.party.forEach(m => { m.rg.fainted = false; m.rg.status = null; m.rg.hp = Math.max(1, Math.floor(rgMaxHp(m) / 2)); m.rg.pp = {}; delete m._fought; });
+      run.wave = res.next.wave; run.enc = res.next.enc; run.coop.next = null;
+      Rogue.msg = (res.secondWind === Coop.me ? "Your Second Wind" : coopName(res.secondWind) + "’s Second Wind") + " got the whole team back up with half their HP! Wave " + run.wave + " is still ahead.";
+      Sound.play("heal"); rgSave(); coopPushParty(); render(); window.scrollTo(0, 0); return;
+    }
+    rgGameOver(); coopPushParty(); return;
+  }
+  const post = { wave: res.wave, kind: res.kind, name: res.name, lines: [], gains: [], money: 0, caught: null, friend: [], coopCatches: [] };
+  Rogue.unlocks = [];
+  /* Exp.: the same base for everyone, then your own Lucky Eggs, Exp. Charms and skill tree on top */
+  const trainer = res.kind !== "wild";
+  const share = 1.5 / Math.max(1, res.size);
+  const charm = 1 + 0.25 * (run.keys["exp-charm"] || 0), skill = 1 + 0.1 * rgSk("exp");
+  for (const m of run.party) {
+    if (m.rg.fainted || !res.defeated.length || m.build.level >= 100) continue;
+    const part = m._fought ? 1 : 0.75;
+    const egg = 1 + 0.4 * (m.rg.mods["lucky-egg"] || 0);
+    let gain = 0;
+    res.defeated.forEach(d => { gain += Math.floor(((d.baseExp * d.L / 5) * Math.pow((2 * d.L + 10) / (d.L + m.build.level + 10), 2.5) + 1) * (trainer && res.kind !== "raid" ? 1.5 : 1) * d.k * (res.kind === "raid" ? 1 : share) * RG_EXP_MULT * part * egg * charm * skill); });
+    const before = m.build.level;
+    m.rg.exp += gain;
+    let L = before;
+    while (L < 100 && m.rg.exp >= rgExpFor(L + 1)) L++;
+    post.gains.push({ uid: m.uid, name: m.displayName, gain, from: before, to: L });
+    if (L > before) await rgSetLevel(m, L, post);
+  }
+  /* friendship is shared: every family on the team grows for every player */
+  const boss = res.kind === "boss" || res.kind === "raid";
+  const ownFirst = run.party.find(m => !m.rg.fainted);
+  run.party.forEach(m => {
+    if (m.rg.fainted) return;
+    const g = rgAddFriend(m, (m._fought ? 2 : 1) + (m === ownFirst ? 1 : 0) + (boss ? 3 : 0));
+    const gi = post.gains.find(x => x.uid === m.uid); if (gi) gi.friend = g; else post.gains.push({ uid: m.uid, name: m.displayName, gain: 0, from: m.build.level, to: m.build.level, friend: g });
+  });
+  const shared = [];
+  res.friends.filter(f => f.owner !== Coop.me && !f.fainted).forEach(f => {
+    const d = RG_BY_SLUG.get(f.sp) || rgBaseOf(f.v);
+    if (!d) return;
+    const g = rgAddFriendRoot(rgRootOf(d.id), (f.fought ? 2 : 1) + (f.lead ? 1 : 0) + (boss ? 3 : 0), f.soothe);
+    shared.push(d.name + " +" + g);
+  });
+  if (shared.length) post.lines.push("Shared friendship from your teammates’ Pokémon: ♥ " + shared.join(", ") + ".");
+  run.party.forEach(m => { delete m._fought; });
+  /* catches are shared: everyone gets the dex entry and unlocks, the thrower gets the Pokémon */
+  for (const c of res.catches) {
+    const m = c.mon;
+    rgNoteCatch(m);
+    run.caught++;
+    if (res.rare) rgMeta().rare++;
+    if (c.by === Coop.me) {
+      m.uid = uidSeq++; m.rg.met = { wave: res.wave, biome: res.biome, ball: true, rare: res.rare || null };
+      rgAddFriend(m, 3);
+      post.caught = post.caught ? post.caught + ", " + m.displayName : m.displayName;
+      if (run.party.length < rgTeamCap(run)) { run.party.push(m); post.lines.push(m.displayName + " joined your team!"); }
+      else run.prompts.push({ t: "full", mon: m });
+    } else post.coopCatches.push(coopName(c.by) + " caught " + m.displayName + (m.build.shiny ? " ✦" : "") + ". It’s registered in your dex too!");
+  }
+  run.kos += res.kos || 0;
+  /* money is your own */
+  const coin = (1 + 0.2 * (run.keys["amulet-coin"] || 0)) * (1 + 0.1 * rgSk("money"));
+  const L = res.level;
+  post.money = Math.round((res.kind === "raid" ? 90 * L : res.kind === "boss" ? 60 * L : trainer ? 25 * L : 30 + 6 * L) * coin);
+  run.money += post.money;
+  if (rgSk("interest")) { const it = Math.min(150 * rgSk("interest"), Math.floor(run.money * 0.05 * rgSk("interest"))); if (it > 0) { run.money += it; post.lines.push("Your savings earned ₽" + it + " in interest."); } }
+  if (rgSk("medic")) { run.party.forEach(m => { if (!m.rg.fainted && m.rg.hp != null) { m.rg.hp = Math.min(rgMaxHp(m), m.rg.hp + Math.ceil(rgMaxHp(m) * 0.05 * rgSk("medic"))); if (m.rg.hp >= rgMaxHp(m)) m.rg.hp = null; } }); }
+  /* co-op teams patch each other up between waves, so nobody is stuck sitting out */
+  if (!boss) {
+    const up = [];
+    run.party.forEach(m => {
+      const mx = rgMaxHp(m);
+      if (m.rg.fainted) { m.rg.fainted = false; m.rg.status = null; m.rg.hp = Math.max(1, Math.floor(mx * 0.2)); up.push(m.displayName); }
+      else if (m.rg.hp != null) { m.rg.hp = Math.min(mx, m.rg.hp + Math.ceil(mx * 0.2)); if (m.rg.hp >= mx) m.rg.hp = null; }
+    });
+    post.lines.push("Your team patched each other up: everyone recovered 20% HP" + (up.length ? ", and " + up.join(", ") + " got back on their feet" : "") + ".");
+  }
+  if (boss) {
+    run.bosses++;
+    run.party.forEach(m => { m.rg.hp = null; m.rg.status = null; m.rg.fainted = false; m.rg.pp = {}; });
+    post.lines.push(res.kind === "raid" ? "The raid is over! Your team was fully healed." : "Your team was fully healed after the big battle.");
+  }
+  if (res.kind === "raid") {
+    run.lastRaid = true;
+    if (res.raidMon) post.raidCatch = { mon: res.raidMon, done: false };
+  }
+  post.unlocks = (Rogue.unlocks || []).slice();
+  rgMetaSave();
+  rgBest(false);
+  run.post = post;
+  if (res.champion && res.wave === RG_CLASSIC_END && run.mode === "classic") { run.phase = "victory"; rgBest(true); rgAwardPoints(run, true); rgSave(); coopPushParty(); return render(); }
+  run.phase = "results";
+  rgSave(); coopPushParty();
+  render(); window.scrollTo(0, 0);
+}
+/* After a raid, every player gets one throw at the worn-out boss. Each catch is your own copy. */
+const RG_RAID_ODDS = { "poke-ball": 0.3, "great-ball": 0.45, "ultra-ball": 0.6, "rogue-ball": 0.85, "master-ball": 1 };
+function rgRaidThrow(ball) {
+  const run = Rogue.run, post = run && run.post, rc = post && post.raidCatch;
+  if (!rc || rc.done) return;
+  const free = ball === "free";
+  if (!free && !(run.balls[ball] > 0)) return toast("You don’t have any of those.");
+  if (!free) run.balls[ball]--;
+  const odds = Math.min(1, (RG_RAID_ODDS[free ? "poke-ball" : ball] || 0.3) * rgCatchBonus());
+  rc.done = true;
+  const ok = Math.random() < odds;
+  const m = JSON.parse(JSON.stringify(rc.mon));
+  if (ok) {
+    m.uid = uidSeq++; m.rg.met = { wave: post.wave, raid: true, ball: true, rare: m.rg.met && m.rg.met.rare };
+    rgNoteCatch(m); rgAddFriend(m, 3); run.caught++;
+    rc.ok = true;
+    if (run.party.length < rgTeamCap(run)) { run.party.push(m); rc.text = "Gotcha! " + m.displayName + " was caught and joined your team!"; }
+    else { run.prompts.push({ t: "full", mon: m }); rc.text = "Gotcha! " + m.displayName + " was caught! Your team is full, so choose who makes room next."; }
+    Sound.play("badge");
+    const strip = Object.assign({}, m);
+    if (Coop.role === "host") { coopBroadcast({ t: "caught", by: 0, mon: strip }); } else coopSend({ t: "caught", mon: strip });
+  } else { rc.text = "Oh no! " + m.displayName + " broke free and fled…"; Sound.play("pop"); }
+  rgSave(); coopPushParty(); render();
+}
+
+/* ---------- battle controls: you only command your own spot ---------- */
+function coopMine(v, i) { const p = v.you.team[i]; return p && p.owner === Coop.me; }
+function coopOrderStrip(v) {
+  if (!v.order || !v.order.length) return "";
+  const nm = x => { const t = x.side === 0 ? v.you.team[v.you.actives[x.pos]] : v.foe.team[v.foe.actives[x.pos]]; if (!t) return "?"; const who = x.side === 0 ? (t.owner === Coop.me ? "You" : coopName(t.owner)) : (v.wild ? "Wild" : v.raid ? "Boss" : "Foe"); return esc(t.name) + (x.extra ? " (again)" : "") + ' <span class="note">' + esc(who) + "</span>"; };
+  return '<div class="coop-order" aria-label="Speed order this turn"><span class="label">Speed order</span>' + v.order.map(x => '<span class="co-o ' + (x.side === 0 ? (v.you.team[v.you.actives[x.pos]] && v.you.team[v.you.actives[x.pos]].owner === Coop.me ? "me" : "ally") : "foe") + (x.tie > 1 ? " tie" : "") + '"><b class="mono">' + x.rank + (x.tie > 1 ? "=" : "") + "</b> " + nm(x) + "</span>").join("") + '<span class="note co-o-note">Ties are decided by a coin flip each turn. Priority moves still go first.</span></div>';
+}
+function coopWho(list) { return list.map(k => k === Coop.me ? "you" : coopName(k)).join(", "); }
+function coopTargets(v, me, m, kind) {
+  const foes = (v.foe.actives || []).map((i, pos) => ({ side: "foe", pos, mon: v.foe.team[i] })).filter(o => o.mon && !o.mon.fainted);
+  const allies = (v.you.actives || []).map((i, pos) => ({ side: "ally", pos, mon: v.you.team[i] })).filter(o => o.mon && !o.mon.fainted && o.mon !== me);
+  if (kind === "ball") return foes;
+  const t = m.target;
+  if (TARGETED.has(t)) return foes.concat(allies);
+  if (t === "ally") return allies;
+  if (t === "user-or-ally") return [{ side: "self", mon: me }].concat(allies);
+  return [];
+}
+function coopKey(v) { const r = v.request || {}; return v.turn + ":" + r.kind + ":" + (v.logBase + v.log.length); }
+function coopChoose(a) {
+  const v = currentView();
+  if (!v || battle.playing) return;
+  const key = coopKey(v);
+  battle.cmine = { key, a };
+  battle.csel = null;
+  if (a.type === "ball" && Rogue.run) { Rogue.run.balls[a.ball] = Math.max(0, (Rogue.run.balls[a.ball] || 0) - 1); rgSave(); a = Object.assign({}, a, { bonus: rgCatchBonus() }); }
+  if (Coop.role === "host") coopHostChoice(Coop.me, a, key);
+  else { coopSend({ t: "choice", a, key }); renderControls(v, false); }
+}
+function renderCoopControls(v, el) {
+  const req = v.request || { kind: "wait" };
+  const me = Coop.me;
+  const pos = me;
+  const wait = v.coopWait || [];
+  const myActive = v.you.team[(v.you.actives || [])[pos]];
+  const order = coopOrderStrip(v);
+  const waitTxt = list => list.length ? '<p class="note coop-waitline"><span class="spin" aria-hidden="true"></span> Waiting for ' + esc(coopWho(list)) + "…</p>" : "";
+  let html = "";
+  if (battle.disconnected) { el.innerHTML = '<div class="banner bad">' + esc(battle.discText || "Disconnected.") + ' <button class="btn sm" data-act="leave" type="button">Back</button></div>'; return; }
+  const sel = battle.csel && battle.csel.key === coopKey(v) ? battle.csel : (battle.csel = { key: coopKey(v), pending: null, tera: false, ball: null });
+  const chosen = battle.cmine && battle.cmine.key === coopKey(v) ? battle.cmine.a : null;
+  const myTurn = req.kind === "move" ? (req.slots || []).some(x => x.pos === pos && !x.skip) : req.kind === "switch" ? (req.slots || []).includes(pos) : false;
+  const iNeed = myTurn && wait.includes(pos) && !chosen;
+  if (req.kind === "move" && iNeed) {
+    const r = req.slots.find(x => x.pos === pos);
+    const foesNow = (v.foe.actives || []).map(i => v.foe.team[i]).filter(f => f && !f.fainted);
+    if (!r.canTera) sel.tera = false;
+    const head = '<div class="headrow"><p class="label">What will ' + esc(myActive.name) + " do?" + (myActive.locked ? " (locked into " + esc(pretty(myActive.locked)) + ")" : "") + '</p><div class="row">' +
+      (r.canTera ? '<button class="terabtn' + (sel.tera ? " on" : "") + '" type="button" data-act="c-tera" aria-pressed="' + !!sel.tera + '" style="--tc:' + (TYPE_COLOR[r.teraType] || "#888") + '"><span class="teragem" aria-hidden="true"></span>' + (sel.tera ? "Terastallizing · pick a move" : "Terastallize · " + esc(pretty(r.teraType))) + "</button>" : "") +
+      (sel.pending != null || sel.ball ? '<button class="btn sm" type="button" data-act="c-back">Back</button>' : "") + "</div></div>";
+    if (sel.pending != null || sel.ball) {
+      const m = sel.ball ? null : shownMove(myActive, myActive.moves[sel.pending], sel.tera);
+      const opts = coopTargets(v, myActive, m || {}, sel.ball ? "ball" : "move");
+      const ballName = sel.ball ? (RG_BALLS.find(b => b[0] === sel.ball) || [0, "ball"])[1] : "";
+      html = head + '<p class="label">' + (sel.ball ? "Throw the " + esc(ballName) + " at…" : "Use " + esc(pretty(m.name)) + " on…") + '</p><div class="tgtgrid">' + opts.map(o => {
+        const code = o.side === "foe" ? "foe:" + o.pos : o.side === "ally" ? "ally:" + o.pos : "self";
+        let sub;
+        if (sel.ball) { const ch = Math.round(BattleEngine.catchChance({ maxhp: 100, hp: o.mon.hpPct, catchRate: o.mon.catchRate || 45, status: o.mon.status }, sel.ball, rgCatchBonus()) * 100); sub = '<span class="note">~' + ch + "% catch</span>"; }
+        else sub = o.side === "foe" ? effChip(m, o.mon) || '<span class="note">Opponent</span>' : o.side === "ally" ? '<span class="note">' + esc(o.mon.owner === Coop.me ? "Yours" : coopName(o.mon.owner) + "’s") + "</span>" : '<span class="note">Itself</span>';
+        return '<button class="tgtbtn' + (o.side === "foe" ? " foe" : "") + '" type="button" data-ctg="' + code + '">' + vSprite(o.mon) + "<b>" + esc(o.mon.name) + "</b>" + sub + "</button>";
+      }).join("") + "</div>";
+    } else {
+      let moves;
+      if (r.recharge) moves = '<button class="mvbtn" style="--tc:var(--muted)" data-cmv="-2" type="button"><b>Recharge</b><span>' + esc(myActive.name) + " must rest this turn.</span></button>";
+      else if (r.struggle) moves = '<button class="mvbtn" style="--tc:var(--muted)" data-cmv="-1" type="button"><b>Struggle</b><span>No PP left on any move</span></button>';
+      else moves = myActive.moves.map((m0, i) => {
+        const m = shownMove(myActive, m0, sel.tera);
+        const spread = BattleEngine.SPREAD_TARGETS.has(m.target);
+        return '<button class="mvbtn" style="--tc:' + (TYPE_COLOR[m.type] || "#888") + '" data-cmv="' + i + '" data-tipslot="' + v.you.actives[pos] + ":" + i + '" type="button" ' + (r.usable[i] ? "" : "disabled") + ">" +
+          '<span class="mvtop"><b>' + esc(pretty(m.name)) + "</b>" + (spread ? '<span class="eff">' + (m.target === "all-other-pokemon" ? "Hits everyone" : "All foes") + "</span>" : "") + "</span>" +
+          "<span>" + esc(pretty(m.type)) + " · " + esc(pretty(m.cat)) + (m.power ? " · " + m.power : "") + (m.prio > 0 ? " · priority" : "") + '</span><span class="effrow">' + foesNow.map(f => effMini(m, f)).join("") + '</span><span class="mono">PP ' + m.ppLeft + "/" + m.maxpp + "</span></button>";
+      }).join("");
+      html = head + '<div class="movegrid">' + moves + "</div>" +
+        (r.canSwitch ? '<p class="label">Or switch ' + esc(myActive.name) + " out</p>" + coopBench(v, true) : "") + coopBallRow(v);
+    }
+  } else if (req.kind === "switch" && iNeed) {
+    html = '<p class="label">' + (req.pivot ? "Choose a Pokémon to switch in" : "Choose one of your Pokémon to send out") + "</p>" + coopBench(v, true);
+  } else {
+    const mineAlive = v.you.team.some((p, i) => p.owner === me && !p.fainted);
+    let note;
+    if (chosen) note = "<b>Locked in:</b> " + esc(coopChoiceText(v, chosen)) + ".";
+    else if (!mineAlive) note = "All your Pokémon have fainted. Cheer your team on!";
+    else if (!myTurn && req.kind === "switch") note = "Your teammates are choosing who to send out.";
+    else note = "";
+    const others = wait.filter(k => k !== pos);
+    const slow = Coop.role === "host" && Coop.hb && others.length && Date.now() - (Coop.hb.waitSince || 0) > 30000;
+    if (Coop.role === "host" && Coop.hb && others.length && !slow) { clearTimeout(battle.aiFillT); battle.aiFillT = setTimeout(() => { if (state.screen === "battle" && !battle.playing && battle.rogue && battle.rogue.coop) renderControls(currentView(), false); }, Math.max(500, 30500 - (Date.now() - (Coop.hb.waitSince || 0)))); }
+    html = (note ? '<p class="coop-locked">' + note + "</p>" : "") + waitTxt(wait.filter(k => k !== pos || !chosen)) +
+      (slow ? '<button class="btn sm" type="button" data-act="c-aifill">Let the AI choose for ' + esc(coopWho(others)) + "</button>" : "") + coopBench(v, false);
+  }
+  el.innerHTML = order + html + (v.wild ? coopFleeRow(v) : "") + coopEmoteBar() + qolHint("battle");
+}
+function coopChoiceText(v, a) {
+  const me = v.you.team[(v.you.actives || [])[Coop.me]];
+  if (a.type === "switch") return "switch to " + (v.you.team[a.index] || {}).name;
+  if (a.type === "ball") return "throw a " + ((RG_BALLS.find(b => b[0] === a.ball) || [0, "ball"])[1]);
+  if (!me) return "ready";
+  const mname = a.index === -2 ? "Recharge" : a.index === -1 ? "Struggle" : pretty(me.moves[a.index].name);
+  const tg = a.target ? (a.target.side === "ally" ? " on " + ((v.you.team[v.you.actives[a.target.pos]] || {}).name || "an ally") : a.target.side === "foe" ? " on " + ((v.foe.team[v.foe.actives[a.target.pos]] || {}).name || "a foe") : "") : "";
+  return me.name + " will use " + mname + tg + (a.tera ? " (Terastallizing)" : "");
+}
+function coopBench(v, enabled) {
+  const mine = v.you.team.map((p, i) => [p, i]).filter(([p]) => p.owner === Coop.me);
+  return '<div class="bench">' + mine.map(([p, i]) => {
+    const pct = Math.round(p.hp / p.maxhp * 100);
+    const isOn = (v.you.actives || []).includes(i);
+    const ok = enabled && !p.fainted && !isOn;
+    return '<button class="benchbtn' + (isOn ? " on" : "") + '" type="button" data-csw="' + i + '" ' + (ok ? "" : "disabled") + ' title="' + esc(p.name) + '">' + vSprite(p) + '<span class="nm">' + esc(p.name) + '</span><span class="mono">' + (p.fainted ? "Fainted" : pct + "%") + (p.status ? " · " + STATUS_SHORT[p.status] : "") + "</span></button>";
+  }).join("") + "</div>";
+}
+function coopBallRow(v) {
+  const run = Rogue.run;
+  if (!v.wild || v.raid || !run) return "";
+  const items = RG_BALLS.filter(([k]) => run.balls[k] > 0 || k === "poke-ball");
+  return '<p class="label" style="margin-top:12px">Your Poké Balls <span class="note" style="text-transform:none;letter-spacing:0;font-weight:500">· a catch is yours, and goes in everyone’s dex</span></p><div class="rg-balls">' + items.map(([k, name, icon, desc]) => {
+    const n = run.balls[k] || 0;
+    return '<button class="rg-ballbtn" type="button" data-rball="' + k + '" title="' + esc(desc) + '"' + (n ? "" : " disabled") + '><span class="rg-ico">' + rgImg(icon) + '</span><span><b>' + esc(name) + '</b><span class="note">×' + n + "</span></span></button>";
+  }).join("") + "</div>";
+}
+function coopFleeRow(v) {
+  const votes = v.coopFlee || [];
+  const n = Coop.players.filter(p => p.here !== false).length || Coop.size;
+  return '<div class="coop-flee"><button class="btn sm ghost' + (Coop.fleeOn ? " on" : "") + '" type="button" data-act="c-flee" aria-pressed="' + !!Coop.fleeOn + '">🏃 ' + (Coop.fleeOn ? "Cancel my vote to run" : "Vote to run away") + '</button><span class="note">' + votes.length + " of " + n + " want to run. Everyone has to agree; you get no Exp., money or reward.</span></div>";
+}
+const COOP_EMOTES = ["👋", "👍", "😮", "😂", "🔥", "🙏"];
+function coopEmoteBar() { return '<div class="emotes" role="group" aria-label="Send a reaction">' + COOP_EMOTES.map((t, i) => '<button type="button" class="emote" data-cemote="' + i + '">' + t + "</button>").join("") + "</div>"; }
+function coopShowEmote(from, i) {
+  if (state.screen !== "battle" || !COOP_EMOTES[i]) return;
+  const f = document.querySelector(".fighter2.me.pp" + from) || document.getElementById("arena");
+  if (!f) return;
+  const b = document.createElement("div");
+  b.className = "coop-emote"; b.textContent = COOP_EMOTES[i] + " " + (from === Coop.me ? "You" : coopName(from));
+  f.appendChild(b); setTimeout(() => b.remove(), 2200);
+}
+function coopThrow(ball) {
+  const v = currentView(), run = Rogue.run;
+  if (!v || !run || battle.playing) return;
+  if (!(run.balls[ball] > 0)) return toast("You don’t have any of those.");
+  const foes = (v.foe.actives || []).map((i, pos) => ({ pos, mon: v.foe.team[i] })).filter(o => o.mon && !o.mon.fainted);
+  if (foes.length > 1) { const sel = battle.csel || {}; sel.ball = ball; sel.pending = null; battle.csel = sel; return renderControls(v, false); }
+  coopChoose({ type: "ball", ball, target: foes[0] ? { side: "foe", pos: foes[0].pos } : null });
+}
+function coopEndBanner(v) {
+  const res = Coop.result;
+  const catches = (v.catches || []).map(c => { const f = v.foe.team[c.slot]; return (c.by === Coop.me ? "You" : esc(coopName(c.by))) + " caught " + esc(f ? f.name : "a Pokémon") + "!"; });
+  let msg;
+  if (v.winner === "you") msg = v.raid ? "The raid boss is down!" : v.wild ? "Your team won!" : "Your team beat " + esc(v.foe.name) + "!";
+  else msg = "Your team is out of usable Pokémon…";
+  let sub = "";
+  if (res && !res.won && res.secondWind != null) sub = "But " + (res.secondWind === Coop.me ? "your" : esc(coopName(res.secondWind)) + "’s") + " Second Wind will get everyone back up!";
+  if (res && !res.won && res.over) sub = "No Second Winds left. The run is over.";
+  if (v.raid && v.winner === "you") sub = "Everyone gets one throw at the worn-out boss next.";
+  return '<div class="banner ' + (v.winner === "you" ? "good" : "bad") + '"><b>' + msg + "</b>" + (sub ? '<span class="note">' + sub + "</span>" : "") + (catches.length ? '<span class="note">' + catches.join(" ") + "</span>" : "") +
+    '<div class="row"><button class="btn primary" type="button" data-ract="after-battle"' + (res ? "" : " disabled") + ">" + (res ? "Continue" : '<span class="spin" aria-hidden="true"></span> Waiting for the host…') + ' <span class="kbd">Enter</span></button></div></div>' + summaryHtml(v);
+}
+
+/* ---------- multi-spot arena: 2, 3 or 6 a side, plus raid bosses ---------- */
+function plateHtmlMulti(v, mon, s, side, pos) {
+  const pct = side === "me" ? Math.round(s.hp / s.mx * 100) : s.hp;
+  const status = s.st ? '<span class="st ' + s.st + '" title="' + esc(STATUS_LONG[s.st]) + '">' + STATUS_SHORT[s.st] + "</span>" : "";
+  const vol = (s.cf ? '<span class="st cnf">CONF</span>' : "") + (s.sub ? '<span class="st sub">SUB</span>' : "") + (s.tr ? '<span class="st tera" style="--tc:' + (TYPE_COLOR[s.tr] || "#888") + '">TERA</span>' : "");
+  const boosts = Object.keys(s.b || {}).map(k => '<span class="boost ' + (s.b[k] > 0 ? "up" : "down") + '">' + BOOST_LABEL[k] + (s.b[k] > 0 ? "+" : "") + s.b[k] + "</span>").join("");
+  const o = (v.order || []).find(x => x.side === (side === "me" ? 0 : 1) && x.pos === pos && !x.extra);
+  const owner = side === "me" && mon.owner != null ? '<span class="co-own' + (mon.owner === Coop.me ? " me" : "") + '">' + esc(mon.owner === Coop.me ? "You" : coopName(mon.owner)) + "</span>" : "";
+  return '<span class="p-top">' + (o && !s.f ? '<span class="co-rank" title="Speed order this turn">' + o.rank + (o.tie > 1 ? "=" : "") + "</span>" : "") + "<b>" + esc(s.nm || mon.name) + '</b><span class="mono note">Lv.' + mon.level + "</span></span>" + owner +
+    '<span class="hp"><b style="width:' + pct + "%;background:" + hpColor(pct) + '"></b></span>' +
+    '<span class="p-bot">' + status + vol + boosts + '<span class="mono hpnum">' + (side === "me" ? s.hp + "/" + s.mx : pct + "%") + "</span></span>";
+}
+function coopSkeleton(v) {
+  const nf = (v.foe.actives || [0]).length, nm = (v.you.actives || [0]).length;
+  const label = "Co-op · Wave " + (battle.rogue ? battle.rogue.wave : "?") + " · " + (v.raid ? "Raid" : nm + " players");
+  app.innerHTML =
+    '<div class="stagehead"><div><p class="label" id="bt-label">' + label + "</p><h2>" + (v.raid ? "Raid: " + esc(((v.foe.team[0] || {}).name) || "Boss") : v.wild ? "Wild Pokémon!" : "Your team vs " + esc(v.foe.name)) + '</h2></div><div class="row"><button class="btn sm" type="button" data-act="skip" id="bt-skip" hidden>Skip ▸▸</button><button class="btn sm" type="button" id="bt-speed" data-qspeed="1" aria-pressed="' + QoL.fast + '" title="Battle text speed (X)">' + qolSpeedLabel() + '</button><button class="btn" data-act="leave" type="button">Leave co-op</button></div></div>' +
+    '<div class="battle2">' +
+      '<div class="bt-main">' +
+        '<div class="arena2 multi cm' + nm + " cf" + nf + (v.raid ? " raid" : "") + '" id="arena" data-bd="' + esc(v.backdrop || "grass") + '" data-fmt="multi" style="--nf:' + nf + ";--nm:" + nm + '">' +
+          '<div class="bd-sky"></div><div class="bd-far"></div><div class="bd-ground"></div><div class="terrain" id="terrain"></div><div class="wx" id="wx"></div>' +
+          Array.from({ length: nf }, (_, pos) => '<div class="fighter2 foe pp' + pos + '" style="--i:' + pos + '" data-slot="" data-side="foe"><div class="pad"></div><div class="mon-art"></div></div>').join("") +
+          Array.from({ length: nm }, (_, pos) => '<div class="fighter2 me pp' + pos + (pos === Coop.me ? " mine" : "") + '" style="--i:' + pos + '" data-slot="" data-side="me"><div class="pad"></div><div class="mon-art"></div></div>').join("") +
+          Array.from({ length: nf }, (_, pos) => '<button class="plate2 foe pp' + pos + '" style="--i:' + pos + '" type="button" data-info="foe:' + pos + '" aria-label="Opponent details"></button>').join("") +
+          Array.from({ length: nm }, (_, pos) => '<button class="plate2 me pp' + pos + (pos === Coop.me ? " mine" : "") + '" style="--i:' + pos + '" type="button" data-info="me:' + pos + '" aria-label="Pokémon details"></button>').join("") +
+          '<div class="fieldtags foe" id="ft-foe"></div><div class="fieldtags me" id="ft-me"></div>' +
+          '<div class="globaltags" id="ft-global"></div>' +
+          '<div class="dialog" id="dialog" aria-live="polite"><span id="dialog-text"></span><span class="caret" aria-hidden="true">▼</span></div>' +
+        "</div>" +
+        '<div class="bt-info" id="bt-info" hidden></div>' +
+        '<div class="controls panel" id="controls"></div>' +
+      "</div>" +
+      '<aside class="panel bt-side">' +
+        '<div class="tabs" role="tablist"><button type="button" role="tab" data-tab="team" id="tab-team">Team</button><button type="button" role="tab" data-tab="log" id="tab-log">Battle log</button></div>' +
+        '<div id="bt-team"></div><div class="blog" id="blog" hidden></div>' +
+      "</aside>" +
+    "</div>";
+  battle.domKey = battleKey(v);
+  setTab(battle.tab || "team");
+}
+function coopTeamPanel(v, el) {
+  const groups = [];
+  for (let k = 0; k < (v.ownerNames || []).length; k++) groups.push(k);
+  groups.sort((a, b) => (a === Coop.me ? -1 : b === Coop.me ? 1 : a - b));
+  el.innerHTML = groups.map(k => {
+    const list = v.you.team.map((p, i) => [p, i]).filter(([p]) => p.owner === k && p.name !== "(empty)");
+    return '<div class="co-group"><p class="label">' + esc(k === Coop.me ? "You" : coopName(k)) + "</p>" + (list.length ? list.map(([p, i]) => {
+      const pct = Math.round(p.hp / p.maxhp * 100), active = (v.you.actives || []).includes(i);
+      return '<div class="tm small' + (p.fainted ? " out" : "") + (active ? " active" : "") + '"><div class="tm-art">' + vSprite(p) + '</div><div class="tm-body"><div class="tm-head"><b>' + esc(p.name) + '</b><span class="mono note">Lv. ' + p.level + "</span>" + (active ? '<span class="pill">In battle</span>' : "") + "</div>" +
+        '<div class="p-types">' + typeChipsSmall(p.curTypes || p.types) + (p.status ? '<span class="st ' + p.status + '">' + STATUS_SHORT[p.status] + "</span>" : "") + '</div><div class="hp"><b style="width:' + pct + "%;background:" + hpColor(pct) + '"></b></div><span class="mono note">' + p.hp + " / " + p.maxhp + " HP</span>" +
+        (k === Coop.me ? '<div class="tm-moves">' + p.moves.map((m, mi) => '<span class="tmv" tabindex="0" data-tipslot="' + i + ":" + mi + '" style="--tc:' + (TYPE_COLOR[m.type] || "#888") + '">' + esc(pretty(m.name)) + ' <span class="mono">' + m.ppLeft + "/" + m.maxpp + "</span></span>").join("") + "</div>" : "") + "</div></div>";
+    }).join("") : '<p class="note">No Pokémon this battle.</p>') + "</div>";
+  }).join("");
+}
+
+/* ---------- lobby screen ---------- */
+function renderCoop() {
+  const seg = (name, val, opts) => '<div class="rg-seg" role="radiogroup">' + opts.map(([k, label, tip]) => '<label title="' + esc(tip) + '"><input type="radio" name="' + name + '" value="' + k + '" data-cset="' + name + '"' + (String(val) === String(k) ? " checked" : "") + "><span>" + esc(label) + "</span></label>").join("") + "</div>";
+  const head = '<div class="stagehead"><div><p class="label">Roguelike · Co-op</p><h2>Play the roguelike together</h2><p class="note" style="margin:4px 0 0">Up to 6 friends, one Pokémon each on the field at a time. Your money, rewards and skill tree stay your own. Catches, friendship and skill points are shared.</p></div><div class="row"><button class="btn sm rg-ptsbtn" type="button" data-ract="tree">🌳 Skill tree</button><button class="btn" type="button" data-act="home-title">← Start screen</button></div></div>';
+  if (!Coop.on) {
+    const sv = coopSaved();
+    const st = Coop.setup;
+    app.innerHTML = head + (Coop.error ? '<p class="err">' + esc(Coop.error) + "</p>" : "") +
+      (sv ? '<section class="panel rg-resume"><div><span class="label">Co-op run saved on this device</span><b>Wave ' + sv.wave + " · " + sv.coop.size + " players · you were " + esc(sv.coop.role === "host" ? "the host" : "Player " + (sv.coop.me + 1)) + '</b><div class="rg-resume-team">' + sv.party.map(m => '<span class="rg-mini">' + spriteImg(m, m.build.shiny) + "</span>").join("") + '</div></div><div class="row">' + (sv.coop.role === "host" ? '<button class="btn primary" type="button" data-cact="reopen">Reopen the room</button><span class="note">Your friends rejoin with the new code.</span>' : '<span class="note">Join the host’s room below to carry on.</span>') + "</div></section>" : "") +
+      '<div class="coop-setup"><section class="panel stack"><h3>Make a room</h3>' +
+        '<span class="label">Players</span>' + seg("size", st.size, [[2, "2 players", "Double battles · 3 Pokémon each"], [3, "3 players", "Triple battles · 2 Pokémon each"], [6, "6 players", "6-on-6 battles · 1 Pokémon each"]]) +
+        '<p class="note" style="margin:0">' + esc((COOP_SIZES[st.size] || COOP_SIZES[2]).label) + " · " + coopPer(st.size) + " Pokémon each · rare raid bosses fight your whole team at once.</p>" +
+        '<span class="label">Mode</span>' + seg("mode", st.mode, [["classic", "Classic", "50 waves. Beat the Champion on wave 50 to win."], ["endless", "Endless", "No finish line."]]) +
+        '<span class="label">Challenge</span>' + seg("challenge", st.challenge, [["casual", "Casual", "Opponents are 3 levels lower."], ["standard", "Standard", "The intended balance."], ["hard", "Hard", "Opponents are 3 levels higher and smarter."]]) +
+        '<label class="namefield"><span class="label">Your name</span><input id="pname" maxlength="20" placeholder="Trainer" value="' + esc(playerName) + '" autocomplete="nickname"></label>' +
+        '<button class="btn primary" type="button" data-cact="host">Create co-op room</button></section>' +
+      '<section class="panel stack"><h3>Join a friend</h3><p class="note" style="margin:0">Ask the host for their 5-character room code.</p><div class="row"><input id="coopcode" class="mono" maxlength="5" placeholder="ABCDE" autocomplete="off" aria-label="Room code"><button class="btn primary" type="button" data-cact="join">Join</button></div>' +
+        '<details class="rg-how" open><summary>How co-op works</summary><ul class="rg-rules"><li><b>Battles.</b> 2 players fight double battles, 3 fight triples and 6 fight 6-on-6. You command your own spot; you can only switch to your own Pokémon.</li><li><b>Speed order.</b> The faster Pokémon moves first and the battle shows the order. Ties are a fair coin flip each turn.</li><li><b>If your team faints</b>, your spot stays empty and your friends fight on. After every win the team patches each other up: everyone heals 20% and fainted Pokémon get back up.</li><li><b>Raid bosses</b> sometimes appear instead of wild Pokémon: one huge boss against your whole team, with big rewards and a throw each at the end.</li><li><b>Your own:</b> money, rewards, Poké Mart, bag, skill tree and Exp. bonuses.</li><li><b>Shared:</b> catches go in everyone’s dex (shinies unlock for everyone), friendship grows for everyone, and everyone earns full skill points.</li></ul></details></section></div>';
+    return;
+  }
+  const host = Coop.role === "host";
+  const p = rgPickState();
+  const cap = coopPer(Coop.size);
+  if (p.team.length > cap) p.team = p.team.slice(0, cap);
+  const used = p.team.reduce((s, o) => s + rgOptCost(o), 0), budget = rgBudget();
+  const slots = Array.from({ length: Coop.size }, (_, i) => Coop.players.find(x => x.idx === i));
+  const players = '<ul class="players coop-players">' + slots.map((x, i) => x ? '<li class="' + (x.lobbyReady ? "ready" : "") + '"><span class="who"><span class="co-num">' + (i + 1) + "</span>" + esc(x.name) + (i === Coop.me ? ' <span class="note">(you)</span>' : "") + (i === 0 ? ' <span class="note">host</span>' : "") + "</span>" +
+    '<span class="coop-picks">' + (x.picks || []).map(o => { const d = RG_BY_ID.get(o.id); return d ? '<span class="rg-mini">' + rgDexSprite(d, o.shiny) + "</span>" : ""; }).join("") + "</span>" +
+    '<span class="note">' + (x.here === false ? "Disconnected" : x.lobbyReady ? "✓ Ready" : "Picking starters") + "</span></li>" : '<li class="waiting"><span class="who note"><span class="co-num">' + (i + 1) + "</span>Waiting for a player…</span></li>").join("") + "</ul>";
+  const allIn = Coop.players.length === Coop.size && Coop.players.every(x => x.lobbyReady);
+  app.innerHTML = head + (Coop.error ? '<p class="err">' + esc(Coop.error) + "</p>" : "") +
+    '<div class="rg-startgrid"><section class="panel"><div class="headrow"><h3>Choose your starters</h3><span class="note">Up to ' + cap + " · your own budget and unlocks</span></div>" +
+      '<div class="rg-filters"><input type="search" id="rg-q" placeholder="Search Pokémon" value="' + esc(p.q || "") + '" aria-label="Search starters" autocomplete="off">' +
+        '<select id="rg-type" aria-label="Filter by type"><option value="">All types</option>' + RG_TYPES.map(t => '<option value="' + t + '"' + (p.type === t ? " selected" : "") + ">" + pretty(t) + "</option>").join("") + "</select>" +
+        '<select id="rg-sort" aria-label="Sort"><option value="dex"' + (p.sort === "dex" ? " selected" : "") + '>Starters first</option><option value="cost"' + (p.sort === "cost" ? " selected" : "") + '>Cost</option><option value="name"' + (p.sort === "name" ? " selected" : "") + ">Name</option></select></div>" +
+      '<div class="rg-roster" id="rg-grid">' + rgRosterGrid() + "</div></section>" +
+    '<aside class="panel rg-setup"><div class="codebox"><div><span class="label">Room code</span><div class="code mono" id="code">' + (Coop.code ? esc(Coop.code) : '<span class="spin" aria-hidden="true"></span>') + '</div><span class="note">' + esc(Coop.size + " players · " + (Coop.mode === "endless" ? "Endless" : "Classic") + " · " + RG_CHALLENGE[Coop.challenge][0]) + "</span></div>" + (host && Coop.code ? '<button class="btn sm" data-act="copy-coop" type="button">Copy code</button>' : "") + "</div>" +
+      players +
+      '<h3 style="margin:8px 0 0">Your starters</h3><div class="rg-budget"><span class="label">Budget</span><span class="rg-bbar"><i style="width:' + Math.min(100, Math.round(used / budget * 100)) + '%"></i></span><b class="mono">' + used + " / " + budget + "</b></div>" +
+      '<div id="rg-teambox">' + rgTeamBox() + "</div>" +
+      '<div class="row"><button class="btn ' + (Coop.lobbyReady ? "" : "primary") + '" type="button" data-cact="lready"' + (p.team.length ? "" : " disabled") + ">" + (Coop.lobbyReady ? "Not ready, keep picking" : p.team.length ? "I’m ready" : "Pick at least one starter") + "</button>" +
+      (host ? '<button class="btn primary" type="button" data-cact="start"' + (allIn ? "" : " disabled") + ">Start the run →</button>" : "") + '<button class="btn ghost" type="button" data-cact="leave">Leave</button></div>' +
+      (host && !allIn ? '<p class="note" style="margin:0">Starts when all ' + Coop.size + " players have joined and are ready.</p>" : !host ? '<p class="note" style="margin:0">The host starts the run when everyone is ready.</p>' : "") +
+    "</aside></div>";
+}
+function coopIsReady(x) { return x.ready != null ? !!x.ready : !!(x.waveReady && x.waveReady.wave === Coop.wave); }
+function coopReadyPanel(run) {
+  const list = Array.from({ length: run.coop.size }, (_, i) => Coop.players.find(x => x.idx === i) || { idx: i, name: (run.coop.players[i] || {}).name || "Player " + (i + 1), here: false, party: [] });
+  const meReady = !!Coop.myReady;
+  const waitingFor = list.filter(x => x.here !== false && !coopIsReady(x) && x.idx !== Coop.me).map(x => x.name);
+  return '<div id="coop-ready" class="coop-ready"><ul class="coop-team">' + list.map(x => '<li class="' + (coopIsReady(x) || (x.idx === Coop.me && meReady) ? "ready" : "") + (x.here === false ? " gone" : "") + '"><span class="who"><span class="co-num">' + (x.idx + 1) + "</span><b>" + esc(x.idx === Coop.me ? "You" : x.name) + '</b></span><span class="coop-picks">' + (x.idx === Coop.me ? coopPartySummary(run) : (x.party || [])).map(coopMini).join("") + '</span><span class="note">' + (x.here === false ? "Away · AI plays their last team" : coopIsReady(x) || (x.idx === Coop.me && meReady) ? "✓ Ready" : "Getting ready") + "</span></li>").join("") + "</ul>" +
+    '<div class="row rg-goRow"><button class="btn ' + (meReady ? "" : "primary") + ' rg-go" type="button" data-ract="fight"' + (run.prompts.length || !Coop.on ? " disabled" : "") + ">" + (meReady ? "Not ready yet" : "Ready for wave " + run.wave) + ' <span class="kbd">F</span></button>' +
+    (!Coop.on ? '<span class="err">Not connected. Rejoin your room from the Co-op screen.</span>' : meReady ? '<span class="note"><span class="spin" aria-hidden="true"></span> ' + (waitingFor.length ? "Waiting for " + esc(waitingFor.join(", ")) + "…" : "Starting…") + "</span>" : !rgAlive(run).length ? '<span class="note">All your Pokémon have fainted. You can still ready up and cheer your team on, or heal first.</span>' : "") + "</div></div>";
+}
+
+/* ---------- input ---------- */
+document.addEventListener("change", e => {
+  const t = e.target;
+  if (t && t.dataset && t.dataset.cset) { Coop.setup[t.dataset.cset] = t.dataset.cset === "size" ? +t.value : t.value; if (state.screen === "coop") render(); }
+});
+document.addEventListener("click", async e => {
+  const t = e.target.closest && e.target.closest("button");
+  if (!t) return;
+  const d = t.dataset;
+  if (d.cact) {
+    const nameEl = document.getElementById("pname");
+    if (nameEl) { playerName = cleanName(nameEl.value); try { localStorage.setItem("rd-name", playerName); } catch (err) { } }
+    if (d.cact === "host") return coopHost(false);
+    if (d.cact === "reopen") return coopHost(true);
+    if (d.cact === "join") return coopJoin();
+    if (d.cact === "leave") { coopLeave(false); state.screen = "coop"; return render(); }
+    if (d.cact === "lready") { if (!rgPickState().team.length) return; Coop.lobbyReady = !Coop.lobbyReady; coopSendPicks(); return render(); }
+    if (d.cact === "start") return coopHostStartRun();
+    return;
+  }
+  if (state.screen === "coop" && Coop.on && (d.ropt || d.rdrop || d.rshinytog || d.rmegatog)) { Coop.lobbyReady = false; coopSendPicks(); return render(); }
+  if (d.act === "copy-coop") { const code = Coop.code; if (navigator.clipboard) navigator.clipboard.writeText(code).then(() => toast("Code copied"), () => toast("Code: " + code)); else toast("Code: " + code); return; }
+  if (!(battle.rogue && battle.rogue.coop) || state.screen !== "battle") return;
+  if (d.cmv != null) {
+    const v = currentView(); if (!v || battle.playing) return;
+    const me = v.you.team[v.you.actives[Coop.me]], i = +d.cmv, sel = battle.csel || {};
+    if (i >= 0) {
+      const m = shownMove(me, me.moves[i], sel.tera);
+      const opts = coopTargets(v, me, m, "move");
+      const foes = opts.filter(o => o.side === "foe");
+      if (opts.length > 1) { sel.pending = i; battle.csel = sel; return renderControls(v, false); }
+      const o = opts[0];
+      return coopChoose({ type: "move", index: i, tera: !!sel.tera, target: o ? (o.side === "foe" ? { side: "foe", pos: o.pos } : o.side === "ally" ? { side: "ally", pos: o.pos } : null) : (foes[0] ? { side: "foe", pos: foes[0].pos } : null) });
+    }
+    return coopChoose({ type: "move", index: i, tera: false, target: null });
+  }
+  if (d.ctg != null) {
+    const sel = battle.csel; if (!sel) return;
+    const [side, p] = String(d.ctg).split(":");
+    const target = side === "foe" ? { side: "foe", pos: +p } : side === "ally" ? { side: "ally", pos: +p } : null;
+    if (sel.ball) return coopChoose({ type: "ball", ball: sel.ball, target });
+    return coopChoose({ type: "move", index: sel.pending, tera: !!sel.tera, target });
+  }
+  if (d.csw != null) return coopChoose({ type: "switch", index: +d.csw });
+  if (d.act === "c-aifill") return coopAiFill();
+  if (d.act === "c-tera") { const sel = battle.csel; if (sel) sel.tera = !sel.tera; return renderControls(currentView(), false); }
+  if (d.act === "c-back") { const sel = battle.csel; if (sel) { sel.pending = null; sel.ball = null; } return renderControls(currentView(), false); }
+  if (d.act === "c-flee") { Coop.fleeOn = !Coop.fleeOn; if (Coop.role === "host") coopHostFlee(Coop.me, Coop.fleeOn); else coopSend({ t: "flee", on: Coop.fleeOn }); return renderControls(currentView(), false); }
+  if (d.cemote != null) { const i = +d.cemote; const now = Date.now(); if (battle.lastEmote && now - battle.lastEmote < 1200) return; battle.lastEmote = now; if (Coop.role === "host") { coopBroadcast({ t: "emote", from: 0, e: i }); coopShowEmote(0, i); } else coopSend({ t: "emote", e: i }); return; }
+});
+window.addEventListener("beforeunload", () => { if (Coop.on && Rogue.run && Rogue.run.coop) rgSave(); });
 
 render();
 </script>
