@@ -10506,17 +10506,186 @@ const Coop = {
 };
 /* ---------- connection helpers, shared by 1v1 rooms and co-op ---------- */
 const COOP_PROTO = 2;
-const PEER_OPTS = { debug: 1, config: { iceServers: [
-  { urls: ["stun:stun.l.google.com:19302", "stun:stun1.l.google.com:19302", "stun:stun2.l.google.com:19302"] },
-  { urls: "stun:stun.cloudflare.com:3478" },
-  { urls: ["turn:eu-0.turn.peerjs.com:3478", "turn:us-0.turn.peerjs.com:3478"], username: "peerjs", credential: "peerjsp" }
-], sdpSemantics: "unified-plan" } };
-/* If the link to the room server drops (sleep, Wi-Fi blip), quietly reconnect so friends can still find the room. */
+const RELAY_BROKERS = [
+  "wss://broker.emqx.io:8084/mqtt",
+  "wss://broker.hivemq.com:8884/mqtt",
+  "wss://test.mosquitto.org:8081/mqtt"
+];
+const RELAY_TOPIC = "pkmn-random-draft-v12/in/";
+
 function makePeer(id) {
-  const peer = id ? new Peer(id, PEER_OPTS) : new Peer(PEER_OPTS);
-  peer.on("disconnected", () => {
-    setTimeout(() => { try { if (!peer.destroyed && peer.disconnected) peer.reconnect(); } catch (e) { } }, 1200);
-  });
+  const myId = id || ("p-" + Math.random().toString(36).slice(2, 10) + Date.now().toString(36));
+  const handlers = {};
+  const conns = new Map();
+  let client = null;
+  let opened = false;
+
+  const peer = {
+    id: myId,
+    destroyed: false,
+    disconnected: false,
+    on(ev, fn) { (handlers[ev] || (handlers[ev] = [])).push(fn); return peer; },
+    emit(ev, arg) { (handlers[ev] || []).slice().forEach(fn => { try { fn(arg); } catch (e) { console.error(e); } }); },
+    connect(targetId) {
+      const cid = "c-" + Math.random().toString(36).slice(2, 10) + Date.now().toString(36);
+      const conn = createConn(cid, targetId);
+      conns.set(cid, conn);
+      const sendSyn = () => { if (!conn.open && !conn._closed) sendPkt(targetId, { k: "syn", cid, from: myId }); };
+      sendSyn();
+      conn._synR = setInterval(sendSyn, 900);
+      conn._synT = setTimeout(() => {
+        clearInterval(conn._synR);
+        if (!conn.open && !peer.destroyed) {
+          conn._teardown(false);
+          peer.emit("error", { type: "peer-unavailable", message: "Peer unavailable" });
+        }
+      }, 3400);
+      return conn;
+    },
+    reconnect() { if (client && !peer.destroyed) { try { client.reconnect(); } catch (e) { } } },
+    destroy() {
+      if (peer.destroyed) return;
+      peer.destroyed = true;
+      clearInterval(hbTimer);
+      conns.forEach(c => c._teardown(true));
+      conns.clear();
+      if (client) { try { client.end(true); } catch (e) { } client = null; }
+    }
+  };
+
+  function sendPkt(to, pkt) {
+    if (!client || peer.destroyed) return;
+    try { client.publish(RELAY_TOPIC + to, JSON.stringify(pkt), { qos: 0 }); } catch (e) { }
+  }
+
+  function createConn(cid, remoteId) {
+    const ch = {};
+    const seen = new Set();
+    const conn = {
+      peer: remoteId,
+      open: false,
+      _closed: false,
+      _outSeq: 0,
+      _seen: Date.now(),
+      _seenSeq: seen,
+      on(ev, fn) { (ch[ev] || (ch[ev] = [])).push(fn); return conn; },
+      emit(ev, arg) { (ch[ev] || []).slice().forEach(fn => { try { fn(arg); } catch (e) { console.error(e); } }); },
+      send(data) {
+        if (conn._closed || !conn.open) return;
+        sendPkt(remoteId, { k: "dat", cid, from: myId, seq: ++conn._outSeq, d: data });
+      },
+      close() { conn._teardown(true); },
+      _teardown(notifyRemote) {
+        if (conn._closed) return;
+        conn._closed = true;
+        const wasOpen = conn.open;
+        conn.open = false;
+        clearInterval(conn._synR);
+        clearTimeout(conn._synT);
+        conns.delete(cid);
+        if (notifyRemote) sendPkt(remoteId, { k: "fin", cid, from: myId });
+        if (wasOpen) conn.emit("close");
+      }
+    };
+    return conn;
+  }
+
+  const hbTimer = setInterval(() => {
+    const now = Date.now();
+    conns.forEach((c, cid) => {
+      if (!c.open) return;
+      if (now - c._seen > 16000) return c._teardown(false);
+      sendPkt(c.peer, { k: "ping", cid, from: myId });
+    });
+  }, 4000);
+
+  window.addEventListener("beforeunload", () => peer.destroy());
+
+  function startClient(brokerIdx) {
+    if (peer.destroyed) return;
+    const url = RELAY_BROKERS[brokerIdx] || RELAY_BROKERS[0];
+    const c = window.mqtt.connect(url, { keepalive: 25, connectTimeout: 5000, reconnectPeriod: 2000 });
+    client = c;
+    const failTimer = setTimeout(() => {
+      if (!opened && !peer.destroyed && brokerIdx + 1 < RELAY_BROKERS.length) {
+        try { c.end(true); } catch (e) { }
+        startClient(brokerIdx + 1);
+      }
+    }, 5200);
+
+    c.on("connect", () => {
+      if (client !== c || peer.destroyed) return;
+      clearTimeout(failTimer);
+      c.subscribe(RELAY_TOPIC + myId, { qos: 0 }, err => {
+        if (err || peer.destroyed) return;
+        peer.disconnected = false;
+        if (!opened) { opened = true; peer.emit("open", myId); }
+      });
+    });
+
+    c.on("message", (topic, payload) => {
+      if (peer.destroyed) return;
+      let pkt;
+      try { pkt = JSON.parse(payload.toString()); } catch (e) { return; }
+      if (!pkt || !pkt.cid) return;
+
+      if (pkt.k === "syn") {
+        let conn = conns.get(pkt.cid);
+        if (conn) {
+          sendPkt(pkt.from, { k: "ack", cid: pkt.cid, from: myId });
+          return;
+        }
+        conn = createConn(pkt.cid, pkt.from);
+        conns.set(pkt.cid, conn);
+        peer.emit("connection", conn);
+        setTimeout(() => {
+          if (conn._closed || peer.destroyed) return;
+          conn.open = true;
+          conn._seen = Date.now();
+          sendPkt(pkt.from, { k: "ack", cid: pkt.cid, from: myId });
+          conn.emit("open");
+        }, 0);
+        return;
+      }
+
+      const conn = conns.get(pkt.cid);
+      if (!conn || conn._closed) return;
+      conn._seen = Date.now();
+
+      if (pkt.k === "ack") {
+        if (!conn.open) {
+          clearInterval(conn._synR);
+          clearTimeout(conn._synT);
+          conn.open = true;
+          conn.emit("open");
+        }
+      } else if (pkt.k === "dat") {
+        if (conn.open && !conn._seenSeq.has(pkt.seq)) {
+          conn._seenSeq.add(pkt.seq);
+          conn.emit("data", pkt.d);
+        }
+      } else if (pkt.k === "ping") {
+        sendPkt(pkt.from, { k: "pong", cid: pkt.cid, from: myId });
+      } else if (pkt.k === "fin") {
+        conn._teardown(false);
+      }
+    });
+
+    c.on("offline", () => {
+      if (client === c && opened && !peer.destroyed) {
+        peer.disconnected = true;
+        peer.emit("disconnected");
+      }
+    });
+
+    c.on("error", () => {
+      if (!opened && brokerIdx + 1 >= RELAY_BROKERS.length) {
+        peer.emit("error", { type: "network", message: "Could not reach relay server." });
+      }
+    });
+  }
+
+  startClient(0);
   return peer;
 }
 const P2P_HELP = "Found the room, but couldn’t open a direct connection to it. Some networks block this (school or work Wi-Fi, some mobile data, VPNs). Try again, turn off any VPN, or have one of you switch to another network or a phone hotspot.";
