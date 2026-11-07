@@ -1562,6 +1562,11 @@ body.noscroll{overflow:hidden}
 .arena2.multi.cm6 .fighter2.me{bottom:32%}
 .arena2.multi .dialog{min-height:14%;bottom:2%}
 @media (max-width:860px){ .arena2.multi .fighter2.me{bottom:32%} .arena2.multi .plate2.me{bottom:18.5%} }
+
+.coop-err{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;border:1.5px solid currentColor;border-radius:12px;padding:10px 14px;margin:0 0 12px;background:color-mix(in srgb,var(--bad, #d8343b) 6%,var(--surface))}
+.coop-connecting{display:flex;gap:14px;align-items:center}
+.coop-connecting>div{flex:1;display:grid;gap:2px}
+.coop-warn{display:flex;gap:6px;align-items:center;margin:0}
 </style>
 </head>
 <body>
@@ -6856,7 +6861,7 @@ async function createRoom() {
   try { await loadPeer(); } catch (e) { return roomFail(e.message); }
   const open = attempt => {
     const code = newCode();
-    const peer = new Peer(peerId(code));
+    const peer = makePeer(peerId(code));
     battle.peer = peer;
     peer.on("open", () => { if (battle.peer !== peer || battle.room !== r) return; r.code = code; r.connecting = false; render(); });
     peer.on("error", err => {
@@ -6878,9 +6883,9 @@ async function createRoom() {
   };
   open(0);
 }
-async function joinRoom() {
+async function joinRoom(codeArg, fromCoop) {
   const input = document.getElementById("joincode");
-  const code = String(input ? input.value : "").trim().toUpperCase().replace(/[^A-Z0-9]/g, "");
+  const code = String(typeof codeArg === "string" ? codeArg : input ? input.value : "").trim().toUpperCase().replace(/[^A-Z0-9]/g, "");
   if (code.length !== 5) { battle.lobbyError = "Room codes are 5 letters and numbers."; toast(battle.lobbyError); return render(); }
   leaveRoom();
   battle.lobbyError = "";
@@ -6888,12 +6893,13 @@ async function joinRoom() {
   r.code = code;
   state.screen = "room"; render(); window.scrollTo(0, 0);
   try { await loadPeer(); } catch (e) { return roomFail(e.message); }
-  const peer = new Peer();
+  const peer = makePeer();
   battle.peer = peer;
   peer.on("open", () => {
-    if (battle.peer !== peer) return;
+    if (battle.peer !== peer || battle.conn) return;
     const conn = peer.connect(peerId(code), { reliable: true });
     battle.conn = conn;
+    watchConn(conn, why => { if (battle.conn === conn && r.connecting) roomFail(why === "timeout" ? "The host didn’t answer. Make sure they still have the game open on the room screen, then try again." : P2P_HELP); });
     conn.on("open", () => { r.connecting = false; send({ t: "hello", v: 2, name: myName() }); render(); });
     conn.on("data", msg => onGuestData(conn, msg));
     conn.on("close", () => onDisconnect(conn));
@@ -6901,7 +6907,10 @@ async function joinRoom() {
   peer.on("error", err => {
     if (battle.peer !== peer) return;
     if (state.screen === "battle") { battle.disconnected = true; return renderBattle(); }
-    roomFail(netError(err));
+    /* maybe it's a co-op room code */
+    if (err.type === "peer-unavailable" && r.connecting && !fromCoop) { leaveRoom(); toast("Checking co-op rooms for " + code + "…"); return coopJoin(code, true); }
+    if (err.type === "peer-unavailable" && fromCoop) { leaveRoom(); Coop.lastCode = code; return coopFail(noRoomMsg(code), true); }
+    roomFail(err.type === "peer-unavailable" ? noRoomMsg(code) : netError(err));
   });
 }
 function startRoomDraft() {
@@ -10495,6 +10504,34 @@ const Coop = {
   size: 2, me: 0, players: [], phase: "lobby", mode: "classic", challenge: "standard", runId: null,
   wave: 1, enc: null, hb: null, result: null, starting: false, lobbyReady: false, setup: { size: 2, mode: "classic", challenge: "standard" }
 };
+/* ---------- connection helpers, shared by 1v1 rooms and co-op ---------- */
+const COOP_PROTO = 2;
+const PEER_OPTS = { debug: 1, config: { iceServers: [
+  { urls: ["stun:stun.l.google.com:19302", "stun:stun1.l.google.com:19302", "stun:stun2.l.google.com:19302"] },
+  { urls: "stun:stun.cloudflare.com:3478" },
+  { urls: ["turn:eu-0.turn.peerjs.com:3478", "turn:us-0.turn.peerjs.com:3478"], username: "peerjs", credential: "peerjsp" }
+], sdpSemantics: "unified-plan" } };
+/* If the link to the room server drops (sleep, Wi-Fi blip), quietly reconnect so friends can still find the room. */
+function makePeer(id) {
+  const peer = id ? new Peer(id, PEER_OPTS) : new Peer(PEER_OPTS);
+  peer.on("disconnected", () => {
+    setTimeout(() => { try { if (!peer.destroyed && peer.disconnected) peer.reconnect(); } catch (e) { } }, 1200);
+  });
+  return peer;
+}
+const P2P_HELP = "Found the room, but couldn’t open a direct connection to it. Some networks block this (school or work Wi-Fi, some mobile data, VPNs). Try again, turn off any VPN, or have one of you switch to another network or a phone hotspot.";
+/* Report a connection that never opens, instead of spinning forever. */
+function watchConn(conn, onFail, ms) {
+  let done = false;
+  const stop = () => { done = true; clearTimeout(t); };
+  const fail = why => { if (done) return; stop(); onFail(why); };
+  const t = setTimeout(() => fail("timeout"), ms || window.__connMs || 20000);
+  conn.on("open", stop);
+  conn.on("iceStateChanged", st => { if (st === "failed") fail("ice"); });
+  conn.on("error", () => fail("error"));
+  return stop;
+}
+function noRoomMsg(code) { return "No room found with code " + code + ". Check the code, and make sure the host still has the game open on the room screen. If their screen went to sleep, they may need to make a new room."; }
 function coopPer(size) { return (COOP_SIZES[size] || COOP_SIZES[2]).per; }
 function rgTeamCap(run) { if (run && run.coop) return coopPer(run.coop.size); if (!run && Coop.on && state.screen === "coop") return coopPer(Coop.size); return 6; }
 function coopPeerId(code) { return "rdcoop-" + code.toLowerCase(); }
@@ -10529,7 +10566,7 @@ function coopLeave(silent) {
   if (wasRun || (Rogue.run && Rogue.run.coop)) { Rogue.run = RogueSave.load(); Rogue.encBuilt = null; }
   if (battle.rogue && battle.rogue.coop) Object.assign(battle, { mode: null, B: null, view: null, shownLine: null, domKey: null, playing: false, rogue: null });
 }
-function coopFail(msg) { coopLeave(true); Coop.error = msg; toast(msg.length > 90 ? msg.slice(0, 88) + "…" : msg); state.screen = "coop"; render(); }
+function coopFail(msg, retry) { coopLeave(true); Coop.error = msg; Coop.canRetry = !!retry; toast(msg.length > 90 ? msg.slice(0, 88) + "…" : msg); state.screen = "coop"; render(); }
 function openCoop() {
   if (state.screen === "battle") return toast("Leave the battle first.");
   if (battle.room) return toast("Leave the online room first.");
@@ -10541,9 +10578,10 @@ async function coopOpenPeer(onConn) {
   return new Promise((res, rej) => {
     const tryOpen = attempt => {
       const code = Coop.code && attempt === 0 && Coop.keepCode ? Coop.code : newCode();
-      const peer = new Peer(coopPeerId(code));
+      const peer = makePeer(coopPeerId(code));
       Coop.peer = peer;
-      peer.on("open", () => { if (Coop.peer !== peer) return; Coop.code = code; Coop.connecting = false; res(code); });
+      peer.on("open", () => { if (Coop.peer !== peer) return; const first = !Coop.code; Coop.code = code; Coop.connecting = false; Coop.serverLost = false; if (first) res(code); else if (state.screen === "coop") render(); });
+      peer.on("disconnected", () => { if (Coop.peer !== peer || !Coop.code) return; Coop.serverLost = true; if (state.screen === "coop") render(); });
       peer.on("error", err => {
         if (Coop.peer !== peer) return;
         if (err.type === "unavailable-id" && attempt < 4) { peer.destroy(); return tryOpen(attempt + 1); }
@@ -10576,25 +10614,45 @@ async function coopHost(resume) {
   catch (e) { return coopFail(e.message || "Couldn’t open a room."); }
   render();
 }
-async function coopJoin() {
+function coopStage(text) { Coop.stage = text; const el = document.getElementById("coop-stage"); if (el) el.textContent = text; }
+async function coopJoin(codeArg, fromBattle) {
   const input = document.getElementById("coopcode");
-  const code = String(input ? input.value : "").trim().toUpperCase().replace(/[^A-Z0-9]/g, "");
+  const code = String(codeArg || (input ? input.value : "")).trim().toUpperCase().replace(/[^A-Z0-9]/g, "");
   if (code.length !== 5) { Coop.error = "Room codes are 5 letters and numbers."; toast(Coop.error); return render(); }
   coopLeave(true);
-  Object.assign(Coop, { on: true, role: "guest", code, connecting: true, error: "", players: [], phase: "lobby", me: -1 });
+  Coop.lastCode = code;
+  Object.assign(Coop, { on: true, role: "guest", code, connecting: true, error: "", players: [], phase: "lobby", me: -1, stage: "Loading the connection library…" });
   state.screen = "coop"; render(); window.scrollTo(0, 0);
   try { await loadPeer(); } catch (e) { return coopFail(e.message); }
-  const peer = new Peer();
+  coopStage("Reaching the room server…");
+  const peer = makePeer();
   Coop.peer = peer;
+  let linked = false;
   peer.on("open", () => {
-    if (Coop.peer !== peer) return;
+    if (Coop.peer !== peer || Coop.conn) return;
+    coopStage("Looking for room " + code + "…");
     const conn = peer.connect(coopPeerId(code), { reliable: true });
     Coop.conn = conn;
-    conn.on("open", () => { const sv = coopSaved(); coopSend({ t: "hello", v: 1, pid: Coop.pid, name: myName(), runId: sv ? sv.coop.runId : null }); });
-    conn.on("data", msg => coopGuestData(msg));
-    conn.on("close", () => { if (Coop.conn === conn) coopHostGone(); });
+    watchConn(conn, why => {
+      if (Coop.conn !== conn || linked) return;
+      coopFail(why === "timeout" ? "Couldn’t connect to the host. Make sure they still have the game open on the co-op room screen. If it keeps failing, your networks may be blocking direct connections: turn off any VPN, or try another network or a phone hotspot." : P2P_HELP, true);
+    });
+    conn.on("open", () => { coopStage("Connected. Saying hello…"); const sv = coopSaved(); coopSend({ t: "hello", v: COOP_PROTO, pid: Coop.pid, name: myName(), runId: sv ? sv.coop.runId : null }); });
+    conn.on("data", msg => { linked = true; coopGuestData(msg); });
+    conn.on("close", () => { if (Coop.conn === conn && linked) coopHostGone(); else if (Coop.conn === conn) coopFail(P2P_HELP, true); });
   });
-  peer.on("error", err => { if (Coop.peer !== peer) return; if (state.screen === "battle" && battle.rogue && battle.rogue.coop) return coopHostGone(); coopFail(netError(err)); });
+  peer.on("error", err => {
+    if (Coop.peer !== peer) return;
+    if (state.screen === "battle" && battle.rogue && battle.rogue.coop) return coopHostGone();
+    if (err.type === "peer-unavailable") {
+      if (linked) return;
+      /* maybe it's a code for a regular online battle room */
+      if (!fromBattle) { coopLeave(true); toast("Checking battle rooms for " + code + "…"); return joinRoom(code, true); }
+      coopLeave(true); return roomFail(noRoomMsg(code));
+    }
+    if (!linked && (err.type === "network" || err.type === "server-error" || err.type === "socket-error" || err.type === "socket-closed")) return coopFail("Couldn’t reach the room server. Check your internet connection and try again.", true);
+    if (!linked) coopFail(netError(err), true);
+  });
 }
 function coopHostGone() {
   if (!Coop.on || Coop.role !== "guest") return;
@@ -10609,7 +10667,7 @@ function coopHostGone() {
 
 /* ---------- host: messages from players ---------- */
 function coopPublicPlayers() { return Coop.players.map(p => ({ idx: p.idx, name: p.name, here: !!p.here, picks: p.picks || [], lobbyReady: !!p.lobbyReady, ready: !!(p.waveReady && p.waveReady.wave === Coop.wave), party: p.party || [] })); }
-function coopLobbyMsg() { return { t: "lobby", size: Coop.size, mode: Coop.mode, challenge: Coop.challenge, phase: Coop.phase, code: Coop.code, runId: Coop.runId, wave: Coop.wave, players: coopPublicPlayers() }; }
+function coopLobbyMsg() { return { t: "lobby", v: COOP_PROTO, size: Coop.size, mode: Coop.mode, challenge: Coop.challenge, phase: Coop.phase, code: Coop.code, runId: Coop.runId, wave: Coop.wave, players: coopPublicPlayers() }; }
 function coopSync() {
   if (Coop.role !== "host") return;
   coopBroadcast(coopLobbyMsg());
@@ -10623,6 +10681,7 @@ function coopHostData(conn, msg) {
   if (Coop.role !== "host" || !msg || typeof msg !== "object") return;
   let p = Coop.players.find(x => x.pid && x.pid === conn._pid);
   if (msg.t === "hello") {
+    if (msg.v !== COOP_PROTO) { try { conn.send({ t: "error", msg: "You and the host are using different versions of the game file. Both of you need the same, latest file." }); } catch (e) { } setTimeout(() => { try { conn.close(); } catch (e) { } }, 600); return; }
     const pid = String(msg.pid || "").slice(0, 20);
     const known = Coop.players.find(x => x.pid === pid && x.idx !== 0);
     if (known) {
@@ -10679,7 +10738,7 @@ function coopStartMsg(idx, resume) {
 /* ---------- guest (and host, for itself): messages from the host ---------- */
 async function coopGuestData(msg, local) {
   if (!msg || typeof msg !== "object" || !Coop.on) return;
-  if (msg.t === "welcome") { Coop.me = msg.me; Coop.connecting = false; return render(); }
+  if (msg.t === "welcome") { Coop.me = msg.me; Coop.connecting = false; Coop.stage = ""; Coop.canRetry = false; return render(); }
   if (msg.t === "error") { const text = String(msg.msg || "The host closed the room.").slice(0, 200); if (Rogue.run && Rogue.run.coop) rgSave(); coopLeave(true); Coop.error = text; if (state.screen === "battle") state.screen = "coop"; if (state.screen !== "title") state.screen = "coop"; return render(); }
   if (msg.t === "lobby") {
     if (Coop.role === "guest") {
@@ -11430,7 +11489,7 @@ function renderCoop() {
   if (!Coop.on) {
     const sv = coopSaved();
     const st = Coop.setup;
-    app.innerHTML = head + (Coop.error ? '<p class="err">' + esc(Coop.error) + "</p>" : "") +
+    app.innerHTML = head + (Coop.error ? '<div class="err coop-err">' + esc(Coop.error) + (Coop.canRetry && Coop.lastCode ? ' <button class="btn sm" type="button" data-cact="retry">Try again</button>' : "") + "</div>" : "") +
       (sv ? '<section class="panel rg-resume"><div><span class="label">Co-op run saved on this device</span><b>Wave ' + sv.wave + " · " + sv.coop.size + " players · you were " + esc(sv.coop.role === "host" ? "the host" : "Player " + (sv.coop.me + 1)) + '</b><div class="rg-resume-team">' + sv.party.map(m => '<span class="rg-mini">' + spriteImg(m, m.build.shiny) + "</span>").join("") + '</div></div><div class="row">' + (sv.coop.role === "host" ? '<button class="btn primary" type="button" data-cact="reopen">Reopen the room</button><span class="note">Your friends rejoin with the new code.</span>' : '<span class="note">Join the host’s room below to carry on.</span>') + "</div></section>" : "") +
       '<div class="coop-setup"><section class="panel stack"><h3>Make a room</h3>' +
         '<span class="label">Players</span>' + seg("size", st.size, [[2, "2 players", "Double battles · 3 Pokémon each"], [3, "3 players", "Triple battles · 2 Pokémon each"], [6, "6 players", "6-on-6 battles · 1 Pokémon each"]]) +
@@ -11439,11 +11498,15 @@ function renderCoop() {
         '<span class="label">Challenge</span>' + seg("challenge", st.challenge, [["casual", "Casual", "Opponents are 3 levels lower."], ["standard", "Standard", "The intended balance."], ["hard", "Hard", "Opponents are 3 levels higher and smarter."]]) +
         '<label class="namefield"><span class="label">Your name</span><input id="pname" maxlength="20" placeholder="Trainer" value="' + esc(playerName) + '" autocomplete="nickname"></label>' +
         '<button class="btn primary" type="button" data-cact="host">Create co-op room</button></section>' +
-      '<section class="panel stack"><h3>Join a friend</h3><p class="note" style="margin:0">Ask the host for their 5-character room code.</p><div class="row"><input id="coopcode" class="mono" maxlength="5" placeholder="ABCDE" autocomplete="off" aria-label="Room code"><button class="btn primary" type="button" data-cact="join">Join</button></div>' +
+      '<section class="panel stack"><h3>Join a friend</h3><p class="note" style="margin:0">Ask the host for their 5-character room code.</p><div class="row"><input id="coopcode" class="mono" maxlength="5" placeholder="ABCDE" autocomplete="off" aria-label="Room code" value="' + esc(Coop.lastCode || "") + '"><button class="btn primary" type="button" data-cact="join">Join</button></div>' +
         '<details class="rg-how" open><summary>How co-op works</summary><ul class="rg-rules"><li><b>Battles.</b> 2 players fight double battles, 3 fight triples and 6 fight 6-on-6. You command your own spot; you can only switch to your own Pokémon.</li><li><b>Speed order.</b> The faster Pokémon moves first and the battle shows the order. Ties are a fair coin flip each turn.</li><li><b>If your team faints</b>, your spot stays empty and your friends fight on. After every win the team patches each other up: everyone heals 20% and fainted Pokémon get back up.</li><li><b>Raid bosses</b> sometimes appear instead of wild Pokémon: one huge boss against your whole team, with big rewards and a throw each at the end.</li><li><b>Your own:</b> money, rewards, Poké Mart, bag, skill tree and Exp. bonuses.</li><li><b>Shared:</b> catches go in everyone’s dex (shinies unlock for everyone), friendship grows for everyone, and everyone earns full skill points.</li></ul></details></section></div>';
     return;
   }
   const host = Coop.role === "host";
+  if (!host && Coop.me < 0) {
+    app.innerHTML = head + '<section class="panel coop-connecting"><span class="spin" aria-hidden="true"></span><div><span class="label">Joining room ' + esc(Coop.code) + '</span><b id="coop-stage">' + esc(Coop.stage || "Connecting…") + '</b><p class="note" style="margin:4px 0 0">This usually takes a few seconds. The host needs to keep the game open on the co-op room screen.</p></div><button class="btn ghost" type="button" data-cact="leave">Cancel</button></section>';
+    return;
+  }
   const p = rgPickState();
   const cap = coopPer(Coop.size);
   if (p.team.length > cap) p.team = p.team.slice(0, cap);
@@ -11460,6 +11523,8 @@ function renderCoop() {
         '<select id="rg-sort" aria-label="Sort"><option value="dex"' + (p.sort === "dex" ? " selected" : "") + '>Starters first</option><option value="cost"' + (p.sort === "cost" ? " selected" : "") + '>Cost</option><option value="name"' + (p.sort === "name" ? " selected" : "") + ">Name</option></select></div>" +
       '<div class="rg-roster" id="rg-grid">' + rgRosterGrid() + "</div></section>" +
     '<aside class="panel rg-setup"><div class="codebox"><div><span class="label">Room code</span><div class="code mono" id="code">' + (Coop.code ? esc(Coop.code) : '<span class="spin" aria-hidden="true"></span>') + '</div><span class="note">' + esc(Coop.size + " players · " + (Coop.mode === "endless" ? "Endless" : "Classic") + " · " + RG_CHALLENGE[Coop.challenge][0]) + "</span></div>" + (host && Coop.code ? '<button class="btn sm" data-act="copy-coop" type="button">Copy code</button>' : "") + "</div>" +
+      (host && Coop.serverLost ? '<p class="note coop-warn"><span class="spin" aria-hidden="true"></span> Lost touch with the room server. Reconnecting so friends can still join…</p>' : "") +
+      (host && Coop.code && Coop.players.length < Coop.size ? '<p class="note" style="margin:0">Friends join from <b>Co-op Roguelike → Join a friend</b> on the start screen with this code. Keep this screen open while they join.</p>' : "") +
       players +
       '<h3 style="margin:8px 0 0">Your starters</h3><div class="rg-budget"><span class="label">Budget</span><span class="rg-bbar"><i style="width:' + Math.min(100, Math.round(used / budget * 100)) + '%"></i></span><b class="mono">' + used + " / " + budget + "</b></div>" +
       '<div id="rg-teambox">' + rgTeamBox() + "</div>" +
@@ -11493,6 +11558,7 @@ document.addEventListener("click", async e => {
     if (d.cact === "host") return coopHost(false);
     if (d.cact === "reopen") return coopHost(true);
     if (d.cact === "join") return coopJoin();
+    if (d.cact === "retry") return coopJoin(Coop.lastCode);
     if (d.cact === "leave") { coopLeave(false); state.screen = "coop"; return render(); }
     if (d.cact === "lready") { if (!rgPickState().team.length) return; Coop.lobbyReady = !Coop.lobbyReady; coopSendPicks(); return render(); }
     if (d.cact === "start") return coopHostStartRun();
@@ -11528,6 +11594,7 @@ document.addEventListener("click", async e => {
   if (d.act === "c-flee") { Coop.fleeOn = !Coop.fleeOn; if (Coop.role === "host") coopHostFlee(Coop.me, Coop.fleeOn); else coopSend({ t: "flee", on: Coop.fleeOn }); return renderControls(currentView(), false); }
   if (d.cemote != null) { const i = +d.cemote; const now = Date.now(); if (battle.lastEmote && now - battle.lastEmote < 1200) return; battle.lastEmote = now; if (Coop.role === "host") { coopBroadcast({ t: "emote", from: 0, e: i }); coopShowEmote(0, i); } else coopSend({ t: "emote", e: i }); return; }
 });
+document.addEventListener("keydown", e => { if (e.key === "Enter" && e.target && e.target.id === "coopcode") coopJoin(); });
 window.addEventListener("beforeunload", () => { if (Coop.on && Rogue.run && Rogue.run.coop) rgSave(); });
 
 render();
